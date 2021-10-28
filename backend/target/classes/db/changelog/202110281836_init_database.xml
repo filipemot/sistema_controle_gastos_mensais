@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+    <changeSet id="202110281836" author="Luis Filipe Guedes Mota">
+        <createTable tableName="tipo_conta">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="tipo_conta_id_pk" />
+            </column>
+            <column name="descricao" type="varchar(250)">
+            </column>
+        </createTable>
+        <createTable tableName="usuario">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="usuario_id_pk" />
+            </column>
+            <column name="nome" type="varchar(250)">
+            </column>
+            <column name="email" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="usuario_email_unq" />
+            </column>
+            <column name="senha" type="varchar(250)">
+            </column>
+        </createTable>
+        <createTable tableName="contas">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="contas_id_pk" />
+            </column>
+            <column name="id_usuario" type="bigint">
+            </column>
+            <column name="id_tipo_conta" type="bigint">
+            </column>
+            <column name="data_conta" type="datetime">
+            </column>
+            <column name="mes_conta" type="tinyint">
+            </column>
+            <column name="ano_conta" type="tinyint">
+            </column>
+            <column name="descricao" type="varchar(250)">
+            </column>
+            <column name="valor" type="currency">
+            </column>
+            <column name="numero_parcela" type="tinyint">
+            </column>
+            <column name="total_parcelas" type="tinyint">
+            </column>
+            <column name="recorrente" type="boolean">
+            </column>
+        </createTable>
+        <createTable tableName="recebidos">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="recebidos_id_pk" />
+            </column>
+            <column name="id_usuario" type="bigint">
+            </column>
+            <column name="data_recebidos" type="datetime">
+            </column>
+            <column name="mes_recebidos" type="tinyint">
+            </column>
+            <column name="ano_recebidos" type="tinyint">
+            </column>
+            <column name="descricao" type="varchar(250)">
+            </column>
+            <column name="valor" type="currency">
+            </column>
+
+        </createTable>
+        <addAutoIncrement tableName="tipo_conta" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1" />
+        <addAutoIncrement tableName="usuario" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1" />
+        <createSequence sequenceName="hibernate_sequence" incrementBy="1" startValue="1" />
+        <addForeignKeyConstraint baseTableName="contas" baseColumnNames="id_usuario" constraintName="contas_id_usuario_fk" referencedTableName="usuario" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="contas" baseColumnNames="id_tipo_conta" constraintName="contas_id_tipo_conta_fk" referencedTableName="tipo_conta" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="recebidos" baseColumnNames="id_usuario" constraintName="recebidos_id_usuario_fk" referencedTableName="usuario" referencedColumnNames="id" />
+
+
+    </changeSet>
+</databaseChangeLog>
