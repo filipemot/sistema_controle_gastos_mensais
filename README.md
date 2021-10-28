@@ -12,7 +12,7 @@
 
 **Modelo de Dados:**
 
-![Modelo de dados](https://github.com/filipemot/sistema_controle_gastos_mensais/blob/main/database/database.drawio.png)
+![Modelo de dados](https://github.com/filipemot/sistema_controle_gastos_mensais/blob/main/database/database.png)
 
 **Planejamento de Tarefas**
 
