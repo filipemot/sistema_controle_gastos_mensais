@@ -16,7 +16,9 @@
 
 **Planejamento de Tarefas**
 
-- **Criação Estrutura Backend**
+- **Criação Estrutura Backend** - OK
+- **Configuração Banco de Dados** - OK
+- **Configuração Migração** - OK
 - **Criação API - Tipo Conta**
 - **Criação API - Usuário**
 - **Criação API - Contas**
