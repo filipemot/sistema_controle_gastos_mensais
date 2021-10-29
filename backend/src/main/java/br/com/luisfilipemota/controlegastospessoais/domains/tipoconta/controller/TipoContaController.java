@@ -1,10 +1,14 @@
 package br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.controller;
 
+import br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.model.TipoConta;
 import br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.service.TipoContaService;
 import br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.service.dto.TipoContaDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -37,8 +41,13 @@ public class TipoContaController {
     }
 
     @PostMapping
-    public TipoContaDTO save(@RequestBody TipoContaDTO tipoConta) {
-        return this.tipoContaService.save(tipoConta);
+    public ResponseEntity<TipoContaDTO> save(@RequestBody String json) {
+        Gson gson = new Gson();
+        TipoContaDTO tipoConta = gson.fromJson(json, TipoContaDTO.class);
+
+        TipoContaDTO tipoContaDTO = this.tipoContaService.save(tipoConta);
+
+        return new ResponseEntity<>(tipoContaDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
