@@ -71,6 +71,8 @@
         </createTable>
         <addAutoIncrement tableName="tipo_conta" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1" />
         <addAutoIncrement tableName="usuario" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1" />
+        <addAutoIncrement tableName="contas" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1" />
+        <addAutoIncrement tableName="recebidos" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1" />
         <createSequence sequenceName="hibernate_sequence" incrementBy="1" startValue="1" />
         <addForeignKeyConstraint baseTableName="contas" baseColumnNames="id_usuario" constraintName="contas_id_usuario_fk" referencedTableName="usuario" referencedColumnNames="id" />
         <addForeignKeyConstraint baseTableName="contas" baseColumnNames="id_tipo_conta" constraintName="contas_id_tipo_conta_fk" referencedTableName="tipo_conta" referencedColumnNames="id" />

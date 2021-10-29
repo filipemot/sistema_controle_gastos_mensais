@@ -2,7 +2,11 @@ package br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.controlle
 
 import br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.service.TipoContaService;
 import br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.service.dto.TipoContaDTO;
+import javassist.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -10,15 +14,26 @@ import java.util.List;
 @RequestMapping("/api/tipoconta")
 public class TipoContaController {
 
+    @Autowired
     private TipoContaService tipoContaService;
-    public TipoContaController(TipoContaService tipoContaService) {
-
-        this.tipoContaService = tipoContaService;
-    }
 
     @GetMapping
     public List<TipoContaDTO> list() {
         return this.tipoContaService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public TipoContaDTO findById(@PathVariable Long id) {
+        TipoContaDTO tipoContaDTO;
+        try {
+            tipoContaDTO = this.tipoContaService.findById(id);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NO_CONTENT, e.getMessage()
+            );
+        }
+
+        return tipoContaDTO;
     }
 
     @PostMapping
@@ -28,11 +43,25 @@ public class TipoContaController {
 
     @PutMapping("/{id}")
     public TipoContaDTO update(@PathVariable Long id, @RequestBody TipoContaDTO tipoConta) {
-        return this.tipoContaService.update(id,tipoConta);
+        TipoContaDTO tipoContaDTO;
+        try {
+            tipoContaDTO = this.tipoContaService.update(id, tipoConta);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NO_CONTENT, e.getMessage()
+            );
+        }
+        return tipoContaDTO;
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        this.tipoContaService.delete(id);
+        try {
+            this.tipoContaService.delete(id);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NO_CONTENT, e.getMessage()
+            );
+        }
     }
 }

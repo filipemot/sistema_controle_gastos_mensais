@@ -1,2 +1,7 @@
-/home/tria/ProjetosPessoais/sistema_controle_gastos_mensais/backend/src/main/java/br/com/luisfilipemota/controlegastospessoais/controller/HelloController.java
+/home/tria/ProjetosPessoais/sistema_controle_gastos_mensais/backend/src/main/java/br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/service/dto/TipoContaDTO.java
+/home/tria/ProjetosPessoais/sistema_controle_gastos_mensais/backend/src/main/java/br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/mapper/ITipoContaMapper.java
 /home/tria/ProjetosPessoais/sistema_controle_gastos_mensais/backend/src/main/java/br/com/luisfilipemota/controlegastospessoais/ControlegastospessoaisApplication.java
+/home/tria/ProjetosPessoais/sistema_controle_gastos_mensais/backend/src/main/java/br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/model/TipoConta.java
+/home/tria/ProjetosPessoais/sistema_controle_gastos_mensais/backend/src/main/java/br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/controller/TipoContaController.java
+/home/tria/ProjetosPessoais/sistema_controle_gastos_mensais/backend/src/main/java/br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/repository/ITipoContaRepository.java
+/home/tria/ProjetosPessoais/sistema_controle_gastos_mensais/backend/src/main/java/br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/service/TipoContaService.java
