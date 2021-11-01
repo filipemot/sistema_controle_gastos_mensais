@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.service.TipoContaServiceTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.043 s - in br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.service.TipoContaServiceTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.69 s - in br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.service.TipoContaServiceTest

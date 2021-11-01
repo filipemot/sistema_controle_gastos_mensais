@@ -1,3 +1,16 @@
 br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/mapper/ITipoContaMapperImpl.class
+br/com/luisfilipemota/controlegastospessoais/domains/usuario/mapper/IUsuarioMapper.class
+br/com/luisfilipemota/controlegastospessoais/domains/usuario/repository/IUsuarioRepository.class
+br/com/luisfilipemota/controlegastospessoais/domains/usuario/model/Usuario.class
 br/com/luisfilipemota/controlegastospessoais/ControlegastospessoaisApplication.class
+br/com/luisfilipemota/controlegastospessoais/domains/usuario/mapper/IUsuarioMapperImpl.class
+br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/repository/ITipoContaRepository.class
+br/com/luisfilipemota/controlegastospessoais/domains/usuario/service/dto/UsuarioDTO.class
+br/com/luisfilipemota/controlegastospessoais/domains/usuario/controller/UsuarioController.class
+br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/mapper/ITipoContaMapper.class
+br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/controller/TipoContaController.class
+br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/model/TipoConta.class
+br/com/luisfilipemota/controlegastospessoais/error/CustomErrorHandler.class
+br/com/luisfilipemota/controlegastospessoais/domains/usuario/service/UsuarioService.class
+br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/service/TipoContaService.class
 br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/service/dto/TipoContaDTO.class

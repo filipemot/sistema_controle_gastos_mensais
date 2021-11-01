@@ -1,1 +1,4 @@
+br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/mapper/TipoContaMapperTest.class
 br/com/luisfilipemota/controlegastospessoais/ControlegastospessoaisApplicationTests.class
+br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/service/TipoContaServiceTest.class
+br/com/luisfilipemota/controlegastospessoais/domains/tipoconta/controller/TipoContaControllerTest.class

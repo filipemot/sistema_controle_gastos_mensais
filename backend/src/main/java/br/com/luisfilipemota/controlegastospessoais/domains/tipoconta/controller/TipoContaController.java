@@ -18,12 +18,15 @@ import java.util.List;
 @RequestMapping("/api/tipoconta")
 public class TipoContaController {
 
-    @Autowired
     private TipoContaService tipoContaService;
 
     @GetMapping
     public List<TipoContaDTO> list() {
         return this.tipoContaService.findAll();
+    }
+
+    public TipoContaController(TipoContaService tipoContaService){
+        this.tipoContaService = tipoContaService;
     }
 
     @GetMapping("/{id}")
