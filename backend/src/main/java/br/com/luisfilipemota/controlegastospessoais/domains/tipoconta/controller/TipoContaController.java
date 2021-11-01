@@ -33,7 +33,7 @@ public class TipoContaController {
             tipoContaDTO = this.tipoContaService.findById(id);
         } catch (NotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NO_CONTENT, e.getMessage()
+                    HttpStatus.NOT_FOUND, e.getMessage()
             );
         }
 
@@ -41,9 +41,7 @@ public class TipoContaController {
     }
 
     @PostMapping
-    public ResponseEntity<TipoContaDTO> save(@RequestBody String json) {
-        Gson gson = new Gson();
-        TipoContaDTO tipoConta = gson.fromJson(json, TipoContaDTO.class);
+    public ResponseEntity<TipoContaDTO> save(@RequestBody TipoContaDTO tipoConta) {
 
         TipoContaDTO tipoContaDTO = this.tipoContaService.save(tipoConta);
 
@@ -57,7 +55,7 @@ public class TipoContaController {
             tipoContaDTO = this.tipoContaService.update(id, tipoConta);
         } catch (NotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NO_CONTENT, e.getMessage()
+                    HttpStatus.NOT_FOUND, e.getMessage()
             );
         }
         return tipoContaDTO;
@@ -69,7 +67,7 @@ public class TipoContaController {
             this.tipoContaService.delete(id);
         } catch (NotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NO_CONTENT, e.getMessage()
+                    HttpStatus.NOT_FOUND, e.getMessage()
             );
         }
     }
