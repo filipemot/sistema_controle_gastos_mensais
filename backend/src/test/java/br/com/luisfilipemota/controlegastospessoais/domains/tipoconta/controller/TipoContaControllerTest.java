@@ -2,9 +2,6 @@ package br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.controlle
 
 import br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.service.TipoContaService;
 import br.com.luisfilipemota.controlegastospessoais.domains.tipoconta.service.dto.TipoContaDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
