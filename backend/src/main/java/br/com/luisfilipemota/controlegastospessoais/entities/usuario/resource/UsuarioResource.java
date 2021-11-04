@@ -1,4 +1,4 @@
-package br.com.luisfilipemota.controlegastospessoais.entities.usuario.controller;
+package br.com.luisfilipemota.controlegastospessoais.entities.usuario.resource;
 
 import br.com.luisfilipemota.controlegastospessoais.entities.usuario.service.UsuarioService;
 import br.com.luisfilipemota.controlegastospessoais.entities.usuario.service.dto.UsuarioDTO;
@@ -13,12 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuario")
-public class UsuarioController {
+public class UsuarioResource {
 
     @Autowired
     private UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioService usuarioService){
+    public UsuarioResource(UsuarioService usuarioService){
         this.usuarioService = usuarioService;
     }
 

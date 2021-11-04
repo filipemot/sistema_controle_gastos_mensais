@@ -10,4 +10,9 @@ class ControlegastospessoaisApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	public void main() {
+		ControlegastospessoaisApplication.main(new String[] {});
+	}
+
 }

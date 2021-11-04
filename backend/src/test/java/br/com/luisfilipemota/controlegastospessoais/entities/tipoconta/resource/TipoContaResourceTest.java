@@ -1,6 +1,5 @@
-package br.com.luisfilipemota.controlegastospessoais.entities.tipoconta.controller;
+package br.com.luisfilipemota.controlegastospessoais.entities.tipoconta.resource;
 
-import br.com.luisfilipemota.controlegastospessoais.entities.tipoconta.controller.TipoContaController;
 import br.com.luisfilipemota.controlegastospessoais.entities.tipoconta.service.TipoContaService;
 import br.com.luisfilipemota.controlegastospessoais.entities.tipoconta.service.dto.TipoContaDTO;
 import com.google.gson.Gson;
@@ -20,8 +19,8 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(TipoContaController.class)
-public class TipoContaControllerTest {
+@WebMvcTest(TipoContaResource.class)
+public class TipoContaResourceTest {
     @Autowired
     private MockMvc mvc;
 

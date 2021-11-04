@@ -1,4 +1,4 @@
-package br.com.luisfilipemota.controlegastospessoais.entities.tipoconta.controller;
+package br.com.luisfilipemota.controlegastospessoais.entities.tipoconta.resource;
 
 import br.com.luisfilipemota.controlegastospessoais.entities.tipoconta.service.TipoContaService;
 import br.com.luisfilipemota.controlegastospessoais.entities.tipoconta.service.dto.TipoContaDTO;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tipoconta")
-public class TipoContaController {
+public class TipoContaResource {
 
     private TipoContaService tipoContaService;
 
@@ -21,7 +21,7 @@ public class TipoContaController {
         return this.tipoContaService.findAll();
     }
 
-    public TipoContaController(TipoContaService tipoContaService){
+    public TipoContaResource(TipoContaService tipoContaService){
         this.tipoContaService = tipoContaService;
     }
 

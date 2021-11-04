@@ -19,7 +19,7 @@ public class CustomErrorHandler {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public void handleConstraintViolationException(DataIntegrityViolationException exception,
+    public void handleDataIntegrityViolationException(DataIntegrityViolationException exception,
                                                    ServletWebRequest webRequest) throws IOException {
         webRequest.getResponse().sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
