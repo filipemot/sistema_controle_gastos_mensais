@@ -109,7 +109,7 @@ public class TipoContaResourceTest {
     }
 
     @Test
-    public void testAtualizarTipoContaNãoEncontrada() throws Exception {
+    public void testAtualizarTipoContaNaoEncontrada() throws Exception {
         TipoContaDTO tipoConta = new TipoContaDTO();
         tipoConta.setDescricao("Descricao");
         tipoConta.setId(1L);
