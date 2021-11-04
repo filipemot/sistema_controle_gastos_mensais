@@ -11,5 +11,5 @@ public interface TipoContaMapper {
 
     TipoContaDTO tipoContaToTipoContaDto(TipoConta tipoConta);
 
-    TipoConta tipoContaDTOToTipoContaDto(TipoContaDTO tipoContaDto);
+    TipoConta tipoContaDTOToTipoConta(TipoContaDTO tipoContaDto);
 }

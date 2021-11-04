@@ -24,7 +24,7 @@ public class TipoContaService {
     }
 
     public TipoContaDTO save(TipoContaDTO tipoContaDTO) {
-        TipoConta tipoConta = tipoContaMapper.tipoContaDTOToTipoContaDto(tipoContaDTO);
+        TipoConta tipoConta = tipoContaMapper.tipoContaDTOToTipoConta(tipoContaDTO);
 
         tipoConta = tipoContaRepository.save(tipoConta);
 

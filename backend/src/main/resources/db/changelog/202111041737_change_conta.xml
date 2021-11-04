@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+    <changeSet id="202111041737" author="Luis Filipe Guedes Mota">
+        <modifyDataType tableName="contas" columnName="ano_conta" newDataType="smallint"/>
+        <modifyDataType tableName="contas" columnName="numero_parcela" newDataType="smallint"/>
+        <modifyDataType tableName="contas" columnName="total_parcelas" newDataType="smallint"/>
+
+
+    </changeSet>
+</databaseChangeLog>

@@ -27,7 +27,7 @@ public class TipoContaMapperTest {
         tipoContaDTO.setId(1L);
         tipoContaDTO.setDescricao("Descricao");
 
-        TipoConta tipoConta = TipoContaMapper.INSTANCE.tipoContaDTOToTipoContaDto(tipoContaDTO);
+        TipoConta tipoConta = TipoContaMapper.INSTANCE.tipoContaDTOToTipoConta(tipoContaDTO);
         assertThat(tipoConta).isNotNull();
         assertThat(tipoContaDTO.getId()).isEqualTo(tipoConta.getId());
         assertThat(tipoContaDTO.getDescricao()).isEqualTo(tipoConta.getDescricao());

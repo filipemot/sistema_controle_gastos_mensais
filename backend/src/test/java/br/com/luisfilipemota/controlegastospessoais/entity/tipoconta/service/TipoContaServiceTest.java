@@ -49,7 +49,7 @@ public class TipoContaServiceTest {
         tipoConta.setId(1L);
         tipoConta.setDescricao("Descricao");
 
-        Mockito.when(tipoContaMapper.tipoContaDTOToTipoContaDto(tipoContaDTO))
+        Mockito.when(tipoContaMapper.tipoContaDTOToTipoConta(tipoContaDTO))
                 .thenReturn(tipoConta);
 
         Mockito.when(tipoContaRepository.save(tipoConta))
