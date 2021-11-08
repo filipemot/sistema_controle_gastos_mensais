@@ -19,9 +19,9 @@
 - **Criação Estrutura Backend** - OK
 - **Configuração Banco de Dados** - OK
 - **Configuração Migração** - OK
-- **Criação API - Tipo Conta**
-- **Criação API - Usuário**
-- **Criação API - Contas**
+- **Criação API - Tipo Conta - Base** - OK
+- **Criação API - Usuário - Base** - OK
+- **Criação API - Contas - Base** - OK
 - **Criação API - Recebidos**
 
 **Execução**
