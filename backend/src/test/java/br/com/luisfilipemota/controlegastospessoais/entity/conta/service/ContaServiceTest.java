@@ -10,9 +10,7 @@ import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.model.Usuario;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
 import javassist.NotFoundException;
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +22,7 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -42,18 +41,17 @@ public class ContaServiceTest {
     @MockBean
     ContaMapper contaMapper;
 
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
+    private final UUID UUID_TEST  = UUID.randomUUID();
 
     @Test
     public void testSalvarConta() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -66,12 +64,12 @@ public class ContaServiceTest {
         contaDTO.setRecorrente(false);
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
 
         Conta conta = new Conta();
-        conta.setId(1L);
+        conta.setId(UUID_TEST);
         conta.setUsuario(usuario);
         conta.setTipoConta(tipoConta);
         conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -99,12 +97,12 @@ public class ContaServiceTest {
     @Test
     public void testAtualizarContaComContaEncontrada() throws NotFoundException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -117,12 +115,12 @@ public class ContaServiceTest {
         contaDTO.setRecorrente(false);
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
 
         Conta conta = new Conta();
-        conta.setId(1L);
+        conta.setId(UUID_TEST);
         conta.setUsuario(usuario);
         conta.setTipoConta(tipoConta);
         conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -136,8 +134,7 @@ public class ContaServiceTest {
 
         Optional<Conta> contaOptional = Optional.of(conta);
 
-
-        Mockito.when(contaRepository.findById(1L))
+        Mockito.when(contaRepository.findById(UUID_TEST))
                 .thenReturn(contaOptional);
 
         Mockito.when(contaRepository.save(conta))
@@ -150,7 +147,7 @@ public class ContaServiceTest {
                 .thenReturn(conta);
 
 
-        ContaDTO contaSalva = contaService.update(1L, contaDTO);
+        ContaDTO contaSalva = contaService.update(UUID_TEST, contaDTO);
         asserts(contaDTO, contaSalva);
     }
 
@@ -158,12 +155,12 @@ public class ContaServiceTest {
     @Test
     public void testAtualizarContaComContaNaoEncontrada() throws NotFoundException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -176,12 +173,12 @@ public class ContaServiceTest {
         contaDTO.setRecorrente(false);
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
 
         Conta conta = new Conta();
-        conta.setId(1L);
+        conta.setId(UUID_TEST);
         conta.setUsuario(usuario);
         conta.setTipoConta(tipoConta);
         conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -193,7 +190,7 @@ public class ContaServiceTest {
         conta.setTotalParcelas(1);
         conta.setRecorrente(false);
 
-        Mockito.when(contaRepository.findById(1L))
+        Mockito.when(contaRepository.findById(UUID_TEST))
                 .thenReturn(Optional.<Conta>empty());
 
         Mockito.when(contaRepository.save(conta))
@@ -203,7 +200,7 @@ public class ContaServiceTest {
                 .thenReturn(contaDTO);
 
         try {
-            ContaDTO tipoContaSalva = contaService.update(1L, contaDTO);
+            ContaDTO tipoContaSalva = contaService.update(UUID_TEST, contaDTO);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Conta não encontrado");
@@ -230,12 +227,12 @@ public class ContaServiceTest {
     @Test
     public void testDeletarContaComContaEncontrada() throws NotFoundException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -248,12 +245,12 @@ public class ContaServiceTest {
         contaDTO.setRecorrente(false);
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
 
         Conta conta = new Conta();
-        conta.setId(1L);
+        conta.setId(UUID_TEST);
         conta.setUsuario(usuario);
         conta.setTipoConta(tipoConta);
         conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -265,14 +262,14 @@ public class ContaServiceTest {
         conta.setTotalParcelas(1);
         conta.setRecorrente(false);
 
-        Mockito.when(contaRepository.findById(1L))
+        Mockito.when(contaRepository.findById(UUID_TEST))
                 .thenReturn(Optional.of(conta));
 
         Mockito.when(contaMapper.contaToContaDto(conta))
                 .thenReturn(contaDTO);
 
         try {
-            contaService.delete(1L);
+            contaService.delete(UUID_TEST);
         } catch (NotFoundException e) {
             fail(e.getMessage());
         }
@@ -281,12 +278,12 @@ public class ContaServiceTest {
     @Test
     public void testDeletarContaComContaNaoEncontrada() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -299,12 +296,12 @@ public class ContaServiceTest {
         contaDTO.setRecorrente(false);
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
 
         Conta conta = new Conta();
-        conta.setId(1L);
+        conta.setId(UUID_TEST);
         conta.setUsuario(usuario);
         conta.setTipoConta(tipoConta);
         conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -315,14 +312,14 @@ public class ContaServiceTest {
         conta.setNumeroParcela(1);
         conta.setTotalParcelas(1);
         conta.setRecorrente(false);
-        Mockito.when(contaRepository.findById(1L))
+        Mockito.when(contaRepository.findById(UUID_TEST))
                 .thenReturn(Optional.<Conta>empty());
 
         Mockito.when(contaMapper.contaToContaDto(conta))
                 .thenReturn(contaDTO);
 
         try {
-            contaService.delete(1L);
+            contaService.delete(UUID_TEST);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Conta não encontrado");
@@ -334,12 +331,12 @@ public class ContaServiceTest {
     @Test
     public void testPesquisaPorIdComContaEncontrada() throws NotFoundException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -352,12 +349,12 @@ public class ContaServiceTest {
         contaDTO.setRecorrente(false);
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
 
         Conta conta = new Conta();
-        conta.setId(1L);
+        conta.setId(UUID_TEST);
         conta.setUsuario(usuario);
         conta.setTipoConta(tipoConta);
         conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -369,13 +366,13 @@ public class ContaServiceTest {
         conta.setTotalParcelas(1);
         conta.setRecorrente(false);
 
-        Mockito.when(contaRepository.findById(1L))
+        Mockito.when(contaRepository.findById(UUID_TEST))
                 .thenReturn(Optional.of(conta));
 
         Mockito.when(contaMapper.contaToContaDto(conta))
                 .thenReturn(contaDTO);
 
-        ContaDTO contaSalva = contaService.findById(1L);
+        ContaDTO contaSalva = contaService.findById(UUID_TEST);
 
         asserts(contaDTO, contaSalva);
     }
@@ -383,12 +380,12 @@ public class ContaServiceTest {
     @Test
     public void testPesquisaPorIdComContaNaoEncontrada() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -401,12 +398,12 @@ public class ContaServiceTest {
         contaDTO.setRecorrente(false);
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
 
         Conta conta = new Conta();
-        conta.setId(1L);
+        conta.setId(UUID_TEST);
         conta.setUsuario(usuario);
         conta.setTipoConta(tipoConta);
         conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -418,14 +415,14 @@ public class ContaServiceTest {
         conta.setTotalParcelas(1);
         conta.setRecorrente(false);
 
-        Mockito.when(contaRepository.findById(1L))
+        Mockito.when(contaRepository.findById(UUID_TEST))
                 .thenReturn(Optional.<Conta>empty());
 
         Mockito.when(contaMapper.contaToContaDto(conta))
                 .thenReturn(contaDTO);
 
         try {
-            ContaDTO contaSalva = contaService.findById(1L);
+            ContaDTO contaSalva = contaService.findById(UUID_TEST);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Conta não encontrado");
@@ -437,12 +434,12 @@ public class ContaServiceTest {
     @Test
     public void testPesquisaTodosContas() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -455,12 +452,12 @@ public class ContaServiceTest {
         contaDTO.setRecorrente(false);
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
 
         Conta conta = new Conta();
-        conta.setId(1L);
+        conta.setId(UUID_TEST);
         conta.setUsuario(usuario);
         conta.setTipoConta(tipoConta);
         conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));

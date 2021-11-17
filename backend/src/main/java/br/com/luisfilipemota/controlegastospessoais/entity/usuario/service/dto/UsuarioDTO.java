@@ -1,8 +1,10 @@
 package br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto;
 
+import java.util.UUID;
+
 public class UsuarioDTO {
 
-    private Long id;
+    private UUID id;
 
     private String nome;
 
@@ -18,11 +20,11 @@ public class UsuarioDTO {
 
     private String senhaUsuario;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

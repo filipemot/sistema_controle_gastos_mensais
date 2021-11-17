@@ -2,16 +2,22 @@ package br.com.luisfilipemota.controlegastospessoais.entity.conta.model;
 
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.model.TipoConta;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.model.Usuario;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name="contas" )
 public class Conta {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
@@ -45,11 +51,11 @@ public class Conta {
     @Column(name = "recorrente")
     private Boolean recorrente;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

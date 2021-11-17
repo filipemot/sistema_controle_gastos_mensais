@@ -4,15 +4,17 @@ import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.model.TipoC
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class TipoContaMapperTest {
 
     @Test
-    public void mapperTipoContaToTipoContaDto() {
+    public void testMapperTipoContaToTipoContaDto() {
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID.randomUUID());
         tipoConta.setDescricao("Descricao");
 
         TipoContaDTO tipoContaDTO = TipoContaMapper.INSTANCE.tipoContaToTipoContaDto(tipoConta);
@@ -22,9 +24,9 @@ public class TipoContaMapperTest {
     }
 
     @Test
-    public void mapperTipoContaDTOToTipoConta() {
+    public void testMapperTipoContaDTOToTipoConta() {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID.randomUUID());
         tipoContaDTO.setDescricao("Descricao");
 
         TipoConta tipoConta = TipoContaMapper.INSTANCE.tipoContaDTOToTipoConta(tipoContaDTO);

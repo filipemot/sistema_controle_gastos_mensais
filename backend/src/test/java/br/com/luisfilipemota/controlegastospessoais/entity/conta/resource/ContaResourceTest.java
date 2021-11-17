@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -34,15 +35,17 @@ public class ContaResourceTest {
     @MockBean
     ContaService tipoContaService;
 
+    private final UUID UUID_TEST  = UUID.randomUUID();
+
     @Test
-    public void testPesquisaPorContaComIdIgual1() throws Exception {
+    public void testPesquisaPorContaComIdIgualUUIDTest() throws Exception {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -54,16 +57,16 @@ public class ContaResourceTest {
         contaDTO.setTotalParcelas(1);
         contaDTO.setRecorrente(false);
 
-        Mockito.when(tipoContaService.findById(1L))
+        Mockito.when(tipoContaService.findById(UUID_TEST))
                 .thenReturn(contaDTO);
 
-        mvc.perform(MockMvcRequestBuilders.get("/api/conta/1")
+        mvc.perform(MockMvcRequestBuilders.get("/api/conta/" + UUID_TEST)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.usuario.id", is(1)))
-                .andExpect(jsonPath("$.tipoConta.id", is(1)))
+                .andExpect(jsonPath("$.usuario.id", is(UUID_TEST.toString())))
+                .andExpect(jsonPath("$.tipoConta.id", is(UUID_TEST.toString())))
                 .andExpect(jsonPath("$.dataConta", is("2015-11-04 17:09:55")))
                 .andExpect(jsonPath("$.mesConta", is(11)))
                 .andExpect(jsonPath("$.anoConta", is(2021)))
@@ -76,10 +79,12 @@ public class ContaResourceTest {
 
     @Test
     public void testPesquisaPorContaContaNaoEncontrada() throws Exception {
-        Mockito.when(tipoContaService.findById(2L))
+
+        UUID uuid = UUID.randomUUID();
+        Mockito.when(tipoContaService.findById(uuid))
                 .thenThrow(NotFoundException.class);
 
-        mvc.perform(MockMvcRequestBuilders.get("/api/conta/2")
+        mvc.perform(MockMvcRequestBuilders.get("/api/conta/"+uuid)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -90,12 +95,12 @@ public class ContaResourceTest {
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeConverter());
 
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -113,16 +118,14 @@ public class ContaResourceTest {
         Gson gson = gsonBuilder.create();
         String requestJson = gson.toJson(contaDTO);
 
-        gson.fromJson(requestJson, ContaDTO.class);
-
         mvc.perform(MockMvcRequestBuilders.post("/api/conta")
                         .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.usuario.id", is(1)))
-                .andExpect(jsonPath("$.tipoConta.id", is(1)))
+                .andExpect(jsonPath("$.usuario.id", is(UUID_TEST.toString())))
+                .andExpect(jsonPath("$.tipoConta.id", is(UUID_TEST.toString())))
                 .andExpect(jsonPath("$.dataConta", is("2015-11-04 17:09:55")))
                 .andExpect(jsonPath("$.mesConta", is(11)))
                 .andExpect(jsonPath("$.anoConta", is(2021)))
@@ -141,12 +144,12 @@ public class ContaResourceTest {
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeConverter());
 
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -160,17 +163,17 @@ public class ContaResourceTest {
         Gson gson = gsonBuilder.create();
         String requestJson = gson.toJson(contaDTO);
 
-        Mockito.when(tipoContaService.update(Mockito.any(Long.class), Mockito.any(ContaDTO.class)))
+        Mockito.when(tipoContaService.update(Mockito.any(UUID.class), Mockito.any(ContaDTO.class)))
                 .thenReturn(contaDTO);
 
-        mvc.perform(MockMvcRequestBuilders.put("/api/conta/" + 1L)
+        mvc.perform(MockMvcRequestBuilders.put("/api/conta/" + UUID_TEST)
                         .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.usuario.id", is(1)))
-                .andExpect(jsonPath("$.tipoConta.id", is(1)))
+                .andExpect(jsonPath("$.usuario.id", is(UUID_TEST.toString())))
+                .andExpect(jsonPath("$.tipoConta.id", is(UUID_TEST.toString())))
                 .andExpect(jsonPath("$.dataConta", is("2015-11-04 17:09:55")))
                 .andExpect(jsonPath("$.mesConta", is(11)))
                 .andExpect(jsonPath("$.anoConta", is(2021)))
@@ -187,12 +190,12 @@ public class ContaResourceTest {
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeConverter());
 
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -206,20 +209,20 @@ public class ContaResourceTest {
         Gson gson = gsonBuilder.create();
         String requestJson = gson.toJson(contaDTO);
 
-        Mockito.when(tipoContaService.update(Mockito.any(Long.class), Mockito.any(ContaDTO.class)))
+        Mockito.when(tipoContaService.update(Mockito.any(UUID.class), Mockito.any(ContaDTO.class)))
                 .thenThrow(NotFoundException.class);
 
-        mvc.perform(MockMvcRequestBuilders.put("/api/conta/" + 1L)
+        mvc.perform(MockMvcRequestBuilders.put("/api/conta/" + UUID_TEST)
                         .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void testDeletarPorContaComIdIgual1() throws Exception {
-        Mockito.doNothing().when(tipoContaService).delete(Mockito.any(Long.class));
+    public void testDeletarPorContaComIdIgualUUIDTest() throws Exception {
+        Mockito.doNothing().when(tipoContaService).delete(Mockito.any(UUID.class));
 
-        mvc.perform(MockMvcRequestBuilders.delete("/api/conta/1")
+        mvc.perform(MockMvcRequestBuilders.delete("/api/conta/" + UUID_TEST)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -227,9 +230,9 @@ public class ContaResourceTest {
     @Test
     public void testDeletarPorContaComContaNaoEncontrada() throws Exception {
 
-        doThrow(NotFoundException.class).when(tipoContaService).delete(Mockito.any(Long.class));
+        doThrow(NotFoundException.class).when(tipoContaService).delete(Mockito.any(UUID.class));
 
-        mvc.perform(MockMvcRequestBuilders.delete("/api/conta/1")
+        mvc.perform(MockMvcRequestBuilders.delete("/api/conta/" + UUID_TEST)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -237,12 +240,12 @@ public class ContaResourceTest {
     @Test
     public void testPesquisaTodosContas() throws Exception {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID_TEST);
         contaDTO.setUsuario(usuarioDTO);
         contaDTO.setTipoConta(tipoContaDTO);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -263,8 +266,8 @@ public class ContaResourceTest {
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].usuario.id", is(1)))
-                .andExpect(jsonPath("$[0].tipoConta.id", is(1)))
+                .andExpect(jsonPath("$[0].usuario.id", is(UUID_TEST.toString())))
+                .andExpect(jsonPath("$[0].tipoConta.id", is(UUID_TEST.toString())))
                 .andExpect(jsonPath("$[0].dataConta", is("2015-11-04 17:09:55")))
                 .andExpect(jsonPath("$[0].mesConta", is(11)))
                 .andExpect(jsonPath("$[0].anoConta", is(2021)))

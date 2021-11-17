@@ -4,8 +4,9 @@ import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.model.TipoC
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface TipoContaRepository extends CrudRepository<TipoConta, Long> {
+public interface TipoContaRepository extends CrudRepository<TipoConta, UUID> {
     @Override
     List<TipoConta> findAll();
 }

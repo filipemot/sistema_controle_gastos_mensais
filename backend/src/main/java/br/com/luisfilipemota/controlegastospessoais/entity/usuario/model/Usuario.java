@@ -1,14 +1,21 @@
 package br.com.luisfilipemota.controlegastospessoais.entity.usuario.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.UUID;
 
 @Entity
 @Table(name="usuario" )
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private UUID id;
 
     @Column(name = "nome")
     private String nome;
@@ -20,11 +27,11 @@ public class Usuario {
     @Column(name = "senha")
     private String senha;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

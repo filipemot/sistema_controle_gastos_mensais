@@ -7,9 +7,7 @@ import br.com.luisfilipemota.controlegastospessoais.entity.usuario.repository.Us
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
 import com.google.common.hash.Hashing;
 import javassist.NotFoundException;
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -36,16 +35,15 @@ public class UsuarioServiceTest {
     UsuarioRepository usuarioRepository;
 
     @MockBean
-   UsuarioMapper usuarioMapper;
+    UsuarioMapper usuarioMapper;
 
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
+    private final UUID UUID_TEST  = UUID.randomUUID();
 
     @Test
     public void testSalvarUsuario() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setNome("Nome");
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
@@ -54,9 +52,8 @@ public class UsuarioServiceTest {
                 .toString();
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         usuario.setNome("Nome");
-        usuario.setId(1L);
         usuario.setEmail(senhaHash);
 
 
@@ -76,9 +73,8 @@ public class UsuarioServiceTest {
     @Test
     public void testAtualizarUsuarioComUsuarioEncontrado() throws NotFoundException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
         usuarioDTO.setNome("Nome");
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
@@ -87,16 +83,15 @@ public class UsuarioServiceTest {
                 .toString();
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         usuario.setNome("Nome");
-        usuario.setId(1L);
         usuario.setSenha(senhaHash);
         usuario.setEmail("Email");
 
         Optional<Usuario> usuarioOptional = Optional.of(usuario);
 
 
-        Mockito.when(usuarioRepository.findById(1L))
+        Mockito.when(usuarioRepository.findById(UUID_TEST))
                 .thenReturn(usuarioOptional);
 
         Mockito.when(usuarioRepository.save(usuario))
@@ -105,7 +100,7 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioMapper.usuarioToUsuarioDto(usuario))
                 .thenReturn(usuarioDTO);
 
-        UsuarioDTO tipoContaSalva = usuarioService.update(1L, usuarioDTO);
+        UsuarioDTO tipoContaSalva = usuarioService.update(UUID_TEST, usuarioDTO);
         asserts(usuarioDTO, tipoContaSalva);
     }
 
@@ -113,9 +108,8 @@ public class UsuarioServiceTest {
     @Test
     public void testAtualizarUsuarioComUsuarioNaoEncontrado() throws NotFoundException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setNome("Nome");
-        usuarioDTO.setId(1L);
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
@@ -124,13 +118,12 @@ public class UsuarioServiceTest {
                 .toString();
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         usuario.setNome("Nome");
-        usuario.setId(1L);
         usuario.setSenha(senhaHash);
         usuario.setEmail("Email");
 
-        Mockito.when(usuarioRepository.findById(1L))
+        Mockito.when(usuarioRepository.findById(UUID_TEST))
                 .thenReturn(Optional.<Usuario>empty());
 
         Mockito.when(usuarioRepository.save(usuario))
@@ -140,7 +133,7 @@ public class UsuarioServiceTest {
                 .thenReturn(usuarioDTO);
 
         try {
-            UsuarioDTO usuarioSalvo = usuarioService.update(1L, usuarioDTO);
+            UsuarioDTO usuarioSalvo = usuarioService.update(UUID_TEST, usuarioDTO);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Usuario não encontrado");
@@ -160,9 +153,8 @@ public class UsuarioServiceTest {
     @Test
     public void testDeletarUsuarioComUsuarioEncontrado() throws NotFoundException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setNome("Nome");
-        usuarioDTO.setId(1L);
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
@@ -171,20 +163,19 @@ public class UsuarioServiceTest {
                 .toString();
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         usuario.setNome("Nome");
-        usuario.setId(1L);
         usuario.setSenha(senhaHash);
         usuario.setEmail("Email");
 
-        Mockito.when(usuarioRepository.findById(1L))
+        Mockito.when(usuarioRepository.findById(UUID_TEST))
                 .thenReturn(Optional.of(usuario));
 
         Mockito.when(usuarioMapper.usuarioToUsuarioDto(usuario))
                 .thenReturn(usuarioDTO);
 
         try {
-            usuarioService.delete(1L);
+            usuarioService.delete(UUID_TEST);
         } catch (NotFoundException e) {
             fail(e.getMessage());
         }
@@ -193,9 +184,8 @@ public class UsuarioServiceTest {
     @Test
     public void testDeletarTipoContaComContaNaoEncontrada() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setNome("Nome");
-        usuarioDTO.setId(1L);
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
@@ -204,20 +194,19 @@ public class UsuarioServiceTest {
                 .toString();
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         usuario.setNome("Nome");
-        usuario.setId(1L);
         usuario.setSenha(senhaHash);
         usuario.setEmail("Email");
 
-        Mockito.when(usuarioRepository.findById(1L))
+        Mockito.when(usuarioRepository.findById(UUID_TEST))
                 .thenReturn(Optional.<Usuario>empty());
 
         Mockito.when(usuarioMapper.usuarioToUsuarioDto(usuario))
                 .thenReturn(usuarioDTO);
 
         try {
-            usuarioService.delete(1L);
+            usuarioService.delete(UUID_TEST);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Usuario não encontrado");
@@ -229,9 +218,8 @@ public class UsuarioServiceTest {
     @Test
     public void testPesquisaPorIdComTipoContaEncontrada() throws NotFoundException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setNome("Nome");
-        usuarioDTO.setId(1L);
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
@@ -240,19 +228,18 @@ public class UsuarioServiceTest {
                 .toString();
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         usuario.setNome("Nome");
-        usuario.setId(1L);
         usuario.setSenha(senhaHash);
         usuario.setEmail("Email");
 
-        Mockito.when(usuarioRepository.findById(1L))
+        Mockito.when(usuarioRepository.findById(UUID_TEST))
                 .thenReturn(Optional.of(usuario));
 
         Mockito.when(usuarioMapper.usuarioToUsuarioDto(usuario))
                 .thenReturn(usuarioDTO);
 
-        UsuarioDTO tipoContaSalva = usuarioService.findById(1L);
+        UsuarioDTO tipoContaSalva = usuarioService.findById(UUID_TEST);
 
         asserts(usuarioDTO, tipoContaSalva);
     }
@@ -260,9 +247,8 @@ public class UsuarioServiceTest {
     @Test
     public void testPesquisaPorIdComUsuarioNaoEncontrado() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setNome("Nome");
-        usuarioDTO.setId(1L);
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
@@ -271,20 +257,19 @@ public class UsuarioServiceTest {
                 .toString();
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         usuario.setNome("Nome");
-        usuario.setId(1L);
         usuario.setSenha(senhaHash);
         usuario.setEmail("Email");
 
-        Mockito.when(usuarioRepository.findById(1L))
+        Mockito.when(usuarioRepository.findById(UUID_TEST))
                 .thenReturn(Optional.<Usuario>empty());
 
         Mockito.when(usuarioMapper.usuarioToUsuarioDto(usuario))
                 .thenReturn(usuarioDTO);
 
         try {
-            UsuarioDTO usuarioSalva = usuarioService.findById(1L);
+            UsuarioDTO usuarioSalva = usuarioService.findById(UUID_TEST);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Usuario não encontrado");
@@ -296,9 +281,8 @@ public class UsuarioServiceTest {
     @Test
     public void testPesquisaTodosTiposContas() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(1L);
+        usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setNome("Nome");
-        usuarioDTO.setId(1L);
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
@@ -307,9 +291,8 @@ public class UsuarioServiceTest {
                 .toString();
 
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID_TEST);
         usuario.setNome("Nome");
-        usuario.setId(1L);
         usuario.setSenha(senhaHash);
         usuario.setEmail("Email");
 

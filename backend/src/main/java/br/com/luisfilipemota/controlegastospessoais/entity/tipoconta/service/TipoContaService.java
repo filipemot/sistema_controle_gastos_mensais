@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TipoContaService {
@@ -31,7 +32,7 @@ public class TipoContaService {
         return tipoContaMapper.tipoContaToTipoContaDto(tipoConta);
     }
 
-    public TipoContaDTO update(Long id, TipoContaDTO tipoContaDTO) throws NotFoundException {
+    public TipoContaDTO update(UUID id, TipoContaDTO tipoContaDTO) throws NotFoundException {
 
         Optional<TipoConta> optionalTipoConta = tipoContaRepository.findById(id);
 
@@ -58,7 +59,7 @@ public class TipoContaService {
         return listTipoContaDto;
     }
 
-    public void delete(Long id) throws NotFoundException {
+    public void delete(UUID id) throws NotFoundException {
         Optional<TipoConta> optionalTipoConta = tipoContaRepository.findById(id);
 
         if (!optionalTipoConta.isPresent()) {
@@ -69,7 +70,7 @@ public class TipoContaService {
         tipoContaRepository.delete(tipoConta);
     }
 
-    public TipoContaDTO findById(Long id) throws NotFoundException {
+    public TipoContaDTO findById(UUID id) throws NotFoundException {
         Optional<TipoConta> optionalTipoConta = tipoContaRepository.findById(id);
 
         if (!optionalTipoConta.isPresent()) {

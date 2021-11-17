@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,14 +18,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ContaMapperTest {
 
     @Test
-    public void mapperContaToContaDto() {
+    public void testMapperContaToContaDto() {
         Usuario usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(UUID.randomUUID());
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID.randomUUID());
 
         Conta conta = new Conta();
-        conta.setId(1L);
+        conta.setId(UUID.randomUUID());
         conta.setUsuario(usuario);
         conta.setTipoConta(tipoConta);
         conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
@@ -52,14 +53,14 @@ public class ContaMapperTest {
     }
 
     @Test
-    public void mapperContaDTOToConta() {
+    public void testMapperContaDTOToConta() {
         UsuarioDTO usuario = new UsuarioDTO();
-        usuario.setId(1L);
+        usuario.setId(UUID.randomUUID());
         TipoContaDTO tipoConta = new TipoContaDTO();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID.randomUUID());
 
         ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(1L);
+        contaDTO.setId(UUID.randomUUID());
         contaDTO.setUsuario(usuario);
         contaDTO.setTipoConta(tipoConta);
         contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));

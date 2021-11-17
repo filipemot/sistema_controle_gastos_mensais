@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/usuario")
@@ -28,7 +29,7 @@ public class UsuarioResource {
     }
 
     @GetMapping("/{id}")
-    public UsuarioDTO findById(@PathVariable Long id) {
+    public UsuarioDTO findById(@PathVariable UUID id) {
         UsuarioDTO usuarioDTO;
         try {
             usuarioDTO = this.usuarioService.findById(id);
@@ -50,7 +51,7 @@ public class UsuarioResource {
     }
 
     @PutMapping("/{id}")
-    public UsuarioDTO update(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+    public UsuarioDTO update(@PathVariable UUID id, @RequestBody UsuarioDTO usuarioDTO) {
         UsuarioDTO tipoContaDTO;
         try {
             tipoContaDTO = this.usuarioService.update(id, usuarioDTO);
@@ -63,7 +64,7 @@ public class UsuarioResource {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable UUID id) {
         try {
             this.usuarioService.delete(id);
         } catch (NotFoundException e) {

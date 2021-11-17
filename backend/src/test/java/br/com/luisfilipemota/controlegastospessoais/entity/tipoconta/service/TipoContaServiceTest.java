@@ -18,6 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -36,17 +37,17 @@ public class TipoContaServiceTest {
     @MockBean
     TipoContaMapper tipoContaMapper;
 
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
+    private final UUID UUID_TEST  = UUID.randomUUID();
+
 
     @Test
     public void testSalvarTipoConta() {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
         tipoConta.setDescricao("Descricao");
 
         Mockito.when(tipoContaMapper.tipoContaDTOToTipoConta(tipoContaDTO))
@@ -66,16 +67,16 @@ public class TipoContaServiceTest {
     public void testAtualizarTipoContaComContaEncontrada() throws NotFoundException {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
         tipoConta.setDescricao("Descricao");
 
         Optional<TipoConta> tipoContaOptional = Optional.of(tipoConta);
 
 
-        Mockito.when(tipoContaRepository.findById(1L))
+        Mockito.when(tipoContaRepository.findById(UUID_TEST))
                 .thenReturn(tipoContaOptional);
 
         Mockito.when(tipoContaRepository.save(tipoConta))
@@ -84,7 +85,7 @@ public class TipoContaServiceTest {
         Mockito.when(tipoContaMapper.tipoContaToTipoContaDto(tipoConta))
                 .thenReturn(tipoContaDTO);
 
-        TipoContaDTO tipoContaSalva = tipoContaService.update(1L, tipoContaDTO);
+        TipoContaDTO tipoContaSalva = tipoContaService.update(UUID_TEST, tipoContaDTO);
         asserts(tipoContaDTO, tipoContaSalva);
     }
 
@@ -93,13 +94,13 @@ public class TipoContaServiceTest {
     public void testAtualizarTipoContaComTipoContaNaoEncontrada() throws NotFoundException {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
         tipoConta.setDescricao("Descricao");
 
-        Mockito.when(tipoContaRepository.findById(1L))
+        Mockito.when(tipoContaRepository.findById(UUID_TEST))
                 .thenReturn(Optional.<TipoConta>empty());
 
         Mockito.when(tipoContaRepository.save(tipoConta))
@@ -109,7 +110,7 @@ public class TipoContaServiceTest {
                 .thenReturn(tipoContaDTO);
 
         try {
-            TipoContaDTO tipoContaSalva = tipoContaService.update(1L, tipoContaDTO);
+            TipoContaDTO tipoContaSalva = tipoContaService.update(UUID_TEST, tipoContaDTO);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Tipo de Conta não encontrado");
@@ -128,20 +129,20 @@ public class TipoContaServiceTest {
     public void testDeletarTipoContaComContaEncontrada() throws NotFoundException {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
         tipoConta.setDescricao("Descricao");
 
-        Mockito.when(tipoContaRepository.findById(1L))
+        Mockito.when(tipoContaRepository.findById(UUID_TEST))
                 .thenReturn(Optional.of(tipoConta));
 
         Mockito.when(tipoContaMapper.tipoContaToTipoContaDto(tipoConta))
                 .thenReturn(tipoContaDTO);
 
         try {
-            tipoContaService.delete(1L);
+            tipoContaService.delete(UUID_TEST);
         } catch (NotFoundException e) {
             fail(e.getMessage());
         }
@@ -151,20 +152,20 @@ public class TipoContaServiceTest {
     public void testDeletarTipoContaComTipoContaNaoEncontrada() {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
         tipoConta.setDescricao("Descricao");
 
-        Mockito.when(tipoContaRepository.findById(1L))
+        Mockito.when(tipoContaRepository.findById(UUID_TEST))
                 .thenReturn(Optional.<TipoConta>empty());
 
         Mockito.when(tipoContaMapper.tipoContaToTipoContaDto(tipoConta))
                 .thenReturn(tipoContaDTO);
 
         try {
-            tipoContaService.delete(1L);
+            tipoContaService.delete(UUID_TEST);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Tipo de Conta não encontrado");
@@ -177,19 +178,19 @@ public class TipoContaServiceTest {
     public void testPesquisaPorIdComTipoContaEncontrada() throws NotFoundException {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
         tipoConta.setDescricao("Descricao");
 
-        Mockito.when(tipoContaRepository.findById(1L))
+        Mockito.when(tipoContaRepository.findById(UUID_TEST))
                 .thenReturn(Optional.of(tipoConta));
 
         Mockito.when(tipoContaMapper.tipoContaToTipoContaDto(tipoConta))
                 .thenReturn(tipoContaDTO);
 
-        TipoContaDTO tipoContaSalva = tipoContaService.findById(1L);
+        TipoContaDTO tipoContaSalva = tipoContaService.findById(UUID_TEST);
 
         asserts(tipoContaDTO, tipoContaSalva);
     }
@@ -198,20 +199,20 @@ public class TipoContaServiceTest {
     public void testPesquisaPorIdComTipoContaNaoEncontrada() {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
         tipoConta.setDescricao("Descricao");
 
-        Mockito.when(tipoContaRepository.findById(1L))
+        Mockito.when(tipoContaRepository.findById(UUID_TEST))
                 .thenReturn(Optional.<TipoConta>empty());
 
         Mockito.when(tipoContaMapper.tipoContaToTipoContaDto(tipoConta))
                 .thenReturn(tipoContaDTO);
 
         try {
-            TipoContaDTO tipoContaSalva = tipoContaService.findById(1L);
+            TipoContaDTO tipoContaSalva = tipoContaService.findById(UUID_TEST);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Tipo de Conta não encontrado");
@@ -224,10 +225,10 @@ public class TipoContaServiceTest {
     public void testPesquisaTodosTiposContas() {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
         tipoConta.setDescricao("Descricao");
 
         Mockito.when(tipoContaRepository.findAll())

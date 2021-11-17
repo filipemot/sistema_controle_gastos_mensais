@@ -5,9 +5,10 @@ import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.U
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class ContaDTO {
-    private Long id;
+    private UUID id;
 
     private UsuarioDTO usuario;
 
@@ -30,11 +31,11 @@ public class ContaDTO {
 
     private Boolean recorrente;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

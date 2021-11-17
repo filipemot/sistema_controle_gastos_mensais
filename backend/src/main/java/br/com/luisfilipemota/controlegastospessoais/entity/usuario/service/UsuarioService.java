@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UsuarioService {
@@ -39,7 +40,7 @@ public class UsuarioService {
         return usuarioMapper.usuarioToUsuarioDto(usuario);
     }
 
-    public UsuarioDTO update(Long id, UsuarioDTO usuarioDTO) throws NotFoundException {
+    public UsuarioDTO update(UUID id, UsuarioDTO usuarioDTO) throws NotFoundException {
 
         Optional<Usuario> optionalTipoConta = usuarioRepository.findById(id);
 
@@ -72,7 +73,7 @@ public class UsuarioService {
         return listTipoContaDto;
     }
 
-    public void delete(Long id) throws NotFoundException {
+    public void delete(UUID id) throws NotFoundException {
         Optional<Usuario> optionalTipoConta = usuarioRepository.findById(id);
 
         if (!optionalTipoConta.isPresent()) {
@@ -83,7 +84,7 @@ public class UsuarioService {
         usuarioRepository.delete(tipoConta);
     }
 
-    public UsuarioDTO findById(Long id) throws NotFoundException {
+    public UsuarioDTO findById(UUID id) throws NotFoundException {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
 
         if (!optionalUsuario.isPresent()) {

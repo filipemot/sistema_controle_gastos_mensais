@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.doThrow;
@@ -27,16 +28,18 @@ public class TipoContaResourceTest {
     @MockBean
     TipoContaService tipoContaService;
 
+    private final UUID UUID_TEST  = UUID.randomUUID();
+
     @Test
-    public void testPesquisaPorTipoContaComIdIgual1() throws Exception {
+    public void testPesquisaPorTipoContaComIdIgualUUIDTest() throws Exception {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
-        Mockito.when(tipoContaService.findById(1L))
+        Mockito.when(tipoContaService.findById(UUID_TEST))
                 .thenReturn(tipoContaDTO);
 
-        mvc.perform(MockMvcRequestBuilders.get("/api/tipoconta/1")
+        mvc.perform(MockMvcRequestBuilders.get("/api/tipoconta/" + UUID_TEST)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
@@ -49,12 +52,14 @@ public class TipoContaResourceTest {
     public void testPesquisaPorTipoContaContaNaoEncontrada() throws Exception {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
-        Mockito.when(tipoContaService.findById(2L))
+        UUID uuid = UUID.randomUUID();
+
+        Mockito.when(tipoContaService.findById(uuid))
                 .thenThrow(NotFoundException.class);
 
-        mvc.perform(MockMvcRequestBuilders.get("/api/tipoconta/2")
+        mvc.perform(MockMvcRequestBuilders.get("/api/tipoconta/"+uuid)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -68,7 +73,7 @@ public class TipoContaResourceTest {
 
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         Mockito.when(tipoContaService.save(Mockito.any(TipoContaDTO.class)))
                 .thenReturn(tipoContaDTO);
@@ -87,43 +92,43 @@ public class TipoContaResourceTest {
     public void testAtualizarTipoContaContaEncontrada() throws Exception {
         TipoContaDTO tipoConta = new TipoContaDTO();
         tipoConta.setDescricao("Descricao");
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
         Gson gson = new Gson();
         String requestJson = gson.toJson(tipoConta);
 
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
-        Mockito.when(tipoContaService.update(Mockito.any(Long.class), Mockito.any(TipoContaDTO.class)))
+        Mockito.when(tipoContaService.update(Mockito.any(UUID.class), Mockito.any(TipoContaDTO.class)))
                 .thenReturn(tipoContaDTO);
 
-        mvc.perform(MockMvcRequestBuilders.put("/api/tipoconta/" + 1L)
+        mvc.perform(MockMvcRequestBuilders.put("/api/tipoconta/" + UUID_TEST)
                         .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.descricao", is("Descricao")))
-                .andExpect(jsonPath("$.id", is(1)));
+                .andExpect(jsonPath("$.id", is(UUID_TEST.toString())));
     }
 
     @Test
     public void testAtualizarTipoContaNaoEncontrada() throws Exception {
         TipoContaDTO tipoConta = new TipoContaDTO();
         tipoConta.setDescricao("Descricao");
-        tipoConta.setId(1L);
+        tipoConta.setId(UUID_TEST);
         Gson gson = new Gson();
         String requestJson = gson.toJson(tipoConta);
 
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
-        Mockito.when(tipoContaService.update(Mockito.any(Long.class), Mockito.any(TipoContaDTO.class)))
-                        .thenThrow(NotFoundException.class);
+        Mockito.when(tipoContaService.update(Mockito.any(UUID.class), Mockito.any(TipoContaDTO.class)))
+                .thenThrow(NotFoundException.class);
 
-        mvc.perform(MockMvcRequestBuilders.put("/api/tipoconta/" + 1L)
+        mvc.perform(MockMvcRequestBuilders.put("/api/tipoconta/" + UUID_TEST)
                         .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -131,14 +136,14 @@ public class TipoContaResourceTest {
 
 
     @Test
-    public void testDeletarPorTipoContaComIdIgual1() throws Exception {
+    public void testDeletarPorTipoContaComIdIgualUUIDTest() throws Exception {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
-        Mockito.doNothing().when(tipoContaService).delete(Mockito.any(Long.class));
+        Mockito.doNothing().when(tipoContaService).delete(Mockito.any(UUID.class));
 
-        mvc.perform(MockMvcRequestBuilders.delete("/api/tipoconta/1")
+        mvc.perform(MockMvcRequestBuilders.delete("/api/tipoconta/" + UUID_TEST)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -147,11 +152,11 @@ public class TipoContaResourceTest {
     public void testDeletarPorTipoContaComTipoContaNaoEncontrada() throws Exception {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
-        doThrow(NotFoundException.class).when(tipoContaService).delete(Mockito.any(Long.class));
+        doThrow(NotFoundException.class).when(tipoContaService).delete(Mockito.any(UUID.class));
 
-        mvc.perform(MockMvcRequestBuilders.delete("/api/tipoconta/1")
+        mvc.perform(MockMvcRequestBuilders.delete("/api/tipoconta/" + UUID_TEST)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -161,7 +166,7 @@ public class TipoContaResourceTest {
     public void testPesquisaTodosTiposContas() throws Exception {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
-        tipoContaDTO.setId(1L);
+        tipoContaDTO.setId(UUID_TEST);
 
         Mockito.when(tipoContaService.findAll())
                 .thenReturn(Arrays.asList(tipoContaDTO));
