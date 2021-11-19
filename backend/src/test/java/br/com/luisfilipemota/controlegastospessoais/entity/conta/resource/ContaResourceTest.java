@@ -33,7 +33,7 @@ public class ContaResourceTest {
     private MockMvc mvc;
 
     @MockBean
-    ContaService tipoContaService;
+    ContaService contaService;
 
     private final UUID UUID_TEST  = UUID.randomUUID();
 
@@ -57,7 +57,7 @@ public class ContaResourceTest {
         contaDTO.setTotalParcelas(1);
         contaDTO.setRecorrente(false);
 
-        Mockito.when(tipoContaService.findById(UUID_TEST))
+        Mockito.when(contaService.findById(UUID_TEST))
                 .thenReturn(contaDTO);
 
         mvc.perform(MockMvcRequestBuilders.get("/api/conta/" + UUID_TEST)
@@ -81,7 +81,7 @@ public class ContaResourceTest {
     public void testPesquisaPorContaContaNaoEncontrada() throws Exception {
 
         UUID uuid = UUID.randomUUID();
-        Mockito.when(tipoContaService.findById(uuid))
+        Mockito.when(contaService.findById(uuid))
                 .thenThrow(NotFoundException.class);
 
         mvc.perform(MockMvcRequestBuilders.get("/api/conta/"+uuid)
@@ -112,7 +112,7 @@ public class ContaResourceTest {
         contaDTO.setTotalParcelas(1);
         contaDTO.setRecorrente(false);
 
-        Mockito.when(tipoContaService.save(Mockito.any(ContaDTO.class)))
+        Mockito.when(contaService.save(Mockito.any(ContaDTO.class)))
                 .thenReturn(contaDTO);
 
         Gson gson = gsonBuilder.create();
@@ -163,7 +163,7 @@ public class ContaResourceTest {
         Gson gson = gsonBuilder.create();
         String requestJson = gson.toJson(contaDTO);
 
-        Mockito.when(tipoContaService.update(Mockito.any(UUID.class), Mockito.any(ContaDTO.class)))
+        Mockito.when(contaService.update(Mockito.any(UUID.class), Mockito.any(ContaDTO.class)))
                 .thenReturn(contaDTO);
 
         mvc.perform(MockMvcRequestBuilders.put("/api/conta/" + UUID_TEST)
@@ -209,7 +209,7 @@ public class ContaResourceTest {
         Gson gson = gsonBuilder.create();
         String requestJson = gson.toJson(contaDTO);
 
-        Mockito.when(tipoContaService.update(Mockito.any(UUID.class), Mockito.any(ContaDTO.class)))
+        Mockito.when(contaService.update(Mockito.any(UUID.class), Mockito.any(ContaDTO.class)))
                 .thenThrow(NotFoundException.class);
 
         mvc.perform(MockMvcRequestBuilders.put("/api/conta/" + UUID_TEST)
@@ -220,7 +220,7 @@ public class ContaResourceTest {
 
     @Test
     public void testDeletarPorContaComIdIgualUUIDTest() throws Exception {
-        Mockito.doNothing().when(tipoContaService).delete(Mockito.any(UUID.class));
+        Mockito.doNothing().when(contaService).delete(Mockito.any(UUID.class));
 
         mvc.perform(MockMvcRequestBuilders.delete("/api/conta/" + UUID_TEST)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -230,7 +230,7 @@ public class ContaResourceTest {
     @Test
     public void testDeletarPorContaComContaNaoEncontrada() throws Exception {
 
-        doThrow(NotFoundException.class).when(tipoContaService).delete(Mockito.any(UUID.class));
+        doThrow(NotFoundException.class).when(contaService).delete(Mockito.any(UUID.class));
 
         mvc.perform(MockMvcRequestBuilders.delete("/api/conta/" + UUID_TEST)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -257,7 +257,7 @@ public class ContaResourceTest {
         contaDTO.setTotalParcelas(1);
         contaDTO.setRecorrente(false);
 
-        Mockito.when(tipoContaService.findAll())
+        Mockito.when(contaService.findAll())
                 .thenReturn(Arrays.asList(contaDTO));
 
         mvc.perform(MockMvcRequestBuilders.get("/api/conta")
