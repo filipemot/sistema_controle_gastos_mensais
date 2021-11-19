@@ -1,4 +1,5 @@
 
+
 # Sistema de Controle de Gastos Pessoais
 
 **Tecnologias Utilizadas:**
@@ -39,4 +40,13 @@ Entrar em backend/src/main/resources/application.properties
     spring.datasource.url=jdbc:postgresql://localhost:5432/controlegastos
     spring.datasource.username=postgres
     spring.datasource.password=postgres
+
+**Criação do Container** 
+
+    docker build -f Dockerfile . -t sistema_controle_gastos_mensais
+
+**Criação do Container** 
+
+- Entrar na pasta docker
+- Executar `docker-compose -f aplicacao.yml down`
 
