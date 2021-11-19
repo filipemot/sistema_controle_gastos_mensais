@@ -39,7 +39,7 @@ Entrar em backend/src/main/resources/application.properties
 
 **Criação do Container** 
 
-- Entrar na pasta docker
+- Entrar na pasta backend/docker
 - Executar `docker-compose -f aplicacao.yml down`
 
 --------
