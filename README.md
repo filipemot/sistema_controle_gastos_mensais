@@ -1,3 +1,4 @@
+
 # Sistema de Controle de Gastos Pessoais
 
 **Última Atualização:** 19/11/2021
@@ -41,7 +42,7 @@ Entrar em backend/src/main/resources/application.properties
 - Entrar na pasta docker
 - Executar `docker-compose -f aplicacao.yml down`
 
-
+--------
 **Tarefas Executadas**
 
 - [x]  **Criação Modelo do Banco**
