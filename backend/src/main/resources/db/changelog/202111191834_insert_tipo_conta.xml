@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+    <changeSet id="202111191834" author="Luis Filipe Guedes Mota">
+        <insert tableName="tipo_conta">
+            <column name="id" value="e6e46566-6648-4f26-4519-63d7a4e12eee"/>
+            <column name="descricao" value="Supermercado"/>
+        </insert>
+        <insert tableName="tipo_conta">
+            <column name="id" value="cf01ead4-60b5-6fa9-1e73-a6fa802946b4"/>
+            <column name="descricao" value="Gasolina"/>
+        </insert>
+        <insert tableName="tipo_conta">
+            <column name="id" value="2a36e526-9c6d-567b-9edf-4a115f4bc051"/>
+            <column name="descricao" value="Restaurantes"/>
+        </insert>
+        <insert tableName="tipo_conta">
+            <column name="id" value="c8f3e3b9-c54e-d026-edc5-721590c9e703"/>
+            <column name="descricao" value="Outros"/>
+        </insert>
+        <insert tableName="tipo_conta">
+            <column name="id" value="ed1f5774-339a-05ae-44e4-4e7f867857b8"/>
+            <column name="descricao" value="Padaria"/>
+        </insert>
+        <insert tableName="tipo_conta">
+            <column name="id" value="45c98b67-4c3a-4161-4104-b5b293962495"/>
+            <column name="descricao" value="Açougue"/>
+        </insert>
+        <insert tableName="tipo_conta">
+            <column name="id" value="b5c7a076-fc83-8926-e25a-a9be2e4589ff"/>
+            <column name="descricao" value="Contas Parceladas"/>
+        </insert>
+        <insert tableName="tipo_conta">
+            <column name="id" value="6a4d03b8-d1a6-9499-5341-afebce328908"/>
+            <column name="descricao" value="Contas Mensais"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

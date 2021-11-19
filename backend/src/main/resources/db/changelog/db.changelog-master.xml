@@ -7,4 +7,5 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
 http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
     <include file="classpath:db/changelog/202110281836_init_database.xml"/>
     <include file="classpath:db/changelog/202111041737_change_conta.xml"/>
+    <include file="classpath:db/changelog/202111191834_insert_tipo_conta.xml"/>
 </databaseChangeLog>
