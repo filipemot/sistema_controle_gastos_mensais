@@ -120,4 +120,6 @@ Dia(s) Trabalhado(s):
 - [ ]  **Validar Constraint de chave estrangeira ao deletar usuário com relacionamento**
 
 Dia(s) Trabalhado(s):
+--------
+
 
