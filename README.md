@@ -22,7 +22,7 @@
 - **Criação API - Tipo Conta - Base** - OK
 - **Criação API - Usuário - Base** - OK
 - **Criação API - Contas - Base** - OK
-- **Criação API - Recebidos**
+- **Criação API - Recebidos** - OK
 
 **Execução**
 
