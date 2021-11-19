@@ -8,4 +8,5 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
     <include file="classpath:db/changelog/202110281836_init_database.xml"/>
     <include file="classpath:db/changelog/202111041737_change_conta.xml"/>
     <include file="classpath:db/changelog/202111191834_insert_tipo_conta.xml"/>
+    <include file="classpath:db/changelog/202111191845_insert_usuario.xml"/>
 </databaseChangeLog>
