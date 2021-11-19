@@ -1,7 +1,6 @@
-
-
-
 # Sistema de Controle de Gastos Pessoais
+
+**Última Atualização:** 19/11/2021
 
 **Tecnologias Utilizadas:**
 
@@ -16,7 +15,7 @@
 
 ![Modelo de dados](https://github.com/filipemot/sistema_controle_gastos_mensais/blob/main/database/database.png)
 
-**Planejamento de Tarefas**
+**Tarefas Executadas**
 
 - **Criação Estrutura Backend** - OK
 - **Configuração Banco de Dados** - OK
@@ -25,6 +24,14 @@
 - **Criação API - Usuário - Base** - OK
 - **Criação API - Contas - Base** - OK
 - **Criação API - Recebidos** - OK
+
+**Planejamento de Tarefas**
+
+- **Listar Contas por Tipo de Tarefa** - 
+- **Listar Contas por Período** - 
+- **Criar na tabela de usuário campo ativado/desativado** - 
+- **Criar api para desativar usuário** -
+- **Validar Constraint de chave estrangeira ao deletar usuário com relacionamento** - 
 
 **Execução**
 
