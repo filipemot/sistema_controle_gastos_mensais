@@ -15,24 +15,6 @@
 
 ![Modelo de dados](https://github.com/filipemot/sistema_controle_gastos_mensais/blob/main/database/database.png)
 
-**Tarefas Executadas**
-
-- **Criação Estrutura Backend** - OK
-- **Configuração Banco de Dados** - OK
-- **Configuração Migração** - OK
-- **Criação API - Tipo Conta - Base** - OK
-- **Criação API - Usuário - Base** - OK
-- **Criação API - Contas - Base** - OK
-- **Criação API - Recebidos** - OK
-
-**Planejamento de Tarefas**
-
-- **Listar Contas por Tipo de Tarefa** - 
-- **Listar Contas por Período** - 
-- **Criar na tabela de usuário campo ativado/desativado** - 
-- **Criar api para desativar usuário** -
-- **Validar Constraint de chave estrangeira ao deletar usuário com relacionamento** - 
-
 **Execução**
 
 **Banco/Docker**
@@ -58,4 +40,83 @@ Entrar em backend/src/main/resources/application.properties
 
 - Entrar na pasta docker
 - Executar `docker-compose -f aplicacao.yml down`
+
+
+**Tarefas Executadas**
+
+- [x]  **Criação Modelo do Banco**
+
+Dia(s) Trabalhado(s): 28/10/2021
+
+- [x]  **Criação Estrutura Backend**
+
+Dia(s) Trabalhado(s): 28/10/2021
+
+- [x]  **Configuração Banco de Dados**
+
+Dia(s) Trabalhado(s): 28/10/2021
+
+- [x]  **Configuração Migração**
+
+Dia(s) Trabalhado(s): 28/10/2021
+
+- [x]  **Criação API - Tipo Conta - Base**
+
+Dia(s) Trabalhado(s): 29/10/2021, 01/11/2021
+
+- [x]  **Criação API - Usuário - Base**
+
+Dia(s) Trabalhado(s): 01/11/2021, 04/11/2021
+
+- [x]  **Criação API - Contas - Base**
+
+Dia(s) Trabalhado(s): 04/11/2021
+
+- [x]  **Criação API - Recebidos - Base**
+
+Dia(s) Trabalhado(s): 19/11/2021
+
+- [x]  **Alteração API - Tipo Conta - Alteração de Tipo de ID para guid**
+
+Dia(s) Trabalhado(s): 17/11/2021
+
+- [x]  **Alteração API - Usuário - Alteração de Tipo de ID para guid**
+
+Dia(s) Trabalhado(s): 17/11/2021
+
+- [x]  **Alteração API - Contas - Alteração de Tipo de ID para guid**
+
+Dia(s) Trabalhado(s): 17/11/2021
+
+- [x]  **Criação do container Docker da Aplicação**
+
+Dia(s) Trabalhado(s): 19/11/2021
+
+- [x]  **Load Tipo de Contas**
+
+Dia(s) Trabalhado(s): 19/11/2021
+
+
+
+**Planejamento de Tarefas**
+
+- [ ]  **Listar Contas por Tipo de Tarefa**
+
+Dia(s) Trabalhado(s): 
+
+- [ ]  **Listar Contas por Período**
+
+Dia(s) Trabalhado(s): 
+
+- [ ]  **Criar na tabela de usuário campo ativado/desativado**
+
+Dia(s) Trabalhado(s): 
+
+- [ ]  **Criar api para desativar usuário**
+
+Dia(s) Trabalhado(s): 
+
+- [ ]  **Validar Constraint de chave estrangeira ao deletar usuário com relacionamento**
+
+Dia(s) Trabalhado(s):
 
