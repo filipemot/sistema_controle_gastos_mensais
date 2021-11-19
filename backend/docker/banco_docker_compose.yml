@@ -12,8 +12,8 @@ services:
     volumes:
       - /home/tria/ProjetosPessoais/sistema_controle_gastos_mensais/backend/docker/data:/var/lib/postgresql/data 
     networks:
-      - postgres-compose-network
+      - postgres-compose-network-bd
 
 networks: 
-  postgres-compose-network:
+  postgres-compose-network-bd:
     driver: bridge

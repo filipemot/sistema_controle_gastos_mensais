@@ -1,5 +1,6 @@
 
 
+
 # Sistema de Controle de Gastos Pessoais
 
 **Tecnologias Utilizadas:**
@@ -43,7 +44,8 @@ Entrar em backend/src/main/resources/application.properties
 
 **Criação do Container** 
 
-    docker build -f Dockerfile . -t sistema_controle_gastos_mensais
+ - Compilar Projeto: `mvn clean package`
+ - Criar Imagem do Container: `docker build -f Dockerfile . -t sistema_controle_gastos_mensais`
 
 **Criação do Container** 
 
