@@ -10,7 +10,7 @@ public interface ContaRepository extends CrudRepository<Conta, UUID> {
     @Override
     List<Conta> findAll();
 
-    List<Conta> findAllByTipoContaId(UUID idTipoConta);
+    List<Conta> findAllByTipoContaIdOrderByDataConta(UUID idTipoConta);
 
-    List<Conta> findAllByTipoContaIdAndMesContaAndAnoConta(UUID idTipoConta, int mesConta, int anoConta );
+    List<Conta> findAllByTipoContaIdAndMesContaAndAnoContaOrderByDataConta(UUID idTipoConta, int mesConta, int anoConta );
 }

@@ -7,8 +7,6 @@ import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.Con
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaTipoContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.model.TipoConta;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.repository.TipoContaRepository;
-import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.TipoContaService;
-import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
 import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -93,7 +91,7 @@ public class ContaService {
     }
 
     public ContaTipoContaDTO findAllByTipoContaIdAndMesContaAndAnoConta(UUID id, int mes, int ano) {
-        List<Conta> listContaPorTipoConta = contaRepository.findAllByTipoContaIdAndMesContaAndAnoConta(id, mes, ano);
+        List<Conta> listContaPorTipoConta = contaRepository.findAllByTipoContaIdAndMesContaAndAnoContaOrderByDataConta(id, mes, ano);
         ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
 
         getContasPorTipoConta(id, listContaPorTipoConta, contaSomatorioDTO);
@@ -102,7 +100,7 @@ public class ContaService {
     }
 
     public ContaTipoContaDTO findAllByTipoConta(UUID id) {
-        List<Conta> listContaPorTipoConta = contaRepository.findAllByTipoContaId(id);
+        List<Conta> listContaPorTipoConta = contaRepository.findAllByTipoContaIdOrderByDataConta(id);
         ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
 
         getContasPorTipoConta(id, listContaPorTipoConta, contaSomatorioDTO);

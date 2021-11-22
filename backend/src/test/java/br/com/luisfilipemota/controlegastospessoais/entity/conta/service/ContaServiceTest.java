@@ -546,7 +546,7 @@ public class ContaServiceTest {
         contaSomatorioDTO.setTipoContaId(UUID_TEST);
         contaSomatorioDTO.setNomeTipoConta(tipoConta.getDescricao());
 
-        Mockito.when(contaRepository.findAllByTipoContaId(Mockito.any(UUID.class)))
+        Mockito.when(contaRepository.findAllByTipoContaIdOrderByDataConta(Mockito.any(UUID.class)))
                 .thenReturn(Arrays.asList(conta));
 
         Mockito.when(tipoContaRepository.findById(Mockito.any(UUID.class)))
@@ -623,7 +623,7 @@ public class ContaServiceTest {
         contaSomatorioDTO.setTipoContaId(UUID_TEST);
         contaSomatorioDTO.setNomeTipoConta(tipoConta.getDescricao());
 
-        Mockito.when(contaRepository.findAllByTipoContaIdAndMesContaAndAnoConta(UUID_TEST, 1, 1))
+        Mockito.when(contaRepository.findAllByTipoContaIdAndMesContaAndAnoContaOrderByDataConta(UUID_TEST, 1, 1))
                 .thenReturn(Arrays.asList(conta));
 
         Mockito.when(tipoContaRepository.findById(Mockito.any(UUID.class)))
