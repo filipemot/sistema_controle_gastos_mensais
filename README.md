@@ -101,13 +101,16 @@ Dia(s) Trabalhado(s): 19/11/2021
 
 Dia(s) Trabalhado(s): 22/11/2021
 
+- [x]  **Listar Contas por Período e Tipo de Conta**
+
+Dia(s) Trabalhado(s): 22/11/2021
+
 --------
 
 **Planejamento de Tarefas**
 
 
-
-- [ ]  **Listar Contas por Período**
+- [ ]  **Listar Todas Contas por Período e Tipo de Conta**
 
 Dia(s) Trabalhado(s): 
 
