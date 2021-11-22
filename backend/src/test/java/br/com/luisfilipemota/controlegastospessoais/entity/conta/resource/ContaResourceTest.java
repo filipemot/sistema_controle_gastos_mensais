@@ -331,4 +331,55 @@ public class ContaResourceTest {
                 .andExpect(jsonPath("$.contas[0].recorrente", is(false)));
     }
 
+    @Test
+    public void testPesquisaTodosContasPorTipoContaMesAno() throws Exception {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(UUID_TEST);
+        TipoContaDTO tipoContaDTO = new TipoContaDTO();
+        tipoContaDTO.setId(UUID_TEST);
+        tipoContaDTO.setDescricao("Descricao");
+
+        ContaDTO contaDTO = new ContaDTO();
+        contaDTO.setId(UUID_TEST);
+        contaDTO.setUsuario(usuarioDTO);
+        contaDTO.setTipoConta(tipoContaDTO);
+        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        contaDTO.setMesConta(11);
+        contaDTO.setAnoConta(2021);
+        contaDTO.setDescricao("Descricao");
+        contaDTO.setValor(100.0);
+        contaDTO.setNumeroParcela(1);
+        contaDTO.setTotalParcelas(1);
+        contaDTO.setRecorrente(false);
+
+        ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
+        contaSomatorioDTO.setContas(Arrays.asList(contaDTO));
+        contaSomatorioDTO.setSomatorio(contaDTO.getValor());
+        contaSomatorioDTO.setTipoContaId(UUID_TEST);
+        contaSomatorioDTO.setNomeTipoConta(tipoContaDTO.getDescricao());
+
+        Mockito.when(contaService.findAllByTipoContaIdAndMesContaAndAnoConta(UUID_TEST,11,2021))
+                .thenReturn(contaSomatorioDTO);
+
+        mvc.perform(MockMvcRequestBuilders.get("/api/conta/tipoconta/" + UUID_TEST + "/11/2021")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.contas", hasSize(1)))
+                .andExpect(jsonPath("$.somatorio", is(contaDTO.getValor())))
+                .andExpect(jsonPath("$.nomeTipoConta", is(contaSomatorioDTO.getNomeTipoConta())))
+                .andExpect(jsonPath("$.tipoContaId", is(contaSomatorioDTO.getTipoContaId().toString())))
+                .andExpect(jsonPath("$.contas[0].usuario.id", is(UUID_TEST.toString())))
+                .andExpect(jsonPath("$.contas[0].tipoConta.id", is(UUID_TEST.toString())))
+                .andExpect(jsonPath("$.contas[0].dataConta", is("2015-11-04 17:09:55")))
+                .andExpect(jsonPath("$.contas[0].mesConta", is(11)))
+                .andExpect(jsonPath("$.contas[0].anoConta", is(2021)))
+                .andExpect(jsonPath("$.contas[0].descricao", is("Descricao")))
+                .andExpect(jsonPath("$.contas[0].valor", is(100.0)))
+                .andExpect(jsonPath("$.contas[0].numeroParcela", is(1)))
+                .andExpect(jsonPath("$.contas[0].totalParcelas", is(1)))
+                .andExpect(jsonPath("$.contas[0].recorrente", is(false)));
+    }
+
 }

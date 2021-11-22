@@ -5,6 +5,8 @@ import br.com.luisfilipemota.controlegastospessoais.entity.conta.model.Conta;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.repository.ContaRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaTipoContaDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.model.TipoConta;
+import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.repository.TipoContaRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.TipoContaService;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
 import javassist.NotFoundException;
@@ -22,12 +24,12 @@ public class ContaService {
 
     private final ContaMapper contaMapper;
 
-    private final TipoContaService tipoContaService;
+    private final TipoContaRepository tipoContaRepository;
 
-    public ContaService(ContaMapper contaMapper, ContaRepository contaRepository, TipoContaService tipoContaService) {
+    public ContaService(ContaMapper contaMapper, ContaRepository contaRepository, TipoContaRepository tipoContaRepository) {
         this.contaMapper = contaMapper;
         this.contaRepository = contaRepository;
-        this.tipoContaService = tipoContaService;
+        this.tipoContaRepository = tipoContaRepository;
     }
 
     public ContaDTO save(ContaDTO tipoContaDTO) {
@@ -90,14 +92,29 @@ public class ContaService {
         return contaMapper.contaToContaDto(tipoConta);
     }
 
+    public ContaTipoContaDTO findAllByTipoContaIdAndMesContaAndAnoConta(UUID id, int mes, int ano) {
+        List<Conta> listContaPorTipoConta = contaRepository.findAllByTipoContaIdAndMesContaAndAnoConta(id, mes, ano);
+        ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
+
+        getContasPorTipoConta(id, listContaPorTipoConta, contaSomatorioDTO);
+
+        return contaSomatorioDTO;
+    }
 
     public ContaTipoContaDTO findAllByTipoConta(UUID id) {
         List<Conta> listContaPorTipoConta = contaRepository.findAllByTipoContaId(id);
         ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
 
-        try {
-            TipoContaDTO tipoConta = tipoContaService.findById(id);
+        getContasPorTipoConta(id, listContaPorTipoConta, contaSomatorioDTO);
 
+
+        return contaSomatorioDTO;
+    }
+
+    private void getContasPorTipoConta(UUID id, List<Conta> listContaPorTipoConta, ContaTipoContaDTO contaSomatorioDTO) {
+        Optional<TipoConta> tipoConta = tipoContaRepository.findById(id);
+
+        if(tipoConta.isPresent()) {
             List<ContaDTO> listTipoContaDto = new ArrayList<>();
 
             Double somatorio = 0.0;
@@ -108,13 +125,8 @@ public class ContaService {
             }
             contaSomatorioDTO.setContas(listTipoContaDto);
             contaSomatorioDTO.setSomatorio(somatorio);
-            contaSomatorioDTO.setTipoContaId(tipoConta.getId());
-            contaSomatorioDTO.setNomeTipoConta(tipoConta.getDescricao());
-        } catch (NotFoundException e) {
-            contaSomatorioDTO.setContas(new ArrayList<>());
-            contaSomatorioDTO.setSomatorio(0D);
+            contaSomatorioDTO.setTipoContaId(tipoConta.get().getId());
+            contaSomatorioDTO.setNomeTipoConta(tipoConta.get().getDescricao());
         }
-
-        return contaSomatorioDTO;
     }
 }

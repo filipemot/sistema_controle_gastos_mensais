@@ -29,6 +29,12 @@ public class ContaResource {
         return this.contaService.findAllByTipoConta(id);
     }
 
+    @GetMapping("/tipoconta/{id}/{mes}/{ano}")
+    public ContaTipoContaDTO listPorTipoContaMesAno(@PathVariable UUID id, @PathVariable int mes, @PathVariable int ano) {
+
+        return this.contaService.findAllByTipoContaIdAndMesContaAndAnoConta(id, mes, ano);
+    }
+
     public ContaResource(ContaService contaService){
         this.contaService = contaService;
     }
