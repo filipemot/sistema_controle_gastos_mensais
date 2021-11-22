@@ -4,13 +4,11 @@ import br.com.luisfilipemota.controlegastospessoais.entity.conta.mapper.ContaMap
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.model.Conta;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.repository.ContaRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaSomatorioDTO;
 import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ContaService {
@@ -82,5 +80,24 @@ public class ContaService {
         Conta tipoConta = optionalTipoConta.get();
 
         return contaMapper.contaToContaDto(tipoConta);
+    }
+
+
+    public ContaSomatorioDTO findAllByTipoConta(UUID id) {
+        List<Conta> listContaPorTipoConta = contaRepository.findAllByTipoContaId(id);
+        List<ContaDTO> listTipoContaDto = new ArrayList<>();
+
+        Double somatorio = 0.0;
+
+        for (Conta tipoConta : listContaPorTipoConta) {
+            somatorio += tipoConta.getValor();
+            listTipoContaDto.add(contaMapper.contaToContaDto(tipoConta));
+        }
+
+        ContaSomatorioDTO contaSomatorioDTO = new ContaSomatorioDTO();
+        contaSomatorioDTO.setContas(listTipoContaDto);
+        contaSomatorioDTO.setSomatorio(somatorio);
+
+        return contaSomatorioDTO;
     }
 }

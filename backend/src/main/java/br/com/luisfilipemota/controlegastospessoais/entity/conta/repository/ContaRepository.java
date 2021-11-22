@@ -9,4 +9,7 @@ import java.util.UUID;
 public interface ContaRepository extends CrudRepository<Conta, UUID> {
     @Override
     List<Conta> findAll();
+
+    List<Conta> findAllByTipoContaId(UUID idTipoConta);
+
 }

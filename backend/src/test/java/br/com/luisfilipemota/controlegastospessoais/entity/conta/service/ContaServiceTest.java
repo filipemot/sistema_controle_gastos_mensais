@@ -5,6 +5,7 @@ import br.com.luisfilipemota.controlegastospessoais.entity.conta.mapper.ContaMap
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.model.Conta;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.repository.ContaRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaSomatorioDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.model.TipoConta;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.model.Usuario;
@@ -491,6 +492,75 @@ public class ContaServiceTest {
         assertThat(contaSalva.get(0).getNumeroParcela()).isEqualTo(conta.getNumeroParcela());
         assertThat(contaSalva.get(0).getTotalParcelas()).isEqualTo(conta.getTotalParcelas());
         assertThat(contaSalva.get(0).getRecorrente()).isEqualTo(conta.getRecorrente());
+
+    }
+
+
+    @Test
+    public void testPesquisaTodosContasPorTipoConta() {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(UUID_TEST);
+        TipoContaDTO tipoContaDTO = new TipoContaDTO();
+        tipoContaDTO.setId(UUID_TEST);
+
+        ContaDTO contaDTO = new ContaDTO();
+        contaDTO.setId(UUID_TEST);
+        contaDTO.setUsuario(usuarioDTO);
+        contaDTO.setTipoConta(tipoContaDTO);
+        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        contaDTO.setMesConta(11);
+        contaDTO.setAnoConta(2021);
+        contaDTO.setDescricao("Descricao");
+        contaDTO.setValor(100.0);
+        contaDTO.setNumeroParcela(1);
+        contaDTO.setTotalParcelas(1);
+        contaDTO.setRecorrente(false);
+
+        Usuario usuario = new Usuario();
+        usuario.setId(UUID_TEST);
+        TipoConta tipoConta = new TipoConta();
+        tipoConta.setId(UUID_TEST);
+
+        Conta conta = new Conta();
+        conta.setId(UUID_TEST);
+        conta.setUsuario(usuario);
+        conta.setTipoConta(tipoConta);
+        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        conta.setMesConta(11);
+        conta.setAnoConta(2021);
+        conta.setDescricao("Descricao");
+        conta.setValor(100.0);
+        conta.setNumeroParcela(1);
+        conta.setTotalParcelas(1);
+        conta.setRecorrente(false);
+
+        ContaSomatorioDTO contaSomatorioDTO = new ContaSomatorioDTO();
+        contaSomatorioDTO.setContas(Arrays.asList(contaDTO));
+        contaSomatorioDTO.setSomatorio(contaDTO.getValor());
+
+        Mockito.when(contaRepository.findAllByTipoContaId(Mockito.any(UUID.class)))
+                .thenReturn(Arrays.asList(conta));
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+
+        ContaSomatorioDTO contaSalva = contaService.findAllByTipoConta(UUID_TEST);
+
+        assertThat(contaSalva).isNotNull();
+        assertThat(contaSalva.getContas().size()).isEqualTo(1);
+        assertThat(contaSalva.getSomatorio()).isEqualTo(conta.getValor());
+        assertThat(contaSalva.getContas().get(0).getId()).isEqualTo(conta.getId());
+        assertThat(contaSalva.getContas().get(0).getUsuario().getId()).isEqualTo(conta.getUsuario().getId());
+        assertThat(contaSalva.getContas().get(0).getTipoConta().getId()).isEqualTo(conta.getTipoConta().getId());
+        assertThat(contaSalva.getContas().get(0).getDataConta()).isEqualTo(conta.getDataConta());
+        assertThat(contaSalva.getContas().get(0).getMesConta()).isEqualTo(conta.getMesConta());
+        assertThat(contaSalva.getContas().get(0).getAnoConta()).isEqualTo(conta.getAnoConta());
+        assertThat(contaSalva.getContas().get(0).getDescricao()).isEqualTo(conta.getDescricao());
+        assertThat(contaSalva.getContas().get(0).getValor()).isEqualTo(conta.getValor());
+        assertThat(contaSalva.getContas().get(0).getNumeroParcela()).isEqualTo(conta.getNumeroParcela());
+        assertThat(contaSalva.getContas().get(0).getTotalParcelas()).isEqualTo(conta.getTotalParcelas());
+        assertThat(contaSalva.getContas().get(0).getRecorrente()).isEqualTo(conta.getRecorrente());
 
     }
 }
