@@ -4,11 +4,16 @@ import br.com.luisfilipemota.controlegastospessoais.entity.conta.mapper.ContaMap
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.model.Conta;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.repository.ContaRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
-import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaSomatorioDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaTipoContaDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.TipoContaService;
+import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
 import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ContaService {
@@ -17,9 +22,12 @@ public class ContaService {
 
     private final ContaMapper contaMapper;
 
-    public ContaService(ContaMapper contaMapper, ContaRepository contaRepository) {
+    private final TipoContaService tipoContaService;
+
+    public ContaService(ContaMapper contaMapper, ContaRepository contaRepository, TipoContaService tipoContaService) {
         this.contaMapper = contaMapper;
         this.contaRepository = contaRepository;
+        this.tipoContaService = tipoContaService;
     }
 
     public ContaDTO save(ContaDTO tipoContaDTO) {
@@ -83,20 +91,29 @@ public class ContaService {
     }
 
 
-    public ContaSomatorioDTO findAllByTipoConta(UUID id) {
+    public ContaTipoContaDTO findAllByTipoConta(UUID id) {
         List<Conta> listContaPorTipoConta = contaRepository.findAllByTipoContaId(id);
-        List<ContaDTO> listTipoContaDto = new ArrayList<>();
+        ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
 
-        Double somatorio = 0.0;
+        try {
+            TipoContaDTO tipoConta = tipoContaService.findById(id);
 
-        for (Conta tipoConta : listContaPorTipoConta) {
-            somatorio += tipoConta.getValor();
-            listTipoContaDto.add(contaMapper.contaToContaDto(tipoConta));
+            List<ContaDTO> listTipoContaDto = new ArrayList<>();
+
+            Double somatorio = 0.0;
+
+            for (Conta conta : listContaPorTipoConta) {
+                somatorio += conta.getValor();
+                listTipoContaDto.add(contaMapper.contaToContaDto(conta));
+            }
+            contaSomatorioDTO.setContas(listTipoContaDto);
+            contaSomatorioDTO.setSomatorio(somatorio);
+            contaSomatorioDTO.setTipoContaId(tipoConta.getId());
+            contaSomatorioDTO.setNomeTipoConta(tipoConta.getDescricao());
+        } catch (NotFoundException e) {
+            contaSomatorioDTO.setContas(new ArrayList<>());
+            contaSomatorioDTO.setSomatorio(0D);
         }
-
-        ContaSomatorioDTO contaSomatorioDTO = new ContaSomatorioDTO();
-        contaSomatorioDTO.setContas(listTipoContaDto);
-        contaSomatorioDTO.setSomatorio(somatorio);
 
         return contaSomatorioDTO;
     }

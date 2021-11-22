@@ -11,5 +11,4 @@ public interface ContaRepository extends CrudRepository<Conta, UUID> {
     List<Conta> findAll();
 
     List<Conta> findAllByTipoContaId(UUID idTipoConta);
-
 }

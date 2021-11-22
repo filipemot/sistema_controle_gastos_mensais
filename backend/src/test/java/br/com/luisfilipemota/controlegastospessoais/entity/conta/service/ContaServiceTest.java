@@ -5,8 +5,9 @@ import br.com.luisfilipemota.controlegastospessoais.entity.conta.mapper.ContaMap
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.model.Conta;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.repository.ContaRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
-import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaSomatorioDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaTipoContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.model.TipoConta;
+import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.TipoContaService;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.model.Usuario;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
@@ -35,6 +36,9 @@ public class ContaServiceTest {
 
     @Autowired
     ContaService contaService;
+
+    @MockBean
+    TipoContaService tipoContaService;
 
     @MockBean
     ContaRepository contaRepository;
@@ -497,11 +501,12 @@ public class ContaServiceTest {
 
 
     @Test
-    public void testPesquisaTodosContasPorTipoConta() {
+    public void testPesquisaTodosContasPorTipoConta() throws NotFoundException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setId(UUID_TEST);
+        tipoContaDTO.setDescricao("Descricao");
 
         ContaDTO contaDTO = new ContaDTO();
         contaDTO.setId(UUID_TEST);
@@ -534,22 +539,29 @@ public class ContaServiceTest {
         conta.setTotalParcelas(1);
         conta.setRecorrente(false);
 
-        ContaSomatorioDTO contaSomatorioDTO = new ContaSomatorioDTO();
+        ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
         contaSomatorioDTO.setContas(Arrays.asList(contaDTO));
         contaSomatorioDTO.setSomatorio(contaDTO.getValor());
+        contaSomatorioDTO.setTipoContaId(UUID_TEST);
+        contaSomatorioDTO.setNomeTipoConta(tipoConta.getDescricao());
 
         Mockito.when(contaRepository.findAllByTipoContaId(Mockito.any(UUID.class)))
                 .thenReturn(Arrays.asList(conta));
+
+        Mockito.when(tipoContaService.findById(Mockito.any(UUID.class)))
+                .thenReturn(tipoContaDTO);
 
         Mockito.when(contaMapper.contaToContaDto(conta))
                 .thenReturn(contaDTO);
 
 
-        ContaSomatorioDTO contaSalva = contaService.findAllByTipoConta(UUID_TEST);
+        ContaTipoContaDTO contaSalva = contaService.findAllByTipoConta(UUID_TEST);
 
         assertThat(contaSalva).isNotNull();
         assertThat(contaSalva.getContas().size()).isEqualTo(1);
         assertThat(contaSalva.getSomatorio()).isEqualTo(conta.getValor());
+        assertThat(contaSalva.getNomeTipoConta()).isEqualTo(tipoContaDTO.getDescricao());
+        assertThat(contaSalva.getTipoContaId()).isEqualTo(tipoContaDTO.getId());
         assertThat(contaSalva.getContas().get(0).getId()).isEqualTo(conta.getId());
         assertThat(contaSalva.getContas().get(0).getUsuario().getId()).isEqualTo(conta.getUsuario().getId());
         assertThat(contaSalva.getContas().get(0).getTipoConta().getId()).isEqualTo(conta.getTipoConta().getId());

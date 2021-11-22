@@ -2,7 +2,7 @@ package br.com.luisfilipemota.controlegastospessoais.entity.conta.resource;
 
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.ContaService;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
-import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaSomatorioDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaTipoContaDTO;
 import javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class ContaResource {
     }
 
     @GetMapping("/tipoconta/{id}")
-    public ContaSomatorioDTO listPorTipoConta(@PathVariable UUID id) {
+    public ContaTipoContaDTO listPorTipoConta(@PathVariable UUID id) {
 
         return this.contaService.findAllByTipoConta(id);
     }

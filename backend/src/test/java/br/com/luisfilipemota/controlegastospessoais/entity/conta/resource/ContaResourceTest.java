@@ -2,7 +2,7 @@ package br.com.luisfilipemota.controlegastospessoais.entity.conta.resource;
 
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.ContaService;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
-import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaSomatorioDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaTipoContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
 import br.com.luisfilipemota.controlegastospessoais.util.converter.LocalDateTimeConverter;
@@ -23,6 +23,7 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doThrow;
@@ -285,6 +286,7 @@ public class ContaResourceTest {
         usuarioDTO.setId(UUID_TEST);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setId(UUID_TEST);
+        tipoContaDTO.setDescricao("Descricao");
 
         ContaDTO contaDTO = new ContaDTO();
         contaDTO.setId(UUID_TEST);
@@ -299,9 +301,11 @@ public class ContaResourceTest {
         contaDTO.setTotalParcelas(1);
         contaDTO.setRecorrente(false);
 
-        ContaSomatorioDTO contaSomatorioDTO = new ContaSomatorioDTO();
+        ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
         contaSomatorioDTO.setContas(Arrays.asList(contaDTO));
         contaSomatorioDTO.setSomatorio(contaDTO.getValor());
+        contaSomatorioDTO.setTipoContaId(UUID_TEST);
+        contaSomatorioDTO.setNomeTipoConta(tipoContaDTO.getDescricao());
 
         Mockito.when(contaService.findAllByTipoConta(UUID_TEST))
                 .thenReturn(contaSomatorioDTO);
@@ -313,6 +317,8 @@ public class ContaResourceTest {
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.contas", hasSize(1)))
                 .andExpect(jsonPath("$.somatorio", is(contaDTO.getValor())))
+                .andExpect(jsonPath("$.nomeTipoConta", is(contaSomatorioDTO.getNomeTipoConta())))
+                .andExpect(jsonPath("$.tipoContaId", is(contaSomatorioDTO.getTipoContaId().toString())))
                 .andExpect(jsonPath("$.contas[0].usuario.id", is(UUID_TEST.toString())))
                 .andExpect(jsonPath("$.contas[0].tipoConta.id", is(UUID_TEST.toString())))
                 .andExpect(jsonPath("$.contas[0].dataConta", is("2015-11-04 17:09:55")))
