@@ -110,9 +110,14 @@ Dia(s) Trabalhado(s): 22/11/2021
 **Planejamento de Tarefas**
 
 
-- [ ]  **Listar Todas Contas por Período e Tipo de Conta**
+- [ ]  **Listar Todas Contas por Período**
 
 Dia(s) Trabalhado(s): 
+
+- [ ]  **Listar Todas Contas por Período Inicial e Final**
+
+Dia(s) Trabalhado(s): 
+
 
 - [ ]  **Criar na tabela de usuário campo ativado/desativado**
 
