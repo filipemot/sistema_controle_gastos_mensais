@@ -45,7 +45,7 @@ Entrar em backend/src/main/resources/application.properties
 
 # API's Disponibilizadas
 
- ## Tipo de Conta
+## Tipo de Conta
 
 **Listar Todas**
 **GET** http://localhost:8080/api/tipoconta
@@ -180,21 +180,17 @@ Entrar em backend/src/main/resources/application.properties
 
 **Body**
 
-    {
+      {
         "usuario":{
 		    "id": "569b4be9-146b-4386-a95a-b7e028320e35"
-	    }, "tipoConta":{
-	        "id": "9ad2f22d-3489-48ea-87bf-40c8808b2f0d"
-        },
-        "dataConta":"2021-11-04 17:35:55",
-        "mesConta": 11,
-        "anoConta": 2021,
-        "descricao": "Conta teste",
-        "valor": 10.50,
-        "numeroParcela": 1,
-        "totalParcelas": 1,
-        "recorrente": false
+	    },
+	    "dataConta":"2021-11-04 17:35:55",
+		"mesConta": 11,
+		"anoConta": 2021,
+		"descricao": "Conta teste",
+		"valor": 10.50
 	 }
+    
     
 **Atualizar**
 **PUT** http://localhost:8080/api/recebidos/{id}
