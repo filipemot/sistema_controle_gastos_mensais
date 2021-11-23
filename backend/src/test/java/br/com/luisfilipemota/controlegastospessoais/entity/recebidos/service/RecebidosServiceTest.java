@@ -373,7 +373,6 @@ public class RecebidosServiceTest {
         Mockito.when(recebidosMapper.recebidosToRecebidosDto(recebidos))
                 .thenReturn(recebidosDTO);
 
-
         List<RecebidosDTO> listaRecebidos = recebidosService.findAll();
 
         assertThat(listaRecebidos).isNotNull();

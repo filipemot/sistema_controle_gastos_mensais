@@ -223,9 +223,9 @@ spring.datasource.password=postgres
     "usuario":{
 	"id": "569b4be9-146b-4386-a95a-b7e028320e35"
     },
-    "dataConta":"2021-11-04 17:35:55",
-    "mesConta": 11,
-    "anoConta": 2021,
+    "dataRecebido":"2021-11-04 17:35:55",
+    "mesRecebido": 11,
+    "anoRecebido": 2021,
     "descricao": "Conta teste",
     "valor": 10.50
  }
@@ -242,9 +242,9 @@ spring.datasource.password=postgres
     "usuario":{
 	"id": "569b4be9-146b-4386-a95a-b7e028320e35"
     },
-    "dataConta":"2021-11-04 17:35:55",
-    "mesConta": 11,
-    "anoConta": 2021,
+    "dataRecebido":"2021-11-04 17:35:55",
+    "mesRecebido": 11,
+    "anoRecebido": 2021,
     "descricao": "Conta teste",
     "valor": 10.50
  }
@@ -316,6 +316,10 @@ Dia(s) Trabalhado(s): 22/11/2021
 
 Dia(s) Trabalhado(s): 22/11/2021
 
+- [x]  **Alterar em recebidos o nome de mesConta e anoConta para mesRecebidos e anoRecebidos**
+
+Dia(s) Trabalhado(s): 23/11/2021
+
 ---
 
 **Planejamento de Tarefas**
@@ -337,10 +341,6 @@ Dia(s) Trabalhado(s):
 Dia(s) Trabalhado(s):
 
 - [ ]  **Ajuste Validaçãpo de Email, para validar na API utlizando o @Valid**
-
-Dia(s) Trabalhado(s):
-
-- [ ]  **Alterar em recebidos o nome de mesConta e anoConta para mesRecebidos e anoRecebidos**
 
 Dia(s) Trabalhado(s):
 
