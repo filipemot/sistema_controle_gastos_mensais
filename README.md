@@ -340,7 +340,31 @@ Dia(s) Trabalhado(s):
 
 Dia(s) Trabalhado(s):
 
-- [ ]  **Ajuste Validaçãpo de Email, para validar na API utlizando o @Valid**
+- [ ]  **Ajuste Validação de Email, para validar na API utlizando o @Valid**
+
+Dia(s) Trabalhado(s):
+
+- [ ]  **Na API de Conta - Criar Teste do Service para Tipo de Conta Não Encontrado**
+
+Dia(s) Trabalhado(s):
+
+- [ ]  **Na API de Conta - Criar Teste do Resource para Tipo de Conta Não Encontrado**
+
+Dia(s) Trabalhado(s):
+
+- [ ]  **Na API de Conta - Criar Teste do Service para Usuário Não Encontrado**
+
+Dia(s) Trabalhado(s):
+
+- [ ]  **Na API de Conta - Criar Teste do Resource para Usuário Não Encontrado**
+
+Dia(s) Trabalhado(s):
+
+- [ ]  **Na API de Recebidos - Criar Teste do Service para Usuário Não Encontrado**
+
+Dia(s) Trabalhado(s):
+
+- [ ]  **Na API de Recebidos - Criar Teste do Resource para Usuário Não Encontrado**
 
 Dia(s) Trabalhado(s):
 
