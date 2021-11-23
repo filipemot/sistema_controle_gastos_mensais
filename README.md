@@ -1,7 +1,8 @@
 
+
 # Sistema de Controle de Gastos Pessoais
 
-**Última Atualização:** 19/11/2021
+**Última Atualização:** 23/11/2021
 
 **Tecnologias Utilizadas:**
 
@@ -32,7 +33,7 @@ Entrar em backend/src/main/resources/application.properties
     spring.datasource.username=postgres
     spring.datasource.password=postgres
 
-**Criação do Container** 
+**Criação da Imagem da Aplicação em Container** 
 
  - Compilar Projeto: `mvn clean package`
  - Criar Imagem do Container: `docker build -f Dockerfile . -t sistema_controle_gastos_mensais`
@@ -42,8 +43,180 @@ Entrar em backend/src/main/resources/application.properties
 - Entrar na pasta backend/docker
 - Executar `docker-compose -f aplicacao.yml down`
 
---------
-**Tarefas Executadas**
+# API's Disponibilizadas
+
+ ## Tipo de Conta
+
+**Listar Todas**
+**GET** http://localhost:8080/api/tipoconta
+
+**Pesquisar por ID**
+**GET** http://localhost:8080/api/tipoconta/{id}
+
+**Salvar**
+**POST** http://localhost:8080/api/tipoconta
+
+**Body**
+
+    {
+    	"descricao":"Supermercado"
+    }
+    
+**Atualizar**
+**PUT** http://localhost:8080/api/tipoconta/{id}
+
+**Body**
+
+    {
+        "descricao":"Supermercado"
+    }
+    
+**Deletar**
+**DEL** http://localhost:8080/api/tipoconta/{id}
+
+## Usuário
+
+**Listar Todas**
+**GET** http://localhost:8080/api/usuario
+
+**Pesquisar por ID**
+**GET** http://localhost:8080/api/usuario/{id}
+
+**Salvar**
+**POST** http://localhost:8080/api/usuario
+
+**Body**
+
+    {
+    
+	    "nome":"nome2",    
+	    "senhaUsuario": "123456",    
+	    "email": "teste@teste222.com"    
+    }
+    
+**Atualizar**
+**PUT** http://localhost:8080/api/usuario/{id}
+
+**Body**
+
+    {
+	    "nome":"nome2",    
+	    "senhaUsuario": "123456",    
+	    "email": "teste@teste222.com"    
+    }
+    
+**Deletar**
+**DEL** http://localhost:8080/api/usuario/{id}
+
+## Contas
+
+**Listar Todas**
+**GET** http://localhost:8080/api/conta
+
+**Listar Todas - Por Tipo de Conta**
+**GET** http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}
+
+**Listar Todas - Por Tipo de Conta**
+**GET** http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}
+
+**Listar Todas - Por Tipo de Conta, Mês e Ano**
+**GET** http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}/{mes}/{ano}
+
+**Salvar**
+**POST** http://localhost:8080/api/conta
+
+**Body**
+
+    {
+        "usuario":{
+		    "id": "569b4be9-146b-4386-a95a-b7e028320e35"
+	    }, "tipoConta":{
+	        "id": "9ad2f22d-3489-48ea-87bf-40c8808b2f0d"
+        },
+        "dataConta":"2021-11-04 17:35:55",
+        "mesConta": 11,
+        "anoConta": 2021,
+        "descricao": "Conta teste",
+        "valor": 10.50,
+        "numeroParcela": 1,
+        "totalParcelas": 1,
+        "recorrente": false
+	 }
+    
+**Atualizar**
+**PUT** http://localhost:8080/api/conta/{id}
+
+**Body**
+
+      {
+        "usuario":{
+		    "id": "569b4be9-146b-4386-a95a-b7e028320e35"
+	    }, "tipoConta":{
+	        "id": "9ad2f22d-3489-48ea-87bf-40c8808b2f0d"
+        },
+        "dataConta":"2021-11-04 17:35:55",
+        "mesConta": 11,
+        "anoConta": 2021,
+        "descricao": "Conta teste",
+        "valor": 10.50,
+        "numeroParcela": 1,
+        "totalParcelas": 1,
+        "recorrente": false
+	 }
+    
+**Deletar**
+**DEL** http://localhost:8080/api/conta/{id}
+
+## Recebidos
+
+**Listar Todas**
+**GET** http://localhost:8080/api/recebidos
+
+**Listar Todas - Por Tipo de Conta**
+**GET** http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}
+
+**Salvar**
+**POST** http://localhost:8080/api/recebidos
+
+**Body**
+
+    {
+        "usuario":{
+		    "id": "569b4be9-146b-4386-a95a-b7e028320e35"
+	    }, "tipoConta":{
+	        "id": "9ad2f22d-3489-48ea-87bf-40c8808b2f0d"
+        },
+        "dataConta":"2021-11-04 17:35:55",
+        "mesConta": 11,
+        "anoConta": 2021,
+        "descricao": "Conta teste",
+        "valor": 10.50,
+        "numeroParcela": 1,
+        "totalParcelas": 1,
+        "recorrente": false
+	 }
+    
+**Atualizar**
+**PUT** http://localhost:8080/api/recebidos/{id}
+
+**Body**
+
+      {
+        "usuario":{
+		    "id": "569b4be9-146b-4386-a95a-b7e028320e35"
+	    },
+	    "dataConta":"2021-11-04 17:35:55",
+		"mesConta": 11,
+		"anoConta": 2021,
+		"descricao": "Conta teste",
+		"valor": 10.50
+	 }
+    
+**Deletar**
+**DEL** http://localhost:8080/api/recebidos/{id}
+
+
+# Tarefas Executadas
 
 - [x]  **Criação Modelo do Banco**
 
@@ -118,6 +291,22 @@ Dia(s) Trabalhado(s):
 
 Dia(s) Trabalhado(s): 
 
+
+- [ ]  **Refatorar Testes evitando duplicação**
+
+Dia(s) Trabalhado(s): 
+
+- [ ]  **Refatorar Services evitando duplicação**
+
+Dia(s) Trabalhado(s): 
+
+- [ ]  **Ajuste Validaçãpo de Email, para validar na API utlizando o @Valid**
+
+Dia(s) Trabalhado(s):
+
+- [ ]  **Alterar em recebidos o nome de mesConta e anoConta para mesRecebidos e anoRecebidos**
+
+Dia(s) Trabalhado(s):
 
 - [ ]  **Criar na tabela de usuário campo ativado/desativado**
 
