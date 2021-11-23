@@ -22,9 +22,9 @@ public class RecebidosMapperTest {
         Recebidos recebidos = new Recebidos();
         recebidos.setId(UUID.randomUUID());
         recebidos.setUsuario(usuario);
-        recebidos.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesConta(11);
-        recebidos.setAnoConta(2021);
+        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidos.setMesRecebido(11);
+        recebidos.setAnoRecebido(2021);
         recebidos.setDescricao("Descricao");
         recebidos.setValor(100.0);
 
@@ -32,9 +32,9 @@ public class RecebidosMapperTest {
         assertThat(recebidosDTO).isNotNull();
         assertThat(recebidosDTO.getId()).isEqualTo(recebidos.getId());
         assertThat(recebidosDTO.getUsuario().getId()).isEqualTo(recebidos.getUsuario().getId());
-        assertThat(recebidosDTO.getDataConta()).isEqualTo(recebidos.getDataConta());
-        assertThat(recebidosDTO.getMesConta()).isEqualTo(recebidos.getMesConta());
-        assertThat(recebidosDTO.getAnoConta()).isEqualTo(recebidos.getAnoConta());
+        assertThat(recebidosDTO.getDataRecebido()).isEqualTo(recebidos.getDataRecebido());
+        assertThat(recebidosDTO.getMesRecebido()).isEqualTo(recebidos.getMesRecebido());
+        assertThat(recebidosDTO.getAnoRecebido()).isEqualTo(recebidos.getAnoRecebido());
         assertThat(recebidosDTO.getDescricao()).isEqualTo(recebidos.getDescricao());
         assertThat(recebidosDTO.getValor()).isEqualTo(recebidos.getValor());
     }
@@ -47,9 +47,9 @@ public class RecebidosMapperTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID.randomUUID());
         recebidosDTO.setUsuario(usuario);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -57,9 +57,9 @@ public class RecebidosMapperTest {
         assertThat(recebidosDTO).isNotNull();
         assertThat(recebidosDTO.getId()).isEqualTo(recebidos.getId());
         assertThat(recebidosDTO.getUsuario().getId()).isEqualTo(recebidos.getUsuario().getId());
-        assertThat(recebidosDTO.getDataConta()).isEqualTo(recebidos.getDataConta());
-        assertThat(recebidosDTO.getMesConta()).isEqualTo(recebidos.getMesConta());
-        assertThat(recebidosDTO.getAnoConta()).isEqualTo(recebidos.getAnoConta());
+        assertThat(recebidosDTO.getDataRecebido()).isEqualTo(recebidos.getDataRecebido());
+        assertThat(recebidosDTO.getMesRecebido()).isEqualTo(recebidos.getMesRecebido());
+        assertThat(recebidosDTO.getAnoRecebido()).isEqualTo(recebidos.getAnoRecebido());
         assertThat(recebidosDTO.getDescricao()).isEqualTo(recebidos.getDescricao());
         assertThat(recebidosDTO.getValor()).isEqualTo(recebidos.getValor());
     }

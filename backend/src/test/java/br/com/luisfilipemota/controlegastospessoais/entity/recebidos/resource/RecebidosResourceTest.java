@@ -44,9 +44,9 @@ public class RecebidosResourceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -59,9 +59,9 @@ public class RecebidosResourceTest {
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.usuario.id", is(UUID_TEST.toString())))
-                .andExpect(jsonPath("$.dataConta", is("2015-11-04 17:09:55")))
-                .andExpect(jsonPath("$.mesConta", is(11)))
-                .andExpect(jsonPath("$.anoConta", is(2021)))
+                .andExpect(jsonPath("$.dataRecebido", is("2015-11-04 17:09:55")))
+                .andExpect(jsonPath("$.mesRecebido", is(11)))
+                .andExpect(jsonPath("$.anoRecebido", is(2021)))
                 .andExpect(jsonPath("$.descricao", is("Descricao")))
                 .andExpect(jsonPath("$.valor", is(100.0)));
     }
@@ -89,9 +89,9 @@ public class RecebidosResourceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -108,9 +108,9 @@ public class RecebidosResourceTest {
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.usuario.id", is(UUID_TEST.toString())))
-                .andExpect(jsonPath("$.dataConta", is("2015-11-04 17:09:55")))
-                .andExpect(jsonPath("$.mesConta", is(11)))
-                .andExpect(jsonPath("$.anoConta", is(2021)))
+                .andExpect(jsonPath("$.dataRecebido", is("2015-11-04 17:09:55")))
+                .andExpect(jsonPath("$.mesRecebido", is(11)))
+                .andExpect(jsonPath("$.anoRecebido", is(2021)))
                 .andExpect(jsonPath("$.descricao", is("Descricao")))
                 .andExpect(jsonPath("$.valor", is(100.0)));
 
@@ -128,9 +128,9 @@ public class RecebidosResourceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -147,9 +147,9 @@ public class RecebidosResourceTest {
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.usuario.id", is(UUID_TEST.toString())))
-                .andExpect(jsonPath("$.dataConta", is("2015-11-04 17:09:55")))
-                .andExpect(jsonPath("$.mesConta", is(11)))
-                .andExpect(jsonPath("$.anoConta", is(2021)))
+                .andExpect(jsonPath("$.dataRecebido", is("2015-11-04 17:09:55")))
+                .andExpect(jsonPath("$.mesRecebido", is(11)))
+                .andExpect(jsonPath("$.anoRecebido", is(2021)))
                 .andExpect(jsonPath("$.descricao", is("Descricao")))
                 .andExpect(jsonPath("$.valor", is(100.0)));
     }
@@ -165,9 +165,9 @@ public class RecebidosResourceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
         Gson gson = gsonBuilder.create();
@@ -209,9 +209,9 @@ public class RecebidosResourceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -225,9 +225,9 @@ public class RecebidosResourceTest {
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].usuario.id", is(UUID_TEST.toString())))
-                .andExpect(jsonPath("$[0].dataConta", is("2015-11-04 17:09:55")))
-                .andExpect(jsonPath("$[0].mesConta", is(11)))
-                .andExpect(jsonPath("$[0].anoConta", is(2021)))
+                .andExpect(jsonPath("$[0].dataRecebido", is("2015-11-04 17:09:55")))
+                .andExpect(jsonPath("$[0].mesRecebido", is(11)))
+                .andExpect(jsonPath("$[0].anoRecebido", is(2021)))
                 .andExpect(jsonPath("$[0].descricao", is("Descricao")))
                 .andExpect(jsonPath("$[0].valor", is(100.0)));
     }

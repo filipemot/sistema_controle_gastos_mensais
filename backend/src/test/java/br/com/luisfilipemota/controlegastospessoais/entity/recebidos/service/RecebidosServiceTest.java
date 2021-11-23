@@ -49,9 +49,9 @@ public class RecebidosServiceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -61,9 +61,9 @@ public class RecebidosServiceTest {
         Recebidos recebidos = new Recebidos();
         recebidos.setId(UUID_TEST);
         recebidos.setUsuario(usuario);
-        recebidos.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesConta(11);
-        recebidos.setAnoConta(2021);
+        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidos.setMesRecebido(11);
+        recebidos.setAnoRecebido(2021);
         recebidos.setDescricao("Descricao");
         recebidos.setValor(100.0);
 
@@ -88,9 +88,9 @@ public class RecebidosServiceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -100,9 +100,9 @@ public class RecebidosServiceTest {
         Recebidos recebidos = new Recebidos();
         recebidos.setId(UUID_TEST);
         recebidos.setUsuario(usuario);
-        recebidos.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesConta(11);
-        recebidos.setAnoConta(2021);
+        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidos.setMesRecebido(11);
+        recebidos.setAnoRecebido(2021);
         recebidos.setDescricao("Descricao");
         recebidos.setValor(100.0);
 
@@ -134,9 +134,9 @@ public class RecebidosServiceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -146,9 +146,9 @@ public class RecebidosServiceTest {
         Recebidos recebidos = new Recebidos();
         recebidos.setId(UUID_TEST);
         recebidos.setUsuario(usuario);
-        recebidos.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesConta(11);
-        recebidos.setAnoConta(2021);
+        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidos.setMesRecebido(11);
+        recebidos.setAnoRecebido(2021);
         recebidos.setDescricao("Descricao");
         recebidos.setValor(100.0);
 
@@ -175,9 +175,9 @@ public class RecebidosServiceTest {
         assertThat(recebidosDTO).isNotNull();
         assertThat(recebidosDTO.getId()).isEqualTo(recebidos.getId());
         assertThat(recebidosDTO.getUsuario().getId()).isEqualTo(recebidos.getUsuario().getId());
-        assertThat(recebidosDTO.getDataConta()).isEqualTo(recebidos.getDataConta());
-        assertThat(recebidosDTO.getMesConta()).isEqualTo(recebidos.getMesConta());
-        assertThat(recebidosDTO.getAnoConta()).isEqualTo(recebidos.getAnoConta());
+        assertThat(recebidosDTO.getDataRecebido()).isEqualTo(recebidos.getDataRecebido());
+        assertThat(recebidosDTO.getMesRecebido()).isEqualTo(recebidos.getMesRecebido());
+        assertThat(recebidosDTO.getAnoRecebido()).isEqualTo(recebidos.getAnoRecebido());
         assertThat(recebidosDTO.getDescricao()).isEqualTo(recebidos.getDescricao());
         assertThat(recebidosDTO.getValor()).isEqualTo(recebidos.getValor());
     }
@@ -190,9 +190,9 @@ public class RecebidosServiceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -202,9 +202,9 @@ public class RecebidosServiceTest {
         Recebidos recebidos = new Recebidos();
         recebidos.setId(UUID_TEST);
         recebidos.setUsuario(usuario);
-        recebidos.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesConta(11);
-        recebidos.setAnoConta(2021);
+        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidos.setMesRecebido(11);
+        recebidos.setAnoRecebido(2021);
         recebidos.setDescricao("Descricao");
         recebidos.setValor(100.0);
 
@@ -229,9 +229,9 @@ public class RecebidosServiceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -241,9 +241,9 @@ public class RecebidosServiceTest {
         Recebidos recebidos = new Recebidos();
         recebidos.setId(UUID_TEST);
         recebidos.setUsuario(usuario);
-        recebidos.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesConta(11);
-        recebidos.setAnoConta(2021);
+        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidos.setMesRecebido(11);
+        recebidos.setAnoRecebido(2021);
         recebidos.setDescricao("Descricao");
         recebidos.setValor(100.0);
         Mockito.when(recebidosRepository.findById(UUID_TEST))
@@ -270,9 +270,9 @@ public class RecebidosServiceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -282,9 +282,9 @@ public class RecebidosServiceTest {
         Recebidos recebidos = new Recebidos();
         recebidos.setId(UUID_TEST);
         recebidos.setUsuario(usuario);
-        recebidos.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesConta(11);
-        recebidos.setAnoConta(2021);
+        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidos.setMesRecebido(11);
+        recebidos.setAnoRecebido(2021);
         recebidos.setDescricao("Descricao");
         recebidos.setValor(100.0);
 
@@ -307,9 +307,9 @@ public class RecebidosServiceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -319,9 +319,9 @@ public class RecebidosServiceTest {
         Recebidos recebidos = new Recebidos();
         recebidos.setId(UUID_TEST);
         recebidos.setUsuario(usuario);
-        recebidos.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesConta(11);
-        recebidos.setAnoConta(2021);
+        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidos.setMesRecebido(11);
+        recebidos.setAnoRecebido(2021);
         recebidos.setDescricao("Descricao");
         recebidos.setValor(100.0);
 
@@ -349,9 +349,9 @@ public class RecebidosServiceTest {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
         recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesConta(11);
-        recebidosDTO.setAnoConta(2021);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
         recebidosDTO.setDescricao("Descricao");
         recebidosDTO.setValor(100.0);
 
@@ -361,9 +361,9 @@ public class RecebidosServiceTest {
         Recebidos recebidos = new Recebidos();
         recebidos.setId(UUID_TEST);
         recebidos.setUsuario(usuario);
-        recebidos.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesConta(11);
-        recebidos.setAnoConta(2021);
+        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidos.setMesRecebido(11);
+        recebidos.setAnoRecebido(2021);
         recebidos.setDescricao("Descricao");
         recebidos.setValor(100.0);
 
@@ -380,9 +380,9 @@ public class RecebidosServiceTest {
         assertThat(listaRecebidos.size()).isEqualTo(1);
         assertThat(listaRecebidos.get(0).getId()).isEqualTo(recebidos.getId());
         assertThat(listaRecebidos.get(0).getUsuario().getId()).isEqualTo(recebidos.getUsuario().getId());
-        assertThat(listaRecebidos.get(0).getDataConta()).isEqualTo(recebidos.getDataConta());
-        assertThat(listaRecebidos.get(0).getMesConta()).isEqualTo(recebidos.getMesConta());
-        assertThat(listaRecebidos.get(0).getAnoConta()).isEqualTo(recebidos.getAnoConta());
+        assertThat(listaRecebidos.get(0).getDataRecebido()).isEqualTo(recebidos.getDataRecebido());
+        assertThat(listaRecebidos.get(0).getMesRecebido()).isEqualTo(recebidos.getMesRecebido());
+        assertThat(listaRecebidos.get(0).getAnoRecebido()).isEqualTo(recebidos.getAnoRecebido());
         assertThat(listaRecebidos.get(0).getDescricao()).isEqualTo(recebidos.getDescricao());
         assertThat(listaRecebidos.get(0).getValor()).isEqualTo(recebidos.getValor());
     }

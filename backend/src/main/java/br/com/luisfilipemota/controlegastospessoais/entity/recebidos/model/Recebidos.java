@@ -23,13 +23,13 @@ public class Recebidos {
     private Usuario usuario;
 
     @Column(name = "data_recebidos")
-    private LocalDateTime dataConta;
+    private LocalDateTime dataRecebido;
 
     @Column(name = "mes_recebidos")
-    private int mesConta;
+    private int mesRecebido;
 
     @Column(name = "ano_recebidos")
-    private int anoConta;
+    private int anoRecebido;
 
     @Column(name = "descricao")
     private String descricao;
@@ -53,28 +53,28 @@ public class Recebidos {
         this.usuario = usuario;
     }
 
-    public LocalDateTime getDataConta() {
-        return dataConta;
+    public LocalDateTime getDataRecebido() {
+        return dataRecebido;
     }
 
-    public void setDataConta(LocalDateTime dataConta) {
-        this.dataConta = dataConta;
+    public void setDataRecebido(LocalDateTime dataRecebido) {
+        this.dataRecebido = dataRecebido;
     }
 
-    public int getMesConta() {
-        return mesConta;
+    public int getMesRecebido() {
+        return mesRecebido;
     }
 
-    public void setMesConta(int mesConta) {
-        this.mesConta = mesConta;
+    public void setMesRecebido(int mesRecebido) {
+        this.mesRecebido = mesRecebido;
     }
 
-    public int getAnoConta() {
-        return anoConta;
+    public int getAnoRecebido() {
+        return anoRecebido;
     }
 
-    public void setAnoConta(int anoConta) {
-        this.anoConta = anoConta;
+    public void setAnoRecebido(int anoRecebido) {
+        this.anoRecebido = anoRecebido;
     }
 
     public String getDescricao() {
