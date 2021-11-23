@@ -1,21 +1,19 @@
-
-
 # Sistema de Controle de Gastos Pessoais
 
 **Última Atualização:** 23/11/2021
 
 **Tecnologias Utilizadas:**
 
- - **Backend:** Java com Spring Boot
- - **Frontend:** Angular
+- **Backend:** Java com Spring Boot
+- **Frontend:** Angular
 - **Infraestrutura:** Docker
- -  **Banco de Dados:** Postgre
+- **Banco de Dados:** Postgre
 
 **Início do Projeto:** Outubro de 2021
 
 **Modelo de Dados:**
 
-![Modelo de dados](https://github.com/filipemot/sistema_controle_gastos_mensais/blob/main/database/database.png)
+![https://github.com/filipemot/sistema_controle_gastos_mensais/blob/main/database/database.png](https://github.com/filipemot/sistema_controle_gastos_mensais/blob/main/database/database.png)
 
 **Execução**
 
@@ -23,22 +21,26 @@
 
 Entrar em backend/docker
 
-    docker-compose -f banco_docker_compose.yml up -d
+```
+docker-compose -f banco_docker_compose.yml up -d
+```
 
 **Configuração Banco**
 
 Entrar em backend/src/main/resources/application.properties
 
-    spring.datasource.url=jdbc:postgresql://localhost:5432/controlegastos
-    spring.datasource.username=postgres
-    spring.datasource.password=postgres
+```yaml
+spring.datasource.url=jdbc:postgresql://localhost:5432/controlegastos
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+```
 
-**Criação da Imagem da Aplicação em Container** 
+**Criação da Imagem da Aplicação em Container**
 
- - Compilar Projeto: `mvn clean package`
- - Criar Imagem do Container: `docker build -f Dockerfile . -t sistema_controle_gastos_mensais`
+- Compilar Projeto: `mvn clean package`
+- Criar Imagem do Container: `docker build -f Dockerfile . -t sistema_controle_gastos_mensais`
 
-**Criação do Container** 
+**Criação do Container**
 
 - Entrar na pasta backend/docker
 - Executar `docker-compose -f aplicacao.yml down`
@@ -48,170 +50,209 @@ Entrar em backend/src/main/resources/application.properties
 ## Tipo de Conta
 
 **Listar Todas**
-**GET** http://localhost:8080/api/tipoconta
+
+**GET** [http://localhost:8080/api/tipoconta](http://localhost:8080/api/tipoconta)
 
 **Pesquisar por ID**
-**GET** http://localhost:8080/api/tipoconta/{id}
+
+**GET** [http://localhost:8080/api/tipoconta/{id}](http://localhost:8080/api/tipoconta/%7Bid%7D)
 
 **Salvar**
-**POST** http://localhost:8080/api/tipoconta
+
+**POST** [http://localhost:8080/api/tipoconta](http://localhost:8080/api/tipoconta)
 
 **Body**
 
-    {
-    	"descricao":"Supermercado"
-    }
-    
+```json
+{
+	"descricao":"Supermercado"
+}
+```
+
 **Atualizar**
-**PUT** http://localhost:8080/api/tipoconta/{id}
+
+**PUT** [http://localhost:8080/api/tipoconta/{id}](http://localhost:8080/api/tipoconta/%7Bid%7D)
 
 **Body**
 
-    {
-        "descricao":"Supermercado"
-    }
-    
+```json
+{
+    "descricao":"Supermercado"
+}
+```
+
 **Deletar**
-**DEL** http://localhost:8080/api/tipoconta/{id}
+
+**DEL** [http://localhost:8080/api/tipoconta/{id}](http://localhost:8080/api/tipoconta/%7Bid%7D)
 
 ## Usuário
 
 **Listar Todas**
-**GET** http://localhost:8080/api/usuario
+
+**GET** [http://localhost:8080/api/usuario](http://localhost:8080/api/usuario)
 
 **Pesquisar por ID**
-**GET** http://localhost:8080/api/usuario/{id}
+
+**GET** [http://localhost:8080/api/usuario/{id}](http://localhost:8080/api/usuario/%7Bid%7D)
 
 **Salvar**
-**POST** http://localhost:8080/api/usuario
+
+**POST** [http://localhost:8080/api/usuario](http://localhost:8080/api/usuario)
 
 **Body**
 
-    {
-    
-	    "nome":"nome2",    
-	    "senhaUsuario": "123456",    
-	    "email": "teste@teste222.com"    
-    }
-    
+```json
+{
+
+    "nome":"nome2",
+    "senhaUsuario": "123456",
+    "email": "teste@teste222.com"
+}
+```
+
 **Atualizar**
-**PUT** http://localhost:8080/api/usuario/{id}
+
+**PUT** [http://localhost:8080/api/usuario/{id}](http://localhost:8080/api/usuario/%7Bid%7D)
 
 **Body**
 
-    {
-	    "nome":"nome2",    
-	    "senhaUsuario": "123456",    
-	    "email": "teste@teste222.com"    
-    }
-    
+```json
+{
+    "nome":"nome2",
+    "senhaUsuario": "123456",
+    "email": "teste@teste222.com"
+}
+```
+
 **Deletar**
-**DEL** http://localhost:8080/api/usuario/{id}
+
+**DEL** [http://localhost:8080/api/usuario/{id}](http://localhost:8080/api/usuario/%7Bid%7D)
 
 ## Contas
 
 **Listar Todas**
-**GET** http://localhost:8080/api/conta
+
+**GET** [http://localhost:8080/api/conta](http://localhost:8080/api/conta)
+
+**Listar Todas - Por ID**
+
+**GET** [http://localhost:8080/api/conta/{](http://localhost:8080/api/conta/tipoconta/%7Bid_tipo_conta%7D)id}
 
 **Listar Todas - Por Tipo de Conta**
-**GET** http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}
+
+**GET** [http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}](http://localhost:8080/api/conta/tipoconta/%7Bid_tipo_conta%7D)
 
 **Listar Todas - Por Tipo de Conta**
-**GET** http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}
+
+**GET** [http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}](http://localhost:8080/api/conta/tipoconta/%7Bid_tipo_conta%7D)
 
 **Listar Todas - Por Tipo de Conta, Mês e Ano**
-**GET** http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}/{mes}/{ano}
+
+**GET** [http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}/{mes}/{ano}](http://localhost:8080/api/conta/tipoconta/%7Bid_tipo_conta%7D/%7Bmes%7D/%7Bano%7D)
 
 **Salvar**
-**POST** http://localhost:8080/api/conta
+
+**POST** [http://localhost:8080/api/conta](http://localhost:8080/api/conta)
 
 **Body**
 
-    {
-        "usuario":{
-		    "id": "569b4be9-146b-4386-a95a-b7e028320e35"
-	    }, "tipoConta":{
-	        "id": "9ad2f22d-3489-48ea-87bf-40c8808b2f0d"
-        },
-        "dataConta":"2021-11-04 17:35:55",
-        "mesConta": 11,
-        "anoConta": 2021,
-        "descricao": "Conta teste",
-        "valor": 10.50,
-        "numeroParcela": 1,
-        "totalParcelas": 1,
-        "recorrente": false
-	 }
-    
+```json
+{
+    "usuario":{
+	    "id": "569b4be9-146b-4386-a95a-b7e028320e35"
+    }, "tipoConta":{
+        "id": "9ad2f22d-3489-48ea-87bf-40c8808b2f0d"
+    },
+    "dataConta":"2021-11-04 17:35:55",
+    "mesConta": 11,
+    "anoConta": 2021,
+    "descricao": "Conta teste",
+    "valor": 10.50,
+    "numeroParcela": 1,
+    "totalParcelas": 1,
+    "recorrente": false
+ }
+```
+
 **Atualizar**
-**PUT** http://localhost:8080/api/conta/{id}
+
+**PUT** [http://localhost:8080/api/conta/{id}](http://localhost:8080/api/conta/%7Bid%7D)
 
 **Body**
 
-      {
-        "usuario":{
-		    "id": "569b4be9-146b-4386-a95a-b7e028320e35"
-	    }, "tipoConta":{
-	        "id": "9ad2f22d-3489-48ea-87bf-40c8808b2f0d"
-        },
-        "dataConta":"2021-11-04 17:35:55",
-        "mesConta": 11,
-        "anoConta": 2021,
-        "descricao": "Conta teste",
-        "valor": 10.50,
-        "numeroParcela": 1,
-        "totalParcelas": 1,
-        "recorrente": false
-	 }
-    
+```json
+  {
+    "usuario":{
+	    "id": "569b4be9-146b-4386-a95a-b7e028320e35"
+    }, "tipoConta":{
+        "id": "9ad2f22d-3489-48ea-87bf-40c8808b2f0d"
+    },
+    "dataConta":"2021-11-04 17:35:55",
+    "mesConta": 11,
+    "anoConta": 2021,
+    "descricao": "Conta teste",
+    "valor": 10.50,
+    "numeroParcela": 1,
+    "totalParcelas": 1,
+    "recorrente": false
+ }
+```
+
 **Deletar**
-**DEL** http://localhost:8080/api/conta/{id}
+
+**DEL** [http://localhost:8080/api/conta/{id}](http://localhost:8080/api/conta/%7Bid%7D)
 
 ## Recebidos
 
 **Listar Todas**
-**GET** http://localhost:8080/api/recebidos
 
-**Listar Todas - Por Tipo de Conta**
-**GET** http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}
+**GET** [http://localhost:8080/api/recebidos](http://localhost:8080/api/recebidos)
+
+**Listar Todas - Por ID**
+
+**GET** [http://localhost:8080/api/recebidos/{id}](http://localhost:8080/api/recebidos/%7Bid%7D)
 
 **Salvar**
-**POST** http://localhost:8080/api/recebidos
+
+**POST** [http://localhost:8080/api/recebidos](http://localhost:8080/api/recebidos)
 
 **Body**
 
-      {
-            "usuario":{
-		"id": "569b4be9-146b-4386-a95a-b7e028320e35"
-	    },
-	    "dataConta":"2021-11-04 17:35:55",
-	    "mesConta": 11,
-	    "anoConta": 2021,
-	    "descricao": "Conta teste",
-	    "valor": 10.50
-	 }
-    
-    
+```json
+  {
+    "usuario":{
+			"id": "569b4be9-146b-4386-a95a-b7e028320e35"
+    },
+    "dataConta":"2021-11-04 17:35:55",
+    "mesConta": 11,
+    "anoConta": 2021,
+    "descricao": "Conta teste",
+    "valor": 10.50
+ }
+```
+
 **Atualizar**
-**PUT** http://localhost:8080/api/recebidos/{id}
+
+**PUT** [http://localhost:8080/api/recebidos/{id}](http://localhost:8080/api/recebidos/%7Bid%7D)
 
 **Body**
 
-      {
-            "usuario":{
-		"id": "569b4be9-146b-4386-a95a-b7e028320e35"
-	    },
-	    "dataConta":"2021-11-04 17:35:55",
-	    "mesConta": 11,
-	    "anoConta": 2021,
-	    "descricao": "Conta teste",
-	    "valor": 10.50
-	 }
-    
-    
-**Deletar**
-**DEL** http://localhost:8080/api/recebidos/{id}
+```json
+  {
+    "usuario":{
+			"id": "569b4be9-146b-4386-a95a-b7e028320e35"
+    },
+    "dataConta":"2021-11-04 17:35:55",
+    "mesConta": 11,
+    "anoConta": 2021,
+    "descricao": "Conta teste",
+    "valor": 10.50
+ }
+```
 
+**Deletar**
+
+**DEL** [http://localhost:8080/api/recebidos/{id}](http://localhost:8080/api/recebidos/%7Bid%7D)
 
 # Tarefas Executadas
 
@@ -275,27 +316,25 @@ Dia(s) Trabalhado(s): 22/11/2021
 
 Dia(s) Trabalhado(s): 22/11/2021
 
---------
+---
 
 **Planejamento de Tarefas**
 
-
 - [ ]  **Listar Todas Contas por Período**
 
-Dia(s) Trabalhado(s): 
+Dia(s) Trabalhado(s):
 
 - [ ]  **Listar Todas Contas por Período Inicial e Final**
 
-Dia(s) Trabalhado(s): 
-
+Dia(s) Trabalhado(s):
 
 - [ ]  **Refatorar Testes evitando duplicação**
 
-Dia(s) Trabalhado(s): 
+Dia(s) Trabalhado(s):
 
 - [ ]  **Refatorar Services evitando duplicação**
 
-Dia(s) Trabalhado(s): 
+Dia(s) Trabalhado(s):
 
 - [ ]  **Ajuste Validaçãpo de Email, para validar na API utlizando o @Valid**
 
@@ -307,16 +346,14 @@ Dia(s) Trabalhado(s):
 
 - [ ]  **Criar na tabela de usuário campo ativado/desativado**
 
-Dia(s) Trabalhado(s): 
+Dia(s) Trabalhado(s):
 
 - [ ]  **Criar api para desativar usuário**
 
-Dia(s) Trabalhado(s): 
+Dia(s) Trabalhado(s):
 
 - [ ]  **Validar Constraint de chave estrangeira ao deletar usuário com relacionamento**
 
 Dia(s) Trabalhado(s):
 
---------
-
-
+---
