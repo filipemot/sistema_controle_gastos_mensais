@@ -12,6 +12,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
+import static br.com.luisfilipemota.controlegastospessoais.util.seguranca.Sha256.getSenha;
+
 @Service
 public class UsuarioService {
 
@@ -89,16 +91,5 @@ public class UsuarioService {
         Usuario tipoConta = optionalUsuario.get();
 
         return usuarioMapper.usuarioToUsuarioDto(tipoConta);
-    }
-
-    private String getSenha(String texto){
-
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(texto.getBytes(StandardCharsets.UTF_8));
-             return Base64.getEncoder().encodeToString(hash);
-        } catch (NoSuchAlgorithmException e) {
-            return null;
-        }
     }
 }

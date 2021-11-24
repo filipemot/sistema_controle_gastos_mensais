@@ -13,11 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
+import static br.com.luisfilipemota.controlegastospessoais.util.seguranca.Sha256.getSenha;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -292,16 +290,5 @@ public class UsuarioServiceTest {
         assertThat(usuarioSalvo.get(0).getId()).isEqualTo(usuario.getId());
         assertThat(usuarioSalvo.get(0).getNome()).isEqualTo(usuario.getNome());
         assertThat(usuarioSalvo.get(0).getEmail()).isEqualTo(usuario.getEmail());
-    }
-
-    private String getSenha(String texto){
-
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(texto.getBytes(StandardCharsets.UTF_8));
-            return Base64.getEncoder().encodeToString(hash);
-        } catch (NoSuchAlgorithmException e) {
-            return null;
-        }
     }
 }
