@@ -320,6 +320,30 @@ Dia(s) Trabalhado(s): 22/11/2021
 
 Dia(s) Trabalhado(s): 23/11/2021
 
+- [x]  **Na API de Conta - Criar Teste do Service para Tipo de Conta Não Encontrado**
+
+Dia(s) Trabalhado(s): 24/11/2021
+
+- [x]  **Na API de Conta - Criar Teste do Resource para Tipo de Conta Não Encontrado**
+
+Dia(s) Trabalhado(s): 24/11/2021
+
+- [x]  **Na API de Conta - Criar Teste do Service para Usuário Não Encontrado**
+
+Dia(s) Trabalhado(s): 24/11/2021
+
+- [x]  **Na API de Conta - Criar Teste do Resource para Usuário Não Encontrado**
+
+Dia(s) Trabalhado(s): 24/11/2021
+
+- [x]  **Na API de Recebidos - Criar Teste do Service para Usuário Não Encontrado**
+
+Dia(s) Trabalhado(s): 24/11/2021
+
+- [x]  **Na API de Recebidos - Criar Teste do Resource para Usuário Não Encontrado**
+
+Dia(s) Trabalhado(s): 24/11/2021
+
 ---
 
 **Planejamento de Tarefas**
@@ -341,30 +365,6 @@ Dia(s) Trabalhado(s):
 Dia(s) Trabalhado(s):
 
 - [ ]  **Ajuste Validação de Email, para validar na API utlizando o @Valid**
-
-Dia(s) Trabalhado(s):
-
-- [ ]  **Na API de Conta - Criar Teste do Service para Tipo de Conta Não Encontrado**
-
-Dia(s) Trabalhado(s):
-
-- [ ]  **Na API de Conta - Criar Teste do Resource para Tipo de Conta Não Encontrado**
-
-Dia(s) Trabalhado(s):
-
-- [ ]  **Na API de Conta - Criar Teste do Service para Usuário Não Encontrado**
-
-Dia(s) Trabalhado(s):
-
-- [ ]  **Na API de Conta - Criar Teste do Resource para Usuário Não Encontrado**
-
-Dia(s) Trabalhado(s):
-
-- [ ]  **Na API de Recebidos - Criar Teste do Service para Usuário Não Encontrado**
-
-Dia(s) Trabalhado(s):
-
-- [ ]  **Na API de Recebidos - Criar Teste do Resource para Usuário Não Encontrado**
 
 Dia(s) Trabalhado(s):
 
