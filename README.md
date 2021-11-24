@@ -1,6 +1,6 @@
 # Sistema de Controle de Gastos Pessoais
 
-**Última Atualização:** 23/11/2021
+**Última Atualização:** 24/11/2021
 
 **Tecnologias Utilizadas:**
 
@@ -344,6 +344,10 @@ Dia(s) Trabalhado(s): 24/11/2021
 
 Dia(s) Trabalhado(s): 24/11/2021
 
+- [x]  **Refatorar Testes evitando duplicação**
+
+Dia(s) Trabalhado(s): 24/11/2021
+
 ---
 
 **Planejamento de Tarefas**
@@ -353,10 +357,6 @@ Dia(s) Trabalhado(s): 24/11/2021
 Dia(s) Trabalhado(s):
 
 - [ ]  **Listar Todas Contas por Período Inicial e Final**
-
-Dia(s) Trabalhado(s):
-
-- [ ]  **Refatorar Testes evitando duplicação**
 
 Dia(s) Trabalhado(s):
 
