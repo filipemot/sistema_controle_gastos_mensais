@@ -18,10 +18,9 @@ public class TipoContaMapperTest {
         tipoConta.setDescricao("Descricao");
 
         TipoContaDTO tipoContaDTO = TipoContaMapper.INSTANCE.tipoContaToTipoContaDto(tipoConta);
-        assertThat(tipoContaDTO).isNotNull();
-        assertThat(tipoContaDTO.getId()).isEqualTo(tipoConta.getId());
-        assertThat(tipoContaDTO.getDescricao()).isEqualTo(tipoConta.getDescricao());
+        asserts(tipoConta, tipoContaDTO);
     }
+
 
     @Test
     public void testMapperTipoContaDTOToTipoConta() {
@@ -30,9 +29,12 @@ public class TipoContaMapperTest {
         tipoContaDTO.setDescricao("Descricao");
 
         TipoConta tipoConta = TipoContaMapper.INSTANCE.tipoContaDTOToTipoConta(tipoContaDTO);
-        assertThat(tipoConta).isNotNull();
+        asserts(tipoConta, tipoContaDTO);
+    }
+
+    private void asserts(TipoConta tipoConta, TipoContaDTO tipoContaDTO) {
+        assertThat(tipoContaDTO).isNotNull();
         assertThat(tipoContaDTO.getId()).isEqualTo(tipoConta.getId());
         assertThat(tipoContaDTO.getDescricao()).isEqualTo(tipoConta.getDescricao());
     }
-
 }
