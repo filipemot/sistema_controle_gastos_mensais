@@ -25,7 +25,7 @@ public class Usuario {
     private String email;
 
     @Column(name = "senha")
-    private String senha;
+    public String senha;
 
     public UUID getId() {
         return id;

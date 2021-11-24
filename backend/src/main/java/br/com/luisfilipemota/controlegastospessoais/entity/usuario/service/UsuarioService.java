@@ -4,22 +4,20 @@ import br.com.luisfilipemota.controlegastospessoais.entity.usuario.mapper.Usuari
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.model.Usuario;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.repository.UsuarioRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
-import com.google.common.hash.Hashing;
 import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
 
 @Service
 public class UsuarioService {
 
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    private UsuarioMapper usuarioMapper;
+    private final UsuarioMapper usuarioMapper;
 
     public UsuarioService(UsuarioMapper usuarioMapper, UsuarioRepository usuarioRepository) {
         this.usuarioMapper = usuarioMapper;
@@ -27,9 +25,7 @@ public class UsuarioService {
     }
 
     public UsuarioDTO save(UsuarioDTO usuarioDTO) {
-        String senhaHash = Hashing.sha256()
-                .hashString(usuarioDTO.getSenhaUsuario(), StandardCharsets.UTF_8)
-                .toString();
+        String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
         Usuario usuario = usuarioMapper.usuarioDtoToUsuario(usuarioDTO);
 
@@ -47,9 +43,8 @@ public class UsuarioService {
         if (!optionalTipoConta.isPresent()) {
             throw new NotFoundException("Usuario não encontrado");
         }
-        String senhaHash = Hashing.sha256()
-                .hashString(usuarioDTO.getSenhaUsuario(), StandardCharsets.UTF_8)
-                .toString();
+
+        String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
         Usuario tipoContaBd = optionalTipoConta.get();
         tipoContaBd.setNome(usuarioDTO.getNome());
@@ -94,5 +89,16 @@ public class UsuarioService {
         Usuario tipoConta = optionalUsuario.get();
 
         return usuarioMapper.usuarioToUsuarioDto(tipoConta);
+    }
+
+    private String getSenha(String texto){
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(texto.getBytes(StandardCharsets.UTF_8));
+             return Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
     }
 }

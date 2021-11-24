@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequestMapping("/api/tipoconta")
 public class TipoContaResource {
 
-    private TipoContaService tipoContaService;
+    private final TipoContaService tipoContaService;
 
     @GetMapping
     public List<TipoContaDTO> list() {

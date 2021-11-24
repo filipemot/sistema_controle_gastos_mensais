@@ -15,9 +15,9 @@ import java.util.UUID;
 @Service
 public class TipoContaService {
 
-    private TipoContaRepository tipoContaRepository;
+    private final TipoContaRepository tipoContaRepository;
 
-    private TipoContaMapper tipoContaMapper;
+    private final TipoContaMapper tipoContaMapper;
 
     public TipoContaService(TipoContaMapper tipoContaMapper, TipoContaRepository tipoContaRepository) {
         this.tipoContaMapper = tipoContaMapper;

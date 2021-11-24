@@ -17,7 +17,7 @@ import java.util.UUID;
 public class UsuarioResource {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
     public UsuarioResource(UsuarioService usuarioService){
         this.usuarioService = usuarioService;

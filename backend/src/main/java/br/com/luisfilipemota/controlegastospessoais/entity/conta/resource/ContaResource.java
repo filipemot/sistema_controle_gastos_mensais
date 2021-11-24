@@ -16,7 +16,13 @@ import java.util.UUID;
 @RequestMapping("/api/conta")
 public class ContaResource {
 
-    private ContaService contaService;
+    private final ContaService contaService;
+
+
+    public ContaResource(ContaService contaService){
+        this.contaService = contaService;
+    }
+
 
     @GetMapping
     public List<ContaDTO> list() {
@@ -33,10 +39,6 @@ public class ContaResource {
     public ContaTipoContaDTO listPorTipoContaMesAno(@PathVariable UUID id, @PathVariable int mes, @PathVariable int ano) {
 
         return this.contaService.findAllByTipoContaIdAndMesContaAndAnoConta(id, mes, ano);
-    }
-
-    public ContaResource(ContaService contaService){
-        this.contaService = contaService;
     }
 
     @GetMapping("/{id}")

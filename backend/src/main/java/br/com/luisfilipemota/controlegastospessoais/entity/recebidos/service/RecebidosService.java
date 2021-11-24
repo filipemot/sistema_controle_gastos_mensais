@@ -15,9 +15,9 @@ import java.util.UUID;
 @Service
 public class RecebidosService {
 
-    private RecebidosRepository recebidosRepository;
+    private final RecebidosRepository recebidosRepository;
 
-    private RecebidosMapper recebidosMapper;
+    private final RecebidosMapper recebidosMapper;
 
     public RecebidosService(RecebidosMapper contaMapper, RecebidosRepository contaRepository) {
         this.recebidosMapper = contaMapper;

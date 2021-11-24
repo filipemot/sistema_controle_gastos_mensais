@@ -5,7 +5,6 @@ import br.com.luisfilipemota.controlegastospessoais.entity.usuario.mapper.Usuari
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.model.Usuario;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.repository.UsuarioRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
-import com.google.common.hash.Hashing;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,10 +14,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -47,9 +45,7 @@ public class UsuarioServiceTest {
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
-        String senhaHash = Hashing.sha256()
-                .hashString(usuarioDTO.getSenhaUsuario(), StandardCharsets.UTF_8)
-                .toString();
+        String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);
@@ -78,9 +74,7 @@ public class UsuarioServiceTest {
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
-        String senhaHash = Hashing.sha256()
-                .hashString(usuarioDTO.getSenhaUsuario(), StandardCharsets.UTF_8)
-                .toString();
+        String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);
@@ -106,16 +100,14 @@ public class UsuarioServiceTest {
 
 
     @Test
-    public void testAtualizarUsuarioComUsuarioNaoEncontrado() throws NotFoundException {
+    public void testAtualizarUsuarioComUsuarioNaoEncontrado() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setNome("Nome");
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
-        String senhaHash = Hashing.sha256()
-                .hashString(usuarioDTO.getSenhaUsuario(), StandardCharsets.UTF_8)
-                .toString();
+        String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);
@@ -124,7 +116,7 @@ public class UsuarioServiceTest {
         usuario.setEmail("Email");
 
         Mockito.when(usuarioRepository.findById(UUID_TEST))
-                .thenReturn(Optional.<Usuario>empty());
+                .thenReturn(Optional.empty());
 
         Mockito.when(usuarioRepository.save(usuario))
                 .thenReturn(usuario);
@@ -133,7 +125,7 @@ public class UsuarioServiceTest {
                 .thenReturn(usuarioDTO);
 
         try {
-            UsuarioDTO usuarioSalvo = usuarioService.update(UUID_TEST, usuarioDTO);
+            usuarioService.update(UUID_TEST, usuarioDTO);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Usuario não encontrado");
@@ -151,16 +143,14 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    public void testDeletarUsuarioComUsuarioEncontrado() throws NotFoundException {
+    public void testDeletarUsuarioComUsuarioEncontrado() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setNome("Nome");
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
-        String senhaHash = Hashing.sha256()
-                .hashString(usuarioDTO.getSenhaUsuario(), StandardCharsets.UTF_8)
-                .toString();
+        String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);
@@ -189,9 +179,7 @@ public class UsuarioServiceTest {
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
-        String senhaHash = Hashing.sha256()
-                .hashString(usuarioDTO.getSenhaUsuario(), StandardCharsets.UTF_8)
-                .toString();
+        String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);
@@ -200,7 +188,7 @@ public class UsuarioServiceTest {
         usuario.setEmail("Email");
 
         Mockito.when(usuarioRepository.findById(UUID_TEST))
-                .thenReturn(Optional.<Usuario>empty());
+                .thenReturn(Optional.empty());
 
         Mockito.when(usuarioMapper.usuarioToUsuarioDto(usuario))
                 .thenReturn(usuarioDTO);
@@ -223,9 +211,7 @@ public class UsuarioServiceTest {
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
-        String senhaHash = Hashing.sha256()
-                .hashString(usuarioDTO.getSenhaUsuario(), StandardCharsets.UTF_8)
-                .toString();
+        String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);
@@ -252,9 +238,7 @@ public class UsuarioServiceTest {
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
-        String senhaHash = Hashing.sha256()
-                .hashString(usuarioDTO.getSenhaUsuario(), StandardCharsets.UTF_8)
-                .toString();
+        String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);
@@ -263,13 +247,13 @@ public class UsuarioServiceTest {
         usuario.setEmail("Email");
 
         Mockito.when(usuarioRepository.findById(UUID_TEST))
-                .thenReturn(Optional.<Usuario>empty());
+                .thenReturn(Optional.empty());
 
         Mockito.when(usuarioMapper.usuarioToUsuarioDto(usuario))
                 .thenReturn(usuarioDTO);
 
         try {
-            UsuarioDTO usuarioSalva = usuarioService.findById(UUID_TEST);
+            usuarioService.findById(UUID_TEST);
             fail("Falha");
         } catch (NotFoundException e) {
             assertThat(e.getMessage()).isEqualTo("Usuario não encontrado");
@@ -286,9 +270,7 @@ public class UsuarioServiceTest {
         usuarioDTO.setEmail("Email");
         usuarioDTO.setSenhaUsuario("Senha");
 
-        String senhaHash = Hashing.sha256()
-                .hashString(usuarioDTO.getSenhaUsuario(), StandardCharsets.UTF_8)
-                .toString();
+        String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);
@@ -297,7 +279,7 @@ public class UsuarioServiceTest {
         usuario.setEmail("Email");
 
         Mockito.when(usuarioRepository.findAll())
-                .thenReturn(Arrays.asList(usuario));
+                .thenReturn(Collections.singletonList(usuario));
 
         Mockito.when(usuarioMapper.usuarioToUsuarioDto(usuario))
                 .thenReturn(usuarioDTO);
@@ -310,5 +292,16 @@ public class UsuarioServiceTest {
         assertThat(usuarioSalvo.get(0).getId()).isEqualTo(usuario.getId());
         assertThat(usuarioSalvo.get(0).getNome()).isEqualTo(usuario.getNome());
         assertThat(usuarioSalvo.get(0).getEmail()).isEqualTo(usuario.getEmail());
+    }
+
+    private String getSenha(String texto){
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(texto.getBytes(StandardCharsets.UTF_8));
+            return Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
     }
 }

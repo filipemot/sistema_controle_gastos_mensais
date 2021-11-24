@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequestMapping("/api/recebidos")
 public class RecebidosResource {
 
-    private RecebidosService recebidosService;
+    private final RecebidosService recebidosService;
 
     @GetMapping
     public List<RecebidosDTO> list() {
