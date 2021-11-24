@@ -8,6 +8,8 @@ import br.com.luisfilipemota.controlegastospessoais.entity.recebidos.service.dto
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.model.Usuario;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
 import javassist.NotFoundException;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -46,29 +45,13 @@ public class RecebidosServiceTest {
 
     @Test
     public void testSalvarRecebidos() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
 
-        RecebidosDTO recebidosDTO = new RecebidosDTO();
-        recebidosDTO.setId(UUID_TEST);
-        recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesRecebido(11);
-        recebidosDTO.setAnoRecebido(2021);
-        recebidosDTO.setDescricao("Descricao");
-        recebidosDTO.setValor(100.0);
+        RecebidosDTO recebidosDTO = getRecebidosDTO(usuarioDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
 
-        Recebidos recebidos = new Recebidos();
-        recebidos.setId(UUID_TEST);
-        recebidos.setUsuario(usuario);
-        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesRecebido(11);
-        recebidos.setAnoRecebido(2021);
-        recebidos.setDescricao("Descricao");
-        recebidos.setValor(100.0);
+        Recebidos recebidos = getRecebidos(usuario);
 
         Mockito.when(recebidosMapper.recebidosDTOToRecebidos(recebidosDTO))
                 .thenReturn(recebidos);
@@ -85,29 +68,13 @@ public class RecebidosServiceTest {
 
     @Test
     public void testSalvarRecebidosUsuarioNaoEncontrado() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST_DIFERENTE);
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST_DIFERENTE);
 
-        RecebidosDTO recebidosDTO = new RecebidosDTO();
-        recebidosDTO.setId(UUID_TEST);
-        recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesRecebido(11);
-        recebidosDTO.setAnoRecebido(2021);
-        recebidosDTO.setDescricao("Descricao");
-        recebidosDTO.setValor(100.0);
+        RecebidosDTO recebidosDTO = getRecebidosDTO(usuarioDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
 
-        Recebidos recebidos = new Recebidos();
-        recebidos.setId(UUID_TEST);
-        recebidos.setUsuario(usuario);
-        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesRecebido(11);
-        recebidos.setAnoRecebido(2021);
-        recebidos.setDescricao("Descricao");
-        recebidos.setValor(100.0);
+        Recebidos recebidos = getRecebidos(usuario);
 
         Mockito.when(recebidosMapper.recebidosDTOToRecebidos(recebidosDTO))
                 .thenReturn(recebidos);
@@ -123,35 +90,19 @@ public class RecebidosServiceTest {
         } catch (DataIntegrityViolationException e) {
             assertTrue(true);
         } catch (Exception e) {
-            assertTrue(false);
+            Assertions.fail();
         }
     }
 
     @Test
     public void testAtualizarRecebidosComRecebidosEncontrado() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
 
-        RecebidosDTO recebidosDTO = new RecebidosDTO();
-        recebidosDTO.setId(UUID_TEST);
-        recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesRecebido(11);
-        recebidosDTO.setAnoRecebido(2021);
-        recebidosDTO.setDescricao("Descricao");
-        recebidosDTO.setValor(100.0);
+        RecebidosDTO recebidosDTO = getRecebidosDTO(usuarioDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
 
-        Recebidos recebidos = new Recebidos();
-        recebidos.setId(UUID_TEST);
-        recebidos.setUsuario(usuario);
-        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesRecebido(11);
-        recebidos.setAnoRecebido(2021);
-        recebidos.setDescricao("Descricao");
-        recebidos.setValor(100.0);
+        Recebidos recebidos = getRecebidos(usuario);
 
         Optional<Recebidos> recebidosOptional = Optional.of(recebidos);
 
@@ -174,33 +125,17 @@ public class RecebidosServiceTest {
 
 
     @Test
-    public void testAtualizarRecibosComRecibosNaoEncontrado() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
+    public void testAtualizarRecibosComRecibosNaoEncontrado() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
 
-        RecebidosDTO recebidosDTO = new RecebidosDTO();
-        recebidosDTO.setId(UUID_TEST);
-        recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesRecebido(11);
-        recebidosDTO.setAnoRecebido(2021);
-        recebidosDTO.setDescricao("Descricao");
-        recebidosDTO.setValor(100.0);
+        RecebidosDTO recebidosDTO = getRecebidosDTO(usuarioDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
 
-        Recebidos recebidos = new Recebidos();
-        recebidos.setId(UUID_TEST);
-        recebidos.setUsuario(usuario);
-        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesRecebido(11);
-        recebidos.setAnoRecebido(2021);
-        recebidos.setDescricao("Descricao");
-        recebidos.setValor(100.0);
+        Recebidos recebidos = getRecebidos(usuario);
 
         Mockito.when(recebidosRepository.findById(UUID_TEST))
-                .thenReturn(Optional.<Recebidos>empty());
+                .thenReturn(Optional.empty());
 
         Mockito.when(recebidosRepository.save(recebidos))
                 .thenReturn(recebidos);
@@ -218,42 +153,15 @@ public class RecebidosServiceTest {
         }
     }
 
-    private void asserts(RecebidosDTO recebidosDTO, RecebidosDTO recebidos) {
-        assertThat(recebidosDTO).isNotNull();
-        assertThat(recebidosDTO.getId()).isEqualTo(recebidos.getId());
-        assertThat(recebidosDTO.getUsuario().getId()).isEqualTo(recebidos.getUsuario().getId());
-        assertThat(recebidosDTO.getDataRecebido()).isEqualTo(recebidos.getDataRecebido());
-        assertThat(recebidosDTO.getMesRecebido()).isEqualTo(recebidos.getMesRecebido());
-        assertThat(recebidosDTO.getAnoRecebido()).isEqualTo(recebidos.getAnoRecebido());
-        assertThat(recebidosDTO.getDescricao()).isEqualTo(recebidos.getDescricao());
-        assertThat(recebidosDTO.getValor()).isEqualTo(recebidos.getValor());
-    }
-
     @Test
-    public void testDeletarRecibosComRecibosEncontrada() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
+    public void testDeletarRecibosComRecibosEncontrada() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
 
-        RecebidosDTO recebidosDTO = new RecebidosDTO();
-        recebidosDTO.setId(UUID_TEST);
-        recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesRecebido(11);
-        recebidosDTO.setAnoRecebido(2021);
-        recebidosDTO.setDescricao("Descricao");
-        recebidosDTO.setValor(100.0);
+        RecebidosDTO recebidosDTO = getRecebidosDTO(usuarioDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
 
-        Recebidos recebidos = new Recebidos();
-        recebidos.setId(UUID_TEST);
-        recebidos.setUsuario(usuario);
-        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesRecebido(11);
-        recebidos.setAnoRecebido(2021);
-        recebidos.setDescricao("Descricao");
-        recebidos.setValor(100.0);
+        Recebidos recebidos = getRecebidos(usuario);
 
         Mockito.when(recebidosRepository.findById(UUID_TEST))
                 .thenReturn(Optional.of(recebidos));
@@ -270,31 +178,15 @@ public class RecebidosServiceTest {
 
     @Test
     public void testDeletarRecibosComRecibosNaoEncontrada() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
 
-        RecebidosDTO recebidosDTO = new RecebidosDTO();
-        recebidosDTO.setId(UUID_TEST);
-        recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesRecebido(11);
-        recebidosDTO.setAnoRecebido(2021);
-        recebidosDTO.setDescricao("Descricao");
-        recebidosDTO.setValor(100.0);
+        RecebidosDTO recebidosDTO = getRecebidosDTO(usuarioDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
 
-        Recebidos recebidos = new Recebidos();
-        recebidos.setId(UUID_TEST);
-        recebidos.setUsuario(usuario);
-        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesRecebido(11);
-        recebidos.setAnoRecebido(2021);
-        recebidos.setDescricao("Descricao");
-        recebidos.setValor(100.0);
+        Recebidos recebidos = getRecebidos(usuario);
         Mockito.when(recebidosRepository.findById(UUID_TEST))
-                .thenReturn(Optional.<Recebidos>empty());
+                .thenReturn(Optional.empty());
 
         Mockito.when(recebidosMapper.recebidosToRecebidosDto(recebidos))
                 .thenReturn(recebidosDTO);
@@ -311,29 +203,13 @@ public class RecebidosServiceTest {
 
     @Test
     public void testPesquisaPorIdComRecibosEncontrado() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
 
-        RecebidosDTO recebidosDTO = new RecebidosDTO();
-        recebidosDTO.setId(UUID_TEST);
-        recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesRecebido(11);
-        recebidosDTO.setAnoRecebido(2021);
-        recebidosDTO.setDescricao("Descricao");
-        recebidosDTO.setValor(100.0);
+        RecebidosDTO recebidosDTO = getRecebidosDTO(usuarioDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
 
-        Recebidos recebidos = new Recebidos();
-        recebidos.setId(UUID_TEST);
-        recebidos.setUsuario(usuario);
-        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesRecebido(11);
-        recebidos.setAnoRecebido(2021);
-        recebidos.setDescricao("Descricao");
-        recebidos.setValor(100.0);
+        Recebidos recebidos = getRecebidos(usuario);
 
         Mockito.when(recebidosRepository.findById(UUID_TEST))
                 .thenReturn(Optional.of(recebidos));
@@ -348,32 +224,16 @@ public class RecebidosServiceTest {
 
     @Test
     public void testPesquisaPorIdComRecibosNaoEncontrado() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
 
-        RecebidosDTO recebidosDTO = new RecebidosDTO();
-        recebidosDTO.setId(UUID_TEST);
-        recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesRecebido(11);
-        recebidosDTO.setAnoRecebido(2021);
-        recebidosDTO.setDescricao("Descricao");
-        recebidosDTO.setValor(100.0);
+        RecebidosDTO recebidosDTO = getRecebidosDTO(usuarioDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
 
-        Recebidos recebidos = new Recebidos();
-        recebidos.setId(UUID_TEST);
-        recebidos.setUsuario(usuario);
-        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidos.setMesRecebido(11);
-        recebidos.setAnoRecebido(2021);
-        recebidos.setDescricao("Descricao");
-        recebidos.setValor(100.0);
+        Recebidos recebidos = getRecebidos(usuario);
 
         Mockito.when(recebidosRepository.findById(UUID_TEST))
-                .thenReturn(Optional.<Recebidos>empty());
+                .thenReturn(Optional.empty());
 
         Mockito.when(recebidosMapper.recebidosToRecebidosDto(recebidos))
                 .thenReturn(recebidosDTO);
@@ -390,21 +250,54 @@ public class RecebidosServiceTest {
 
     @Test
     public void testPesquisaTodosRecibos() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+
+        RecebidosDTO recebidosDTO = getRecebidosDTO(usuarioDTO);
+
+        Usuario usuario = getUsuario();
+
+        Recebidos recebidos = getRecebidos(usuario);
+
+        Mockito.when(recebidosRepository.findAll())
+                .thenReturn(Collections.singletonList(recebidos));
+
+        Mockito.when(recebidosMapper.recebidosToRecebidosDto(recebidos))
+                .thenReturn(recebidosDTO);
+
+        List<RecebidosDTO> listaRecebidos = recebidosService.findAll();
+
+        asserts(recebidosDTO, listaRecebidos.get(0));
+
+        assertThat(listaRecebidos).isNotNull();
+        assertThat(listaRecebidos.size()).isEqualTo(1);
+    }
+    @NotNull
+    private UsuarioDTO getUsuarioDTO(UUID uuid_test) {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
+        usuarioDTO.setId(uuid_test);
+        return usuarioDTO;
+    }
 
-        RecebidosDTO recebidosDTO = new RecebidosDTO();
-        recebidosDTO.setId(UUID_TEST);
-        recebidosDTO.setUsuario(usuarioDTO);
-        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        recebidosDTO.setMesRecebido(11);
-        recebidosDTO.setAnoRecebido(2021);
-        recebidosDTO.setDescricao("Descricao");
-        recebidosDTO.setValor(100.0);
-
+    @NotNull
+    private Usuario getUsuario() {
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);
+        return usuario;
+    }
 
+    private void asserts(RecebidosDTO recebidosDTO, RecebidosDTO recebidos) {
+        assertThat(recebidosDTO).isNotNull();
+        assertThat(recebidosDTO.getId()).isEqualTo(recebidos.getId());
+        assertThat(recebidosDTO.getUsuario().getId()).isEqualTo(recebidos.getUsuario().getId());
+        assertThat(recebidosDTO.getDataRecebido()).isEqualTo(recebidos.getDataRecebido());
+        assertThat(recebidosDTO.getMesRecebido()).isEqualTo(recebidos.getMesRecebido());
+        assertThat(recebidosDTO.getAnoRecebido()).isEqualTo(recebidos.getAnoRecebido());
+        assertThat(recebidosDTO.getDescricao()).isEqualTo(recebidos.getDescricao());
+        assertThat(recebidosDTO.getValor()).isEqualTo(recebidos.getValor());
+    }
+    
+    @NotNull
+    private Recebidos getRecebidos(Usuario usuario) {
         Recebidos recebidos = new Recebidos();
         recebidos.setId(UUID_TEST);
         recebidos.setUsuario(usuario);
@@ -413,23 +306,19 @@ public class RecebidosServiceTest {
         recebidos.setAnoRecebido(2021);
         recebidos.setDescricao("Descricao");
         recebidos.setValor(100.0);
+        return recebidos;
+    }
 
-        Mockito.when(recebidosRepository.findAll())
-                .thenReturn(Arrays.asList(recebidos));
-
-        Mockito.when(recebidosMapper.recebidosToRecebidosDto(recebidos))
-                .thenReturn(recebidosDTO);
-
-        List<RecebidosDTO> listaRecebidos = recebidosService.findAll();
-
-        assertThat(listaRecebidos).isNotNull();
-        assertThat(listaRecebidos.size()).isEqualTo(1);
-        assertThat(listaRecebidos.get(0).getId()).isEqualTo(recebidos.getId());
-        assertThat(listaRecebidos.get(0).getUsuario().getId()).isEqualTo(recebidos.getUsuario().getId());
-        assertThat(listaRecebidos.get(0).getDataRecebido()).isEqualTo(recebidos.getDataRecebido());
-        assertThat(listaRecebidos.get(0).getMesRecebido()).isEqualTo(recebidos.getMesRecebido());
-        assertThat(listaRecebidos.get(0).getAnoRecebido()).isEqualTo(recebidos.getAnoRecebido());
-        assertThat(listaRecebidos.get(0).getDescricao()).isEqualTo(recebidos.getDescricao());
-        assertThat(listaRecebidos.get(0).getValor()).isEqualTo(recebidos.getValor());
+    @NotNull
+    private RecebidosDTO getRecebidosDTO(UsuarioDTO usuarioDTO) {
+        RecebidosDTO recebidosDTO = new RecebidosDTO();
+        recebidosDTO.setId(UUID_TEST);
+        recebidosDTO.setUsuario(usuarioDTO);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
+        recebidosDTO.setDescricao("Descricao");
+        recebidosDTO.setValor(100.0);
+        return recebidosDTO;
     }
 }

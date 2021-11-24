@@ -38,7 +38,7 @@ public class ContaMapperTest {
         conta.setRecorrente(false);
 
         ContaDTO contaDTO = ContaMapper.INSTANCE.contaToContaDto(conta);
-        asserts(conta, contaDTO);
+        asserts(contaDTO, conta);
     }
 
     @Test
@@ -62,10 +62,10 @@ public class ContaMapperTest {
         contaDTO.setRecorrente(false);
 
         Conta conta = ContaMapper.INSTANCE.contaDTOToConta(contaDTO);
-        asserts(conta, contaDTO);
+        asserts(contaDTO, conta);
     }
 
-    private void asserts(Conta conta, ContaDTO contaDTO) {
+    private void asserts(ContaDTO contaDTO, Conta conta) {
         assertThat(contaDTO).isNotNull();
         assertThat(contaDTO.getId()).isEqualTo(conta.getId());
         assertThat(contaDTO.getUsuario().getId()).isEqualTo(conta.getUsuario().getId());
@@ -79,4 +79,5 @@ public class ContaMapperTest {
         assertThat(contaDTO.getTotalParcelas()).isEqualTo(conta.getTotalParcelas());
         assertThat(contaDTO.getRecorrente()).isEqualTo(conta.getRecorrente());
     }
+
 }

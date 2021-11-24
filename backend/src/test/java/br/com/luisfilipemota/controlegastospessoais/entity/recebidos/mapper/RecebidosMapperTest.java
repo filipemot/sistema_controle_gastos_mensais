@@ -29,14 +29,7 @@ public class RecebidosMapperTest {
         recebidos.setValor(100.0);
 
         RecebidosDTO recebidosDTO = RecebidosMapper.INSTANCE.recebidosToRecebidosDto(recebidos);
-        assertThat(recebidosDTO).isNotNull();
-        assertThat(recebidosDTO.getId()).isEqualTo(recebidos.getId());
-        assertThat(recebidosDTO.getUsuario().getId()).isEqualTo(recebidos.getUsuario().getId());
-        assertThat(recebidosDTO.getDataRecebido()).isEqualTo(recebidos.getDataRecebido());
-        assertThat(recebidosDTO.getMesRecebido()).isEqualTo(recebidos.getMesRecebido());
-        assertThat(recebidosDTO.getAnoRecebido()).isEqualTo(recebidos.getAnoRecebido());
-        assertThat(recebidosDTO.getDescricao()).isEqualTo(recebidos.getDescricao());
-        assertThat(recebidosDTO.getValor()).isEqualTo(recebidos.getValor());
+        asserts(recebidosDTO, recebidos);
     }
 
     @Test
@@ -54,6 +47,10 @@ public class RecebidosMapperTest {
         recebidosDTO.setValor(100.0);
 
         Recebidos recebidos = RecebidosMapper.INSTANCE.recebidosDTOToRecebidos(recebidosDTO);
+        asserts(recebidosDTO, recebidos);
+    }
+
+    private void asserts(RecebidosDTO recebidosDTO, Recebidos recebidos) {
         assertThat(recebidosDTO).isNotNull();
         assertThat(recebidosDTO.getId()).isEqualTo(recebidos.getId());
         assertThat(recebidosDTO.getUsuario().getId()).isEqualTo(recebidos.getUsuario().getId());
