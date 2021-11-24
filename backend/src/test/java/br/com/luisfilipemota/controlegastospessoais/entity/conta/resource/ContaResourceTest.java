@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -38,6 +39,7 @@ public class ContaResourceTest {
     ContaService contaService;
 
     private final UUID UUID_TEST  = UUID.randomUUID();
+    private final UUID UUID_TEST_DIFERENTE  = UUID.randomUUID();
 
     @Test
     public void testPesquisaPorContaComIdIgualUUIDTest() throws Exception {
@@ -139,6 +141,41 @@ public class ContaResourceTest {
 
     }
 
+    @Test
+    public void testSalvarContaComUsuarioNaoEncontradoOuTipoContaNaoEncontrado() throws Exception {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeConverter());
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(UUID_TEST);
+        TipoContaDTO tipoContaDTO = new TipoContaDTO();
+        tipoContaDTO.setId(UUID_TEST);
+
+        ContaDTO contaDTO = new ContaDTO();
+        contaDTO.setId(UUID_TEST);
+        contaDTO.setUsuario(usuarioDTO);
+        contaDTO.setTipoConta(tipoContaDTO);
+        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        contaDTO.setMesConta(11);
+        contaDTO.setAnoConta(2021);
+        contaDTO.setDescricao("Descricao");
+        contaDTO.setValor(100.0);
+        contaDTO.setNumeroParcela(1);
+        contaDTO.setTotalParcelas(1);
+        contaDTO.setRecorrente(false);
+
+        Mockito.when(contaService.save(Mockito.any(ContaDTO.class)))
+                .thenThrow(DataIntegrityViolationException.class);
+
+        Gson gson = gsonBuilder.create();
+        String requestJson = gson.toJson(contaDTO);
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/conta")
+                        .content(requestJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+    }
 
     @Test
     public void testAtualizarContaComContaEncontrada() throws Exception {
@@ -184,6 +221,40 @@ public class ContaResourceTest {
                 .andExpect(jsonPath("$.numeroParcela", is(1)))
                 .andExpect(jsonPath("$.totalParcelas", is(1)))
                 .andExpect(jsonPath("$.recorrente", is(false)));
+    }
+
+    @Test
+    public void testAtualizarContaComUsuarioNaoEncontradoOuTipoContaNaoEncontrado() throws Exception {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeConverter());
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(UUID_TEST_DIFERENTE);
+        TipoContaDTO tipoContaDTO = new TipoContaDTO();
+        tipoContaDTO.setId(UUID_TEST_DIFERENTE);
+
+        ContaDTO contaDTO = new ContaDTO();
+        contaDTO.setId(UUID_TEST);
+        contaDTO.setUsuario(usuarioDTO);
+        contaDTO.setTipoConta(tipoContaDTO);
+        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        contaDTO.setMesConta(11);
+        contaDTO.setAnoConta(2021);
+        contaDTO.setDescricao("Descricao");
+        contaDTO.setValor(100.0);
+        contaDTO.setNumeroParcela(1);
+        contaDTO.setTotalParcelas(1);
+        contaDTO.setRecorrente(false);
+        Gson gson = gsonBuilder.create();
+        String requestJson = gson.toJson(contaDTO);
+
+        Mockito.when(contaService.update(Mockito.any(UUID.class), Mockito.any(ContaDTO.class)))
+                .thenThrow(DataIntegrityViolationException.class);
+
+        mvc.perform(MockMvcRequestBuilders.put("/api/conta/" + UUID_TEST)
+                        .content(requestJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

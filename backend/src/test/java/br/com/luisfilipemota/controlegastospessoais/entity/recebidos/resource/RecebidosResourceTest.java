@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -35,6 +36,7 @@ public class RecebidosResourceTest {
     RecebidosService recebidosService;
 
     private final UUID UUID_TEST  = UUID.randomUUID();
+    private final UUID UUID_TEST_DIFERENTE  = UUID.randomUUID();
 
     @Test
     public void testPesquisaPorRecebidosComIdIgualUUIDTest() throws Exception {
@@ -116,6 +118,35 @@ public class RecebidosResourceTest {
 
     }
 
+    @Test
+    public void testSalvarRecebidosComUsuarioNaoEncontrado() throws Exception {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeConverter());
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(UUID_TEST_DIFERENTE);
+
+        RecebidosDTO recebidosDTO = new RecebidosDTO();
+        recebidosDTO.setId(UUID_TEST);
+        recebidosDTO.setUsuario(usuarioDTO);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
+        recebidosDTO.setDescricao("Descricao");
+        recebidosDTO.setValor(100.0);
+
+        Mockito.when(recebidosService.save(Mockito.any(RecebidosDTO.class)))
+                .thenThrow(DataIntegrityViolationException.class);
+
+        Gson gson = gsonBuilder.create();
+        String requestJson = gson.toJson(recebidosDTO);
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/recebidos")
+                        .content(requestJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+    }
 
     @Test
     public void testAtualizarRecebidosComRecebidosEncontrado() throws Exception {
@@ -180,6 +211,34 @@ public class RecebidosResourceTest {
                         .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testAtualizarRecebidosComUsuarioNaoEncontrado() throws Exception {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeConverter());
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(UUID_TEST_DIFERENTE);
+
+        RecebidosDTO recebidosDTO = new RecebidosDTO();
+        recebidosDTO.setId(UUID_TEST);
+        recebidosDTO.setUsuario(usuarioDTO);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
+        recebidosDTO.setDescricao("Descricao");
+        recebidosDTO.setValor(100.0);
+        Gson gson = gsonBuilder.create();
+        String requestJson = gson.toJson(recebidosDTO);
+
+        Mockito.when(recebidosService.update(Mockito.any(UUID.class), Mockito.any(RecebidosDTO.class)))
+                .thenThrow(DataIntegrityViolationException.class);
+
+        mvc.perform(MockMvcRequestBuilders.put("/api/recebidos/" + UUID_TEST)
+                        .content(requestJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
