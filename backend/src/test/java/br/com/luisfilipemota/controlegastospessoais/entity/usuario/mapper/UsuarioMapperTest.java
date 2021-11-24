@@ -19,10 +19,7 @@ public class UsuarioMapperTest {
         usuario.setEmail("Email");
 
         UsuarioDTO usuarioDTO = UsuarioMapper.INSTANCE.usuarioToUsuarioDto(usuario);
-        assertThat(usuarioDTO).isNotNull();
-        assertThat(usuarioDTO.getId()).isEqualTo(usuario.getId());
-        assertThat(usuarioDTO.getNome()).isEqualTo(usuario.getNome());
-        assertThat(usuarioDTO.getEmail()).isEqualTo(usuario.getEmail());
+        asserts(usuarioDTO, usuario);
     }
 
     @Test
@@ -33,6 +30,10 @@ public class UsuarioMapperTest {
         usuarioDTO.setEmail("Email");
 
         Usuario usuario = UsuarioMapper.INSTANCE.usuarioDtoToUsuario(usuarioDTO);
+        asserts(usuarioDTO, usuario);
+    }
+
+    private void asserts(UsuarioDTO usuarioDTO, Usuario usuario) {
         assertThat(usuario).isNotNull();
         assertThat(usuarioDTO).isNotNull();
         assertThat(usuarioDTO.getId()).isEqualTo(usuario.getId());
