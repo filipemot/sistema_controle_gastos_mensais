@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,8 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = ControlegastospessoaisApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -46,7 +49,9 @@ public class ContaServiceTest {
     @MockBean
     ContaMapper contaMapper;
 
-    private final UUID UUID_TEST  = UUID.randomUUID();
+    private final UUID UUID_TEST = UUID.randomUUID();
+
+    private final UUID UUID_TEST_DIFERENTE = UUID.randomUUID();
 
     @Test
     public void testSalvarConta() {
@@ -97,6 +102,60 @@ public class ContaServiceTest {
 
         ContaDTO contaSalva = contaService.save(contaDTO);
         asserts(contaDTO, contaSalva);
+    }
+
+    @Test
+    public void testSalvarContaUsuarioNaoEncontradoOuTipoContaNaoEncontrado() {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(UUID_TEST_DIFERENTE);
+        TipoContaDTO tipoContaDTO = new TipoContaDTO();
+        tipoContaDTO.setId(UUID_TEST);
+
+        ContaDTO contaDTO = new ContaDTO();
+        contaDTO.setId(UUID_TEST);
+        contaDTO.setUsuario(usuarioDTO);
+        contaDTO.setTipoConta(tipoContaDTO);
+        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        contaDTO.setMesConta(11);
+        contaDTO.setAnoConta(2021);
+        contaDTO.setDescricao("Descricao");
+        contaDTO.setValor(100.0);
+        contaDTO.setNumeroParcela(1);
+        contaDTO.setTotalParcelas(1);
+        contaDTO.setRecorrente(false);
+
+        Usuario usuario = new Usuario();
+        usuario.setId(UUID_TEST);
+        TipoConta tipoConta = new TipoConta();
+        tipoConta.setId(UUID_TEST);
+
+        Conta conta = new Conta();
+        conta.setId(UUID_TEST);
+        conta.setUsuario(usuario);
+        conta.setTipoConta(tipoConta);
+        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        conta.setMesConta(11);
+        conta.setAnoConta(2021);
+        conta.setDescricao("Descricao");
+        conta.setValor(100.0);
+        conta.setNumeroParcela(1);
+        conta.setTotalParcelas(1);
+        conta.setRecorrente(false);
+
+        Mockito.when(contaMapper.contaDTOToConta(contaDTO))
+                .thenReturn(conta);
+
+        Mockito.when(contaRepository.save(conta))
+                .thenThrow(DataIntegrityViolationException.class);
+
+        try {
+            contaService.save(contaDTO);
+        } catch (DataIntegrityViolationException e) {
+            assertTrue(true);
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+
     }
 
     @Test
@@ -156,6 +215,66 @@ public class ContaServiceTest {
         asserts(contaDTO, contaSalva);
     }
 
+    @Test
+    public void testAtualizarContaComTipoContaOuUsuarioNaoEncontrado() throws NotFoundException {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(UUID_TEST_DIFERENTE);
+        TipoContaDTO tipoContaDTO = new TipoContaDTO();
+        tipoContaDTO.setId(UUID_TEST_DIFERENTE);
+
+        ContaDTO contaDTO = new ContaDTO();
+        contaDTO.setId(UUID_TEST);
+        contaDTO.setUsuario(usuarioDTO);
+        contaDTO.setTipoConta(tipoContaDTO);
+        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        contaDTO.setMesConta(11);
+        contaDTO.setAnoConta(2021);
+        contaDTO.setDescricao("Descricao");
+        contaDTO.setValor(100.0);
+        contaDTO.setNumeroParcela(1);
+        contaDTO.setTotalParcelas(1);
+        contaDTO.setRecorrente(false);
+
+        Usuario usuario = new Usuario();
+        usuario.setId(UUID_TEST);
+        TipoConta tipoConta = new TipoConta();
+        tipoConta.setId(UUID_TEST);
+
+        Conta conta = new Conta();
+        conta.setId(UUID_TEST);
+        conta.setUsuario(usuario);
+        conta.setTipoConta(tipoConta);
+        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        conta.setMesConta(11);
+        conta.setAnoConta(2021);
+        conta.setDescricao("Descricao");
+        conta.setValor(100.0);
+        conta.setNumeroParcela(1);
+        conta.setTotalParcelas(1);
+        conta.setRecorrente(false);
+
+        Optional<Conta> contaOptional = Optional.of(conta);
+
+        Mockito.when(contaRepository.findById(UUID_TEST))
+                .thenReturn(contaOptional);
+
+        Mockito.when(contaRepository.save(conta))
+                .thenThrow(DataIntegrityViolationException.class);
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+        Mockito.when(contaMapper.contaDTOToConta(contaDTO))
+                .thenReturn(conta);
+
+        try {
+            contaService.update(UUID_TEST, contaDTO);
+        } catch (DataIntegrityViolationException e) {
+            assertTrue(true);
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+    }
 
     @Test
     public void testAtualizarContaComContaNaoEncontrada() throws NotFoundException {

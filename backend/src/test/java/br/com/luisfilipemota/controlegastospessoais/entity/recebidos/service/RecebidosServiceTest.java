@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = ControlegastospessoaisApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -39,7 +41,8 @@ public class RecebidosServiceTest {
     @MockBean
     RecebidosMapper recebidosMapper;
 
-    private final UUID UUID_TEST  = UUID.randomUUID();
+    private final UUID UUID_TEST = UUID.randomUUID();
+    private final UUID UUID_TEST_DIFERENTE = UUID.randomUUID();
 
     @Test
     public void testSalvarRecebidos() {
@@ -78,6 +81,50 @@ public class RecebidosServiceTest {
 
         RecebidosDTO recebidosSalvo = recebidosService.save(recebidosDTO);
         asserts(recebidosDTO, recebidosSalvo);
+    }
+
+    @Test
+    public void testSalvarRecebidosUsuarioNaoEncontrado() {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(UUID_TEST_DIFERENTE);
+
+        RecebidosDTO recebidosDTO = new RecebidosDTO();
+        recebidosDTO.setId(UUID_TEST);
+        recebidosDTO.setUsuario(usuarioDTO);
+        recebidosDTO.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidosDTO.setMesRecebido(11);
+        recebidosDTO.setAnoRecebido(2021);
+        recebidosDTO.setDescricao("Descricao");
+        recebidosDTO.setValor(100.0);
+
+        Usuario usuario = new Usuario();
+        usuario.setId(UUID_TEST);
+
+        Recebidos recebidos = new Recebidos();
+        recebidos.setId(UUID_TEST);
+        recebidos.setUsuario(usuario);
+        recebidos.setDataRecebido(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        recebidos.setMesRecebido(11);
+        recebidos.setAnoRecebido(2021);
+        recebidos.setDescricao("Descricao");
+        recebidos.setValor(100.0);
+
+        Mockito.when(recebidosMapper.recebidosDTOToRecebidos(recebidosDTO))
+                .thenReturn(recebidos);
+
+        Mockito.when(recebidosRepository.save(recebidos))
+                .thenThrow(DataIntegrityViolationException.class);
+
+        Mockito.when(recebidosMapper.recebidosToRecebidosDto(recebidos))
+                .thenReturn(recebidosDTO);
+
+        try {
+            recebidosService.save(recebidosDTO);
+        } catch (DataIntegrityViolationException e) {
+            assertTrue(true);
+        } catch (Exception e) {
+            assertTrue(false);
+        }
     }
 
     @Test
