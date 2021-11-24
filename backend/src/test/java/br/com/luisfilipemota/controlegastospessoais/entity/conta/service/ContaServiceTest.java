@@ -12,6 +12,8 @@ import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.model.Usuario;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
 import javassist.NotFoundException;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,11 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = ControlegastospessoaisApplication.class,
@@ -55,41 +54,16 @@ public class ContaServiceTest {
 
     @Test
     public void testSalvarConta() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
 
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
 
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
+
+        Conta conta = getConta(usuario, tipoConta);
 
         Mockito.when(contaMapper.contaDTOToConta(contaDTO))
                 .thenReturn(conta);
@@ -106,41 +80,15 @@ public class ContaServiceTest {
 
     @Test
     public void testSalvarContaUsuarioNaoEncontradoOuTipoContaNaoEncontrado() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST_DIFERENTE);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST_DIFERENTE);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
 
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
 
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
+        Conta conta = getConta(usuario, tipoConta);
 
         Mockito.when(contaMapper.contaDTOToConta(contaDTO))
                 .thenReturn(conta);
@@ -151,50 +99,24 @@ public class ContaServiceTest {
         try {
             contaService.save(contaDTO);
         } catch (DataIntegrityViolationException e) {
-            assertTrue(true);
+            assertFalse(false);
         } catch (Exception e) {
-            assertTrue(false);
+            Assertions.fail();
         }
 
     }
 
     @Test
     public void testAtualizarContaComContaEncontrada() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
 
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
 
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
+        Conta conta = getConta(usuario, tipoConta);
 
         Optional<Conta> contaOptional = Optional.of(conta);
 
@@ -216,42 +138,17 @@ public class ContaServiceTest {
     }
 
     @Test
-    public void testAtualizarContaComTipoContaOuUsuarioNaoEncontrado() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST_DIFERENTE);
+    public void testAtualizarContaComTipoContaOuUsuarioNaoEncontrado() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST_DIFERENTE);
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setId(UUID_TEST_DIFERENTE);
 
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
 
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
+        Conta conta = getConta(usuario, tipoConta);
 
         Optional<Conta> contaOptional = Optional.of(conta);
 
@@ -272,35 +169,246 @@ public class ContaServiceTest {
         } catch (DataIntegrityViolationException e) {
             assertTrue(true);
         } catch (Exception e) {
-            assertTrue(false);
+            Assertions.fail();
         }
     }
 
     @Test
-    public void testAtualizarContaComContaNaoEncontrada() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
+    public void testAtualizarContaComContaNaoEncontrada(){
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
 
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
 
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
 
+        Conta conta = getConta(usuario, tipoConta);
+
+        Mockito.when(contaRepository.findById(UUID_TEST))
+                .thenReturn(Optional.empty());
+
+        Mockito.when(contaRepository.save(conta))
+                .thenReturn(conta);
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+        try {
+            contaService.update(UUID_TEST, contaDTO);
+            fail("Falha");
+        } catch (NotFoundException e) {
+            assertThat(e.getMessage()).isEqualTo("Conta não encontrado");
+        } catch (Exception e) {
+            fail("Falha");
+        }
+    }
+
+    @Test
+    public void testDeletarContaComContaEncontrada() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
+
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
+
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
+
+        Conta conta = getConta(usuario, tipoConta);
+
+        Mockito.when(contaRepository.findById(UUID_TEST))
+                .thenReturn(Optional.of(conta));
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+        try {
+            contaService.delete(UUID_TEST);
+        } catch (NotFoundException e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testDeletarContaComContaNaoEncontrada() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
+
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
+
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
+
+        Conta conta = getConta(usuario, tipoConta);
+        Mockito.when(contaRepository.findById(UUID_TEST))
+                .thenReturn(Optional.empty());
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+        try {
+            contaService.delete(UUID_TEST);
+            fail("Falha");
+        } catch (NotFoundException e) {
+            assertThat(e.getMessage()).isEqualTo("Conta não encontrado");
+        } catch (Exception e) {
+            fail("Falha");
+        }
+    }
+
+    @Test
+    public void testPesquisaPorIdComContaEncontrada() throws NotFoundException {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
+
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
+
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
+
+        Conta conta = getConta(usuario, tipoConta);
+
+        Mockito.when(contaRepository.findById(UUID_TEST))
+                .thenReturn(Optional.of(conta));
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+        ContaDTO contaSalva = contaService.findById(UUID_TEST);
+
+        asserts(contaDTO, contaSalva);
+    }
+
+    @Test
+    public void testPesquisaPorIdComContaNaoEncontrada() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
+
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
+
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
+
+        Conta conta = getConta(usuario, tipoConta);
+
+        Mockito.when(contaRepository.findById(UUID_TEST))
+                .thenReturn(Optional.empty());
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+        try {
+            contaService.findById(UUID_TEST);
+            fail("Falha");
+        } catch (NotFoundException e) {
+            assertThat(e.getMessage()).isEqualTo("Conta não encontrado");
+        } catch (Exception e) {
+            fail("Falha");
+        }
+    }
+
+    @Test
+    public void testPesquisaTodosContas() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
+
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
+
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
+
+        Conta conta = getConta(usuario, tipoConta);
+
+        Mockito.when(contaRepository.findAll())
+                .thenReturn(Collections.singletonList(conta));
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+
+        List<ContaDTO> contaSalva = contaService.findAll();
+
+        asserts(contaDTO, contaSalva.get(0));
+        assertThat(contaSalva).isNotNull();
+        assertThat(contaSalva.size()).isEqualTo(1);
+
+    }
+
+    @Test
+    public void testPesquisaTodosContasPorTipoConta() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
+
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
+
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
+
+        Conta conta = getConta(usuario, tipoConta);
+
+        Mockito.when(contaRepository.findAllByTipoContaIdOrderByDataConta(Mockito.any(UUID.class)))
+                .thenReturn(Collections.singletonList(conta));
+
+        Mockito.when(tipoContaRepository.findById(Mockito.any(UUID.class)))
+                .thenReturn(Optional.of(tipoConta));
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+        ContaTipoContaDTO contaSalva = contaService.findAllByTipoConta(UUID_TEST);
+
+        asserts(tipoContaDTO, conta, contaSalva);
+    }
+
+    @Test
+    public void testPesquisaTodosContasPorTipoContaAnoContaMesAno() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
+
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
+
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
+
+        Conta conta = getConta(usuario, tipoConta);
+
+        Mockito.when(contaRepository.findAllByTipoContaIdAndMesContaAndAnoContaOrderByDataConta(UUID_TEST, 1, 1))
+                .thenReturn(Collections.singletonList(conta));
+
+        Mockito.when(tipoContaRepository.findById(Mockito.any(UUID.class)))
+                .thenReturn(Optional.of(tipoConta));
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+
+        ContaTipoContaDTO contaSalva = contaService.findAllByTipoContaIdAndMesContaAndAnoConta(UUID_TEST, 1, 1);
+
+        asserts(tipoContaDTO, conta, contaSalva);
+
+    }
+
+    private void asserts(TipoContaDTO tipoContaDTO, Conta conta, ContaTipoContaDTO contaSalva) {
+        assertThat(contaSalva).isNotNull();
+        assertThat(contaSalva.getContas().size()).isEqualTo(1);
+        assertThat(contaSalva.getSomatorio()).isEqualTo(conta.getValor());
+        assertThat(contaSalva.getNomeTipoConta()).isEqualTo(tipoContaDTO.getDescricao());
+        assertThat(contaSalva.getTipoContaId()).isEqualTo(tipoContaDTO.getId());
+        assertThat(contaSalva.getContas().get(0).getId()).isEqualTo(conta.getId());
+        assertThat(contaSalva.getContas().get(0).getUsuario().getId()).isEqualTo(conta.getUsuario().getId());
+        assertThat(contaSalva.getContas().get(0).getTipoConta().getId()).isEqualTo(conta.getTipoConta().getId());
+        assertThat(contaSalva.getContas().get(0).getDataConta()).isEqualTo(conta.getDataConta());
+        assertThat(contaSalva.getContas().get(0).getMesConta()).isEqualTo(conta.getMesConta());
+        assertThat(contaSalva.getContas().get(0).getAnoConta()).isEqualTo(conta.getAnoConta());
+        assertThat(contaSalva.getContas().get(0).getDescricao()).isEqualTo(conta.getDescricao());
+        assertThat(contaSalva.getContas().get(0).getValor()).isEqualTo(conta.getValor());
+        assertThat(contaSalva.getContas().get(0).getNumeroParcela()).isEqualTo(conta.getNumeroParcela());
+        assertThat(contaSalva.getContas().get(0).getTotalParcelas()).isEqualTo(conta.getTotalParcelas());
+        assertThat(contaSalva.getContas().get(0).getRecorrente()).isEqualTo(conta.getRecorrente());
+    }
+
+    @NotNull
+    private Conta getConta(Usuario usuario, TipoConta tipoConta) {
         Conta conta = new Conta();
         conta.setId(UUID_TEST);
         conta.setUsuario(usuario);
@@ -313,24 +421,55 @@ public class ContaServiceTest {
         conta.setNumeroParcela(1);
         conta.setTotalParcelas(1);
         conta.setRecorrente(false);
+        return conta;
+    }
 
-        Mockito.when(contaRepository.findById(UUID_TEST))
-                .thenReturn(Optional.<Conta>empty());
+    @NotNull
+    private TipoConta getTipoConta() {
+        TipoConta tipoConta = new TipoConta();
+        tipoConta.setId(UUID_TEST);
+        tipoConta.setDescricao("Descricao");
+        return tipoConta;
+    }
 
-        Mockito.when(contaRepository.save(conta))
-                .thenReturn(conta);
+    @NotNull
+    private TipoContaDTO getTipoContaDTO() {
+        TipoContaDTO tipoContaDTO = new TipoContaDTO();
+        tipoContaDTO.setId(UUID_TEST);
+        tipoContaDTO.setDescricao("Descricao");
+        return tipoContaDTO;
+    }
 
-        Mockito.when(contaMapper.contaToContaDto(conta))
-                .thenReturn(contaDTO);
 
-        try {
-            ContaDTO tipoContaSalva = contaService.update(UUID_TEST, contaDTO);
-            fail("Falha");
-        } catch (NotFoundException e) {
-            assertThat(e.getMessage()).isEqualTo("Conta não encontrado");
-        } catch (Exception e) {
-            fail("Falha");
-        }
+    @NotNull
+    private Usuario getUsuario() {
+        Usuario usuario = new Usuario();
+        usuario.setId(UUID_TEST);
+        return usuario;
+    }
+
+    @NotNull
+    private ContaDTO getContaDTO(UsuarioDTO usuarioDTO, TipoContaDTO tipoContaDTO) {
+        ContaDTO contaDTO = new ContaDTO();
+        contaDTO.setId(UUID_TEST);
+        contaDTO.setUsuario(usuarioDTO);
+        contaDTO.setTipoConta(tipoContaDTO);
+        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
+        contaDTO.setMesConta(11);
+        contaDTO.setAnoConta(2021);
+        contaDTO.setDescricao("Descricao");
+        contaDTO.setValor(100.0);
+        contaDTO.setNumeroParcela(1);
+        contaDTO.setTotalParcelas(1);
+        contaDTO.setRecorrente(false);
+        return contaDTO;
+    }
+
+    @NotNull
+    private UsuarioDTO getUsuarioDTO(UUID uuid_test) {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(uuid_test);
+        return usuarioDTO;
     }
 
     private void asserts(ContaDTO contaDTO, ContaDTO conta) {
@@ -348,428 +487,4 @@ public class ContaServiceTest {
         assertThat(contaDTO.getRecorrente()).isEqualTo(conta.getRecorrente());
     }
 
-    @Test
-    public void testDeletarContaComContaEncontrada() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
-
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
-
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
-
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
-
-        Mockito.when(contaRepository.findById(UUID_TEST))
-                .thenReturn(Optional.of(conta));
-
-        Mockito.when(contaMapper.contaToContaDto(conta))
-                .thenReturn(contaDTO);
-
-        try {
-            contaService.delete(UUID_TEST);
-        } catch (NotFoundException e) {
-            fail(e.getMessage());
-        }
-    }
-
-    @Test
-    public void testDeletarContaComContaNaoEncontrada() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
-
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
-
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
-
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
-        Mockito.when(contaRepository.findById(UUID_TEST))
-                .thenReturn(Optional.<Conta>empty());
-
-        Mockito.when(contaMapper.contaToContaDto(conta))
-                .thenReturn(contaDTO);
-
-        try {
-            contaService.delete(UUID_TEST);
-            fail("Falha");
-        } catch (NotFoundException e) {
-            assertThat(e.getMessage()).isEqualTo("Conta não encontrado");
-        } catch (Exception e) {
-            fail("Falha");
-        }
-    }
-
-    @Test
-    public void testPesquisaPorIdComContaEncontrada() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
-
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
-
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
-
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
-
-        Mockito.when(contaRepository.findById(UUID_TEST))
-                .thenReturn(Optional.of(conta));
-
-        Mockito.when(contaMapper.contaToContaDto(conta))
-                .thenReturn(contaDTO);
-
-        ContaDTO contaSalva = contaService.findById(UUID_TEST);
-
-        asserts(contaDTO, contaSalva);
-    }
-
-    @Test
-    public void testPesquisaPorIdComContaNaoEncontrada() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
-
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
-
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
-
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
-
-        Mockito.when(contaRepository.findById(UUID_TEST))
-                .thenReturn(Optional.<Conta>empty());
-
-        Mockito.when(contaMapper.contaToContaDto(conta))
-                .thenReturn(contaDTO);
-
-        try {
-            ContaDTO contaSalva = contaService.findById(UUID_TEST);
-            fail("Falha");
-        } catch (NotFoundException e) {
-            assertThat(e.getMessage()).isEqualTo("Conta não encontrado");
-        } catch (Exception e) {
-            fail("Falha");
-        }
-    }
-
-    @Test
-    public void testPesquisaTodosContas() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
-
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
-
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
-
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
-
-        Mockito.when(contaRepository.findAll())
-                .thenReturn(Arrays.asList(conta));
-
-        Mockito.when(contaMapper.contaToContaDto(conta))
-                .thenReturn(contaDTO);
-
-
-        List<ContaDTO> contaSalva = contaService.findAll();
-
-        assertThat(contaSalva).isNotNull();
-        assertThat(contaSalva.size()).isEqualTo(1);
-        assertThat(contaSalva.get(0).getId()).isEqualTo(conta.getId());
-        assertThat(contaSalva.get(0).getUsuario().getId()).isEqualTo(conta.getUsuario().getId());
-        assertThat(contaSalva.get(0).getTipoConta().getId()).isEqualTo(conta.getTipoConta().getId());
-        assertThat(contaSalva.get(0).getDataConta()).isEqualTo(conta.getDataConta());
-        assertThat(contaSalva.get(0).getMesConta()).isEqualTo(conta.getMesConta());
-        assertThat(contaSalva.get(0).getAnoConta()).isEqualTo(conta.getAnoConta());
-        assertThat(contaSalva.get(0).getDescricao()).isEqualTo(conta.getDescricao());
-        assertThat(contaSalva.get(0).getValor()).isEqualTo(conta.getValor());
-        assertThat(contaSalva.get(0).getNumeroParcela()).isEqualTo(conta.getNumeroParcela());
-        assertThat(contaSalva.get(0).getTotalParcelas()).isEqualTo(conta.getTotalParcelas());
-        assertThat(contaSalva.get(0).getRecorrente()).isEqualTo(conta.getRecorrente());
-
-    }
-
-
-    @Test
-    public void testPesquisaTodosContasPorTipoConta() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
-        tipoContaDTO.setDescricao("Descricao");
-
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
-
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
-        tipoConta.setDescricao("Descricao");
-
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
-
-        ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
-        contaSomatorioDTO.setContas(Arrays.asList(contaDTO));
-        contaSomatorioDTO.setSomatorio(contaDTO.getValor());
-        contaSomatorioDTO.setTipoContaId(UUID_TEST);
-        contaSomatorioDTO.setNomeTipoConta(tipoConta.getDescricao());
-
-        Mockito.when(contaRepository.findAllByTipoContaIdOrderByDataConta(Mockito.any(UUID.class)))
-                .thenReturn(Arrays.asList(conta));
-
-        Mockito.when(tipoContaRepository.findById(Mockito.any(UUID.class)))
-                .thenReturn(Optional.of(tipoConta));
-
-        Mockito.when(contaMapper.contaToContaDto(conta))
-                .thenReturn(contaDTO);
-
-
-        ContaTipoContaDTO contaSalva = contaService.findAllByTipoConta(UUID_TEST);
-
-        assertThat(contaSalva).isNotNull();
-        assertThat(contaSalva.getContas().size()).isEqualTo(1);
-        assertThat(contaSalva.getSomatorio()).isEqualTo(conta.getValor());
-        assertThat(contaSalva.getNomeTipoConta()).isEqualTo(tipoContaDTO.getDescricao());
-        assertThat(contaSalva.getTipoContaId()).isEqualTo(tipoContaDTO.getId());
-        assertThat(contaSalva.getContas().get(0).getId()).isEqualTo(conta.getId());
-        assertThat(contaSalva.getContas().get(0).getUsuario().getId()).isEqualTo(conta.getUsuario().getId());
-        assertThat(contaSalva.getContas().get(0).getTipoConta().getId()).isEqualTo(conta.getTipoConta().getId());
-        assertThat(contaSalva.getContas().get(0).getDataConta()).isEqualTo(conta.getDataConta());
-        assertThat(contaSalva.getContas().get(0).getMesConta()).isEqualTo(conta.getMesConta());
-        assertThat(contaSalva.getContas().get(0).getAnoConta()).isEqualTo(conta.getAnoConta());
-        assertThat(contaSalva.getContas().get(0).getDescricao()).isEqualTo(conta.getDescricao());
-        assertThat(contaSalva.getContas().get(0).getValor()).isEqualTo(conta.getValor());
-        assertThat(contaSalva.getContas().get(0).getNumeroParcela()).isEqualTo(conta.getNumeroParcela());
-        assertThat(contaSalva.getContas().get(0).getTotalParcelas()).isEqualTo(conta.getTotalParcelas());
-        assertThat(contaSalva.getContas().get(0).getRecorrente()).isEqualTo(conta.getRecorrente());
-
-    }
-
-    @Test
-    public void testPesquisaTodosContasPorTipoContaAnoContaMesAno() throws NotFoundException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setId(UUID_TEST);
-        TipoContaDTO tipoContaDTO = new TipoContaDTO();
-        tipoContaDTO.setId(UUID_TEST);
-        tipoContaDTO.setDescricao("Descricao");
-
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setId(UUID_TEST);
-        contaDTO.setUsuario(usuarioDTO);
-        contaDTO.setTipoConta(tipoContaDTO);
-        contaDTO.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        contaDTO.setMesConta(11);
-        contaDTO.setAnoConta(2021);
-        contaDTO.setDescricao("Descricao");
-        contaDTO.setValor(100.0);
-        contaDTO.setNumeroParcela(1);
-        contaDTO.setTotalParcelas(1);
-        contaDTO.setRecorrente(false);
-
-        Usuario usuario = new Usuario();
-        usuario.setId(UUID_TEST);
-        TipoConta tipoConta = new TipoConta();
-        tipoConta.setId(UUID_TEST);
-        tipoConta.setDescricao("Descricao");
-
-        Conta conta = new Conta();
-        conta.setId(UUID_TEST);
-        conta.setUsuario(usuario);
-        conta.setTipoConta(tipoConta);
-        conta.setDataConta(LocalDateTime.of(2015, Month.NOVEMBER, 4, 17, 9, 55));
-        conta.setMesConta(11);
-        conta.setAnoConta(2021);
-        conta.setDescricao("Descricao");
-        conta.setValor(100.0);
-        conta.setNumeroParcela(1);
-        conta.setTotalParcelas(1);
-        conta.setRecorrente(false);
-
-        ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
-        contaSomatorioDTO.setContas(Arrays.asList(contaDTO));
-        contaSomatorioDTO.setSomatorio(contaDTO.getValor());
-        contaSomatorioDTO.setTipoContaId(UUID_TEST);
-        contaSomatorioDTO.setNomeTipoConta(tipoConta.getDescricao());
-
-        Mockito.when(contaRepository.findAllByTipoContaIdAndMesContaAndAnoContaOrderByDataConta(UUID_TEST, 1, 1))
-                .thenReturn(Arrays.asList(conta));
-
-        Mockito.when(tipoContaRepository.findById(Mockito.any(UUID.class)))
-                .thenReturn(Optional.of(tipoConta));
-
-        Mockito.when(contaMapper.contaToContaDto(conta))
-                .thenReturn(contaDTO);
-
-
-        ContaTipoContaDTO contaSalva = contaService.findAllByTipoContaIdAndMesContaAndAnoConta(UUID_TEST, 1, 1);
-
-        assertThat(contaSalva).isNotNull();
-        assertThat(contaSalva.getContas().size()).isEqualTo(1);
-        assertThat(contaSalva.getSomatorio()).isEqualTo(conta.getValor());
-        assertThat(contaSalva.getNomeTipoConta()).isEqualTo(tipoContaDTO.getDescricao());
-        assertThat(contaSalva.getTipoContaId()).isEqualTo(tipoContaDTO.getId());
-        assertThat(contaSalva.getContas().get(0).getId()).isEqualTo(conta.getId());
-        assertThat(contaSalva.getContas().get(0).getUsuario().getId()).isEqualTo(conta.getUsuario().getId());
-        assertThat(contaSalva.getContas().get(0).getTipoConta().getId()).isEqualTo(conta.getTipoConta().getId());
-        assertThat(contaSalva.getContas().get(0).getDataConta()).isEqualTo(conta.getDataConta());
-        assertThat(contaSalva.getContas().get(0).getMesConta()).isEqualTo(conta.getMesConta());
-        assertThat(contaSalva.getContas().get(0).getAnoConta()).isEqualTo(conta.getAnoConta());
-        assertThat(contaSalva.getContas().get(0).getDescricao()).isEqualTo(conta.getDescricao());
-        assertThat(contaSalva.getContas().get(0).getValor()).isEqualTo(conta.getValor());
-        assertThat(contaSalva.getContas().get(0).getNumeroParcela()).isEqualTo(conta.getNumeroParcela());
-        assertThat(contaSalva.getContas().get(0).getTotalParcelas()).isEqualTo(conta.getTotalParcelas());
-        assertThat(contaSalva.getContas().get(0).getRecorrente()).isEqualTo(conta.getRecorrente());
-
-    }
 }
