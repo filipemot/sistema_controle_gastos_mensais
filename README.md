@@ -377,10 +377,6 @@ Dia(s) Trabalhado(s):
 
 Dia(s) Trabalhado(s):
 
-- [ ]  **Insert todos os recebidos**
-
-Dia(s) Trabalhado(s):
-
 - [ ]  **Criar na tabela de usuário campo ativado/desativado**
 
 Dia(s) Trabalhado(s):
