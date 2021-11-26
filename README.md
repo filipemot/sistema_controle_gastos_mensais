@@ -1,3 +1,4 @@
+
 # Sistema de Controle de Gastos Pessoais
 
 **Última Atualização:** 26/11/2021
@@ -149,6 +150,10 @@ spring.datasource.password=postgres
 **Listar Todas - Por Tipo de Conta, Mês e Ano**
 
 **GET** [http://localhost:8080/api/conta/tipoconta/{id_tipo_conta}/{mes}/{ano}](http://localhost:8080/api/conta/tipoconta/%7Bid_tipo_conta%7D/%7Bmes%7D/%7Bano%7D)
+
+**Listar Todas Contas Mes - Por Mês e Ano**
+
+**GET** [http://localhost:8080/api/conta/todascontasmes/{mes}/{ano}](http://localhost:8080/api/conta/todascontasmes/%7Bmes%7D/%7Bano%7D)
 
 **Salvar**
 
