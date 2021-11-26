@@ -369,6 +369,18 @@ Dia(s) Trabalhado(s): 26/11/2021
 
 **Planejamento de Tarefas**
 
+- [ ]  **Listar Todos recebidos por Periódo**
+
+Dia(s) Trabalhado(s):
+
+- [ ]  **Listar Todas as Contas e Recebidos**
+
+Dia(s) Trabalhado(s):
+
+- [ ]  **Insert todos os recebidos**
+
+Dia(s) Trabalhado(s):
+
 - [ ]  **Criar na tabela de usuário campo ativado/desativado**
 
 Dia(s) Trabalhado(s):
