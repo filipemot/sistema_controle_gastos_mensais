@@ -9,7 +9,7 @@ public class UsuarioDTO {
 
     private String nome;
 
-    @Email
+    @Email(message = "E-mail inválido")
     private String email;
 
     public String getSenhaUsuario() {
