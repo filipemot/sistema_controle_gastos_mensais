@@ -356,13 +356,14 @@ Dia(s) Trabalhado(s): 26/11/2021
 
 Dia(s) Trabalhado(s):26/11/2021
 
+- [x]  **Listar Todas Contas por Período**
+
+Dia(s) Trabalhado(s): 26/11/2021
+
 ---
 
 **Planejamento de Tarefas**
 
-- [ ]  **Listar Todas Contas por Período**
-
-Dia(s) Trabalhado(s):
 
 - [ ]  **Listar Todas Contas por Período Inicial e Final**
 
