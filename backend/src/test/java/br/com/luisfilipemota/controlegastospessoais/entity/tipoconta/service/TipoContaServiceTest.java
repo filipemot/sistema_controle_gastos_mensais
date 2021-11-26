@@ -6,7 +6,6 @@ import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.model.TipoC
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.repository.TipoContaRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
 import javassist.NotFoundException;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -203,7 +202,6 @@ public class TipoContaServiceTest {
         asserts(tipoContaDTO, tipoContaSalva.get(0));
     }
 
-    @NotNull
     private TipoContaDTO getTipoContaDTO() {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");
@@ -211,7 +209,6 @@ public class TipoContaServiceTest {
         return tipoContaDTO;
     }
 
-    @NotNull
     private TipoConta getTipoConta() {
         TipoConta tipoConta = new TipoConta();
         tipoConta.setId(UUID_TEST);

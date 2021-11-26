@@ -40,15 +40,9 @@ public class ContaService {
 
     public ContaDTO update(UUID id, ContaDTO contaDTO) throws NotFoundException {
 
-        Optional<Conta> optionalConta = contaRepository.findById(id);
-
-        if (!optionalConta.isPresent()) {
-            throw new NotFoundException("Conta não encontrado");
-        }
-
         Conta contaBd = contaMapper.contaDTOToConta(contaDTO);
-        contaBd.setId(optionalConta.get().getId());
 
+        contaBd.setId(getConta(id).getId());
 
         Conta contaUpdated = contaRepository.save(contaBd);
         contaDTO = contaMapper.contaToContaDto(contaUpdated);
@@ -68,24 +62,13 @@ public class ContaService {
     }
 
     public void delete(UUID id) throws NotFoundException {
-        Optional<Conta> optionalTipoConta = contaRepository.findById(id);
 
-        if (!optionalTipoConta.isPresent()) {
-            throw new NotFoundException("Conta não encontrado");
-        }
-
-        Conta tipoConta = optionalTipoConta.get();
+        Conta tipoConta = getConta(id);
         contaRepository.delete(tipoConta);
     }
 
     public ContaDTO findById(UUID id) throws NotFoundException {
-        Optional<Conta> optionalTipoConta = contaRepository.findById(id);
-
-        if (!optionalTipoConta.isPresent()) {
-            throw new NotFoundException("Conta não encontrado");
-        }
-
-        Conta tipoConta = optionalTipoConta.get();
+        Conta tipoConta = getConta(id);
 
         return contaMapper.contaToContaDto(tipoConta);
     }
@@ -104,7 +87,6 @@ public class ContaService {
         ContaTipoContaDTO contaSomatorioDTO = new ContaTipoContaDTO();
 
         getContasPorTipoConta(id, listContaPorTipoConta, contaSomatorioDTO);
-
 
         return contaSomatorioDTO;
     }
@@ -127,4 +109,15 @@ public class ContaService {
             contaSomatorioDTO.setNomeTipoConta(tipoConta.get().getDescricao());
         }
     }
+
+
+    private Conta getConta(UUID id) throws NotFoundException {
+        Optional<Conta> optionalTipoConta = contaRepository.findById(id);
+
+        if (!optionalTipoConta.isPresent()) {
+            throw new NotFoundException("Conta não encontrado");
+        }
+        return optionalTipoConta.get();
+    }
+
 }

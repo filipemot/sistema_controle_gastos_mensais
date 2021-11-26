@@ -12,7 +12,6 @@ import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.model.Usuario;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
 import javassist.NotFoundException;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -407,7 +406,6 @@ public class ContaServiceTest {
         assertThat(contaSalva.getContas().get(0).getRecorrente()).isEqualTo(conta.getRecorrente());
     }
 
-    @NotNull
     private Conta getConta(Usuario usuario, TipoConta tipoConta) {
         Conta conta = new Conta();
         conta.setId(UUID_TEST);
@@ -424,7 +422,6 @@ public class ContaServiceTest {
         return conta;
     }
 
-    @NotNull
     private TipoConta getTipoConta() {
         TipoConta tipoConta = new TipoConta();
         tipoConta.setId(UUID_TEST);
@@ -432,7 +429,6 @@ public class ContaServiceTest {
         return tipoConta;
     }
 
-    @NotNull
     private TipoContaDTO getTipoContaDTO() {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setId(UUID_TEST);
@@ -440,15 +436,12 @@ public class ContaServiceTest {
         return tipoContaDTO;
     }
 
-
-    @NotNull
     private Usuario getUsuario() {
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);
         return usuario;
     }
 
-    @NotNull
     private ContaDTO getContaDTO(UsuarioDTO usuarioDTO, TipoContaDTO tipoContaDTO) {
         ContaDTO contaDTO = new ContaDTO();
         contaDTO.setId(UUID_TEST);
@@ -465,7 +458,6 @@ public class ContaServiceTest {
         return contaDTO;
     }
 
-    @NotNull
     private UsuarioDTO getUsuarioDTO(UUID uuid_test) {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(uuid_test);

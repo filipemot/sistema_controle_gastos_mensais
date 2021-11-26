@@ -4,7 +4,6 @@ import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.Tip
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
 import com.google.gson.Gson;
 import javassist.NotFoundException;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,7 +150,6 @@ public class TipoContaResourceTest {
         }
     }
 
-    @NotNull
     private TipoContaDTO getTipoContaDTO() {
         TipoContaDTO tipoContaDTO = new TipoContaDTO();
         tipoContaDTO.setDescricao("Descricao");

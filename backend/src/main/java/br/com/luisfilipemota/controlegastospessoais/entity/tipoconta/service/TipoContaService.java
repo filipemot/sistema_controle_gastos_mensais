@@ -34,13 +34,7 @@ public class TipoContaService {
 
     public TipoContaDTO update(UUID id, TipoContaDTO tipoContaDTO) throws NotFoundException {
 
-        Optional<TipoConta> optionalTipoConta = tipoContaRepository.findById(id);
-
-        if (!optionalTipoConta.isPresent()) {
-            throw new NotFoundException("Tipo de Conta não encontrado");
-        }
-
-        TipoConta tipoContaBd = optionalTipoConta.get();
+        TipoConta tipoContaBd = getTipoConta(id);
         tipoContaBd.setDescricao(tipoContaDTO.getDescricao());
         TipoConta tipoContaUpdated = tipoContaRepository.save(tipoContaBd);
         tipoContaDTO = tipoContaMapper.tipoContaToTipoContaDto(tipoContaUpdated);
@@ -60,25 +54,25 @@ public class TipoContaService {
     }
 
     public void delete(UUID id) throws NotFoundException {
-        Optional<TipoConta> optionalTipoConta = tipoContaRepository.findById(id);
-
-        if (!optionalTipoConta.isPresent()) {
-            throw new NotFoundException("Tipo de Conta não encontrado");
-        }
-
-        TipoConta tipoConta = optionalTipoConta.get();
+        TipoConta tipoConta = getTipoConta(id);
         tipoContaRepository.delete(tipoConta);
     }
 
     public TipoContaDTO findById(UUID id) throws NotFoundException {
+        TipoConta tipoConta = getTipoConta(id);
+
+        return tipoContaMapper.tipoContaToTipoContaDto(tipoConta);
+    }
+
+
+    private TipoConta getTipoConta(UUID id) throws NotFoundException {
         Optional<TipoConta> optionalTipoConta = tipoContaRepository.findById(id);
 
         if (!optionalTipoConta.isPresent()) {
             throw new NotFoundException("Tipo de Conta não encontrado");
         }
 
-        TipoConta tipoConta = optionalTipoConta.get();
-
-        return tipoContaMapper.tipoContaToTipoContaDto(tipoConta);
+        return optionalTipoConta.get();
     }
+
 }

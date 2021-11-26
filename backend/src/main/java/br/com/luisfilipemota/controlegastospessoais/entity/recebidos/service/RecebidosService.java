@@ -33,15 +33,8 @@ public class RecebidosService {
     }
 
     public RecebidosDTO update(UUID id, RecebidosDTO contaDTO) throws NotFoundException {
-
-        Optional<Recebidos> optionalConta = recebidosRepository.findById(id);
-
-        if (!optionalConta.isPresent()) {
-            throw new NotFoundException("Recebidos não encontrado");
-        }
-
         Recebidos contaBd = recebidosMapper.recebidosDTOToRecebidos(contaDTO);
-        contaBd.setId(optionalConta.get().getId());
+        contaBd.setId(getRecebidos(id).getId());
 
 
         Recebidos contaUpdated = recebidosRepository.save(contaBd);
@@ -62,25 +55,23 @@ public class RecebidosService {
     }
 
     public void delete(UUID id) throws NotFoundException {
-        Optional<Recebidos> optionalTipoConta = recebidosRepository.findById(id);
-
-        if (!optionalTipoConta.isPresent()) {
-            throw new NotFoundException("Recebidos não encontrado");
-        }
-
-        Recebidos tipoConta = optionalTipoConta.get();
+        Recebidos tipoConta = getRecebidos(id);
         recebidosRepository.delete(tipoConta);
     }
 
     public RecebidosDTO findById(UUID id) throws NotFoundException {
+        Recebidos tipoConta = getRecebidos(id);
+
+        return recebidosMapper.recebidosToRecebidosDto(tipoConta);
+    }
+
+    private Recebidos getRecebidos(UUID id) throws NotFoundException {
         Optional<Recebidos> optionalTipoConta = recebidosRepository.findById(id);
 
         if (!optionalTipoConta.isPresent()) {
             throw new NotFoundException("Recebidos não encontrado");
         }
 
-        Recebidos tipoConta = optionalTipoConta.get();
-
-        return recebidosMapper.recebidosToRecebidosDto(tipoConta);
+        return optionalTipoConta.get();
     }
 }

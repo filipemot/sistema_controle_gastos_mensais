@@ -39,16 +39,9 @@ public class UsuarioService {
     }
 
     public UsuarioDTO update(UUID id, UsuarioDTO usuarioDTO) throws NotFoundException {
-
-        Optional<Usuario> optionalTipoConta = usuarioRepository.findById(id);
-
-        if (!optionalTipoConta.isPresent()) {
-            throw new NotFoundException("Usuario não encontrado");
-        }
-
         String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
-        Usuario tipoContaBd = optionalTipoConta.get();
+        Usuario tipoContaBd = getUsuario(id);
         tipoContaBd.setNome(usuarioDTO.getNome());
         tipoContaBd.setEmail(usuarioDTO.getEmail());
         tipoContaBd.setSenha(senhaHash);
@@ -71,25 +64,23 @@ public class UsuarioService {
     }
 
     public void delete(UUID id) throws NotFoundException {
-        Optional<Usuario> optionalTipoConta = usuarioRepository.findById(id);
-
-        if (!optionalTipoConta.isPresent()) {
-            throw new NotFoundException("Usuario não encontrado");
-        }
-
-        Usuario tipoConta = optionalTipoConta.get();
+        Usuario tipoConta = getUsuario(id);
         usuarioRepository.delete(tipoConta);
     }
 
     public UsuarioDTO findById(UUID id) throws NotFoundException {
+        Usuario tipoConta = getUsuario(id);
+
+        return usuarioMapper.usuarioToUsuarioDto(tipoConta);
+    }
+
+    private Usuario getUsuario(UUID id) throws NotFoundException {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
 
         if (!optionalUsuario.isPresent()) {
             throw new NotFoundException("Usuario não encontrado");
         }
 
-        Usuario tipoConta = optionalUsuario.get();
-
-        return usuarioMapper.usuarioToUsuarioDto(tipoConta);
+        return optionalUsuario.get();
     }
 }

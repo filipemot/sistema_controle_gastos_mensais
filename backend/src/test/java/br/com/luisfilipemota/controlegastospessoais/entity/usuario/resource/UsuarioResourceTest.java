@@ -4,7 +4,6 @@ import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.Usuar
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
 import com.google.gson.Gson;
 import javassist.NotFoundException;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -192,7 +191,6 @@ public class UsuarioResourceTest {
         }
     }
 
-    @NotNull
     private UsuarioDTO getUsuarioDTO() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(UUID_TEST);
@@ -208,7 +206,6 @@ public class UsuarioResourceTest {
         return gson.toJson(usuarioDTO);
     }
 
-    @NotNull
     private UsuarioDTO getUsuarioDto() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(UUID_TEST);

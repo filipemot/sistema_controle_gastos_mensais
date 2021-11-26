@@ -6,7 +6,6 @@ import br.com.luisfilipemota.controlegastospessoais.entity.usuario.model.Usuario
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.repository.UsuarioRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
 import javassist.NotFoundException;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static br.com.luisfilipemota.controlegastospessoais.util.seguranca.Sha256.getSenha;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -224,7 +226,6 @@ public class UsuarioServiceTest {
         assertThat(usuarioDTO.getEmail()).isEqualTo(usuarioDTOSalvo.getEmail());
     }
 
-    @NotNull
     private UsuarioDTO getUsuarioDto() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setNome("Nome");
@@ -234,7 +235,6 @@ public class UsuarioServiceTest {
         return usuarioDTO;
     }
 
-    @NotNull
     private Usuario getUsuario(UsuarioDTO usuarioDTO) {
         String senhaHash = getSenha(usuarioDTO.getSenhaUsuario());
 
@@ -245,7 +245,6 @@ public class UsuarioServiceTest {
         return usuario;
     }
 
-    @NotNull
     private UsuarioDTO getUsuarioDTO() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(UUID_TEST);
@@ -255,7 +254,6 @@ public class UsuarioServiceTest {
         return usuarioDTO;
     }
 
-    @NotNull
     private Usuario getUsuario(String senhaHash) {
         Usuario usuario = new Usuario();
         usuario.setId(UUID_TEST);

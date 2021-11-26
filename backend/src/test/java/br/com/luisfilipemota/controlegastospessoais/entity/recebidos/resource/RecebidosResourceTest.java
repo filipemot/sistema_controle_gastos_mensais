@@ -7,7 +7,6 @@ import br.com.luisfilipemota.controlegastospessoais.util.converter.LocalDateTime
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javassist.NotFoundException;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -228,21 +227,18 @@ public class RecebidosResourceTest {
         }
     }
 
-    @NotNull
     private GsonBuilder getGsonBuilder() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeConverter());
         return gsonBuilder;
     }
 
-    @NotNull
     private UsuarioDTO getUsuarioDTO(UUID uuid_test) {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(uuid_test);
         return usuarioDTO;
     }
 
-    @NotNull
     private RecebidosDTO getRecebidosDTO(UsuarioDTO usuarioDTO) {
         RecebidosDTO recebidosDTO = new RecebidosDTO();
         recebidosDTO.setId(UUID_TEST);
