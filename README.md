@@ -1,6 +1,6 @@
 # Sistema de Controle de Gastos Pessoais
 
-**Última Atualização:** 24/11/2021
+**Última Atualização:** 26/11/2021
 
 **Tecnologias Utilizadas:**
 
@@ -348,9 +348,13 @@ Dia(s) Trabalhado(s): 24/11/2021
 
 Dia(s) Trabalhado(s): 24/11/2021
 
-- [ ]  **Refatorar Services evitando duplicação**
+- [x]  **Refatorar Services evitando duplicação**
 
 Dia(s) Trabalhado(s): 26/11/2021
+
+- [x]  **Ajuste Validação de Email, para validar na API utlizando o @Valid**
+
+Dia(s) Trabalhado(s):26/11/2021
 
 ---
 
@@ -364,9 +368,6 @@ Dia(s) Trabalhado(s):
 
 Dia(s) Trabalhado(s):
 
-- [ ]  **Ajuste Validação de Email, para validar na API utlizando o @Valid**
-
-Dia(s) Trabalhado(s):
 
 - [ ]  **Criar na tabela de usuário campo ativado/desativado**
 

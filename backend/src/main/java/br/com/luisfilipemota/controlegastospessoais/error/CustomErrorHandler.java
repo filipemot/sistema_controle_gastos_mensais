@@ -12,12 +12,6 @@ import java.io.IOException;
 @ControllerAdvice
 public class CustomErrorHandler {
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public void handleConstraintViolationException(ConstraintViolationException exception,
-                                                   ServletWebRequest webRequest) throws IOException {
-        webRequest.getResponse().sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
-    }
-
     @ExceptionHandler(DataIntegrityViolationException.class)
     public void handleDataIntegrityViolationException(DataIntegrityViolationException exception,
                                                    ServletWebRequest webRequest) throws IOException {

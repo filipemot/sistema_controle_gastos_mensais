@@ -35,6 +35,7 @@ public class UsuarioResourceTest {
 
     private final UUID UUID_TEST  = UUID.randomUUID();
 
+    private String EMAIL = "email@email.com";
 
     @Test
     public void testPesquisaPorUsuarioComIdIgualUUIDTest() throws Exception {
@@ -112,6 +113,7 @@ public class UsuarioResourceTest {
     @Test
     public void testAtualizarUsuarioComEmailInvalido() throws Exception {
         UsuarioDTO usuarioDTO = getUsuarioDTO();
+        usuarioDTO.setEmail("email.invalido");
 
         String requestJson = getJson(usuarioDTO);
 
@@ -174,7 +176,7 @@ public class UsuarioResourceTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].nome", is("Nome")))
                 .andExpect(jsonPath("$[0].id", is(UUID_TEST.toString())))
-                .andExpect(jsonPath("$[0].email", is("Email")));
+                .andExpect(jsonPath("$[0].email", is(EMAIL)));
     }
 
     private void assertsRequest(ResultActions result, ResultMatcher status, Boolean isContent) throws Exception {
@@ -185,7 +187,7 @@ public class UsuarioResourceTest {
                             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.nome", is("Nome")))
                     .andExpect(jsonPath("$.id", is(UUID_TEST.toString())))
-                    .andExpect(jsonPath("$.email", is("Email")));
+                    .andExpect(jsonPath("$.email", is(EMAIL)));
         } else {
             result.andExpect(status);
         }
@@ -196,7 +198,7 @@ public class UsuarioResourceTest {
         usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setNome("Nome");
         usuarioDTO.setId(UUID_TEST);
-        usuarioDTO.setEmail("Email");
+        usuarioDTO.setEmail(EMAIL);
         usuarioDTO.setSenhaUsuario("Senha");
         return usuarioDTO;
     }
@@ -210,7 +212,7 @@ public class UsuarioResourceTest {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(UUID_TEST);
         usuarioDTO.setNome("Nome");
-        usuarioDTO.setEmail("Email");
+        usuarioDTO.setEmail(EMAIL);
         usuarioDTO.setSenhaUsuario("Senha");
         return usuarioDTO;
     }

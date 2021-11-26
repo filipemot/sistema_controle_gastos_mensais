@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,7 +44,7 @@ public class UsuarioResource {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> save(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<UsuarioDTO> save(@RequestBody @Valid UsuarioDTO usuarioDTO) {
 
         UsuarioDTO tipoContaDTO = this.usuarioService.save(usuarioDTO);
 
@@ -51,7 +52,7 @@ public class UsuarioResource {
     }
 
     @PutMapping("/{id}")
-    public UsuarioDTO update(@PathVariable UUID id, @RequestBody UsuarioDTO usuarioDTO) {
+    public UsuarioDTO update(@PathVariable UUID id, @RequestBody @Valid UsuarioDTO usuarioDTO) {
         UsuarioDTO tipoContaDTO;
         try {
             tipoContaDTO = this.usuarioService.update(id, usuarioDTO);

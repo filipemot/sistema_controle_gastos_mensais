@@ -1,5 +1,6 @@
 package br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto;
 
+import javax.validation.constraints.Email;
 import java.util.UUID;
 
 public class UsuarioDTO {
@@ -8,6 +9,7 @@ public class UsuarioDTO {
 
     private String nome;
 
+    @Email
     private String email;
 
     public String getSenhaUsuario() {
