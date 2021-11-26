@@ -5,6 +5,7 @@ import br.com.luisfilipemota.controlegastospessoais.entity.conta.model.Conta;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.repository.ContaRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaTipoContaDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.TodasContaTipoContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.model.TipoConta;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.repository.TipoContaRepository;
 import javassist.NotFoundException;
@@ -91,6 +92,40 @@ public class ContaService {
         return contaSomatorioDTO;
     }
 
+    public TodasContaTipoContaDTO listarTodasContas(int mes, int ano){
+
+        List<TipoConta> listaTipoConta = tipoContaRepository.findAll();
+        List<ContaTipoContaDTO> listaContaTipoContaDTO = new ArrayList<>();
+
+        TodasContaTipoContaDTO todasContaTipoContaDTO = getTodasContaTipoContaDTO(mes, ano, listaTipoConta, listaContaTipoContaDTO);
+
+        return todasContaTipoContaDTO;
+    }
+
+    private TodasContaTipoContaDTO getTodasContaTipoContaDTO(int mes, int ano, List<TipoConta> listaTipoConta, List<ContaTipoContaDTO> listaContaTipoContaDTO) {
+        Double somatorio = 0.0;
+
+        for(TipoConta tipoConta : listaTipoConta){
+            ContaTipoContaDTO contaTipoContaDTO = findAllByTipoContaIdAndMesContaAndAnoConta(tipoConta.getId(), mes, ano);
+            listaContaTipoContaDTO.add(contaTipoContaDTO);
+            somatorio += contaTipoContaDTO.getSomatorio();
+        }
+
+        TodasContaTipoContaDTO todasContaTipoContaDTO = new TodasContaTipoContaDTO();
+        todasContaTipoContaDTO.setContas(listaContaTipoContaDTO);
+        todasContaTipoContaDTO.setSomatorio(somatorio);
+        return todasContaTipoContaDTO;
+    }
+
+    private Conta getConta(UUID id) throws NotFoundException {
+        Optional<Conta> optionalTipoConta = contaRepository.findById(id);
+
+        if (!optionalTipoConta.isPresent()) {
+            throw new NotFoundException("Conta não encontrado");
+        }
+        return optionalTipoConta.get();
+    }
+
     private void getContasPorTipoConta(UUID id, List<Conta> listContaPorTipoConta, ContaTipoContaDTO contaSomatorioDTO) {
         Optional<TipoConta> tipoConta = tipoContaRepository.findById(id);
 
@@ -108,16 +143,6 @@ public class ContaService {
             contaSomatorioDTO.setTipoContaId(tipoConta.get().getId());
             contaSomatorioDTO.setNomeTipoConta(tipoConta.get().getDescricao());
         }
-    }
-
-
-    private Conta getConta(UUID id) throws NotFoundException {
-        Optional<Conta> optionalTipoConta = contaRepository.findById(id);
-
-        if (!optionalTipoConta.isPresent()) {
-            throw new NotFoundException("Conta não encontrado");
-        }
-        return optionalTipoConta.get();
     }
 
 }

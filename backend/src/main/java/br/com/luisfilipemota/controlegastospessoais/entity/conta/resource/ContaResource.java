@@ -3,6 +3,7 @@ package br.com.luisfilipemota.controlegastospessoais.entity.conta.resource;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.ContaService;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaTipoContaDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.TodasContaTipoContaDTO;
 import javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,12 @@ public class ContaResource {
     public ContaTipoContaDTO listPorTipoContaMesAno(@PathVariable UUID id, @PathVariable int mes, @PathVariable int ano) {
 
         return this.contaService.findAllByTipoContaIdAndMesContaAndAnoConta(id, mes, ano);
+    }
+
+    @GetMapping("/todascontasmes/{mes}/{ano}")
+    public TodasContaTipoContaDTO listPorTipoContaMesAno(@PathVariable int mes, @PathVariable int ano) {
+
+        return this.contaService.listarTodasContas(mes, ano);
     }
 
     @GetMapping("/{id}")

@@ -6,6 +6,7 @@ import br.com.luisfilipemota.controlegastospessoais.entity.conta.model.Conta;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.repository.ContaRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaTipoContaDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.TodasContaTipoContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.model.TipoConta;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.repository.TipoContaRepository;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
@@ -385,6 +386,38 @@ public class ContaServiceTest {
 
         asserts(tipoContaDTO, conta, contaSalva);
 
+    }
+
+    @Test
+    public void testPesquisaTodosContasMesPorAnoContaMesAno() {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
+
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
+
+        Usuario usuario = getUsuario();
+        TipoConta tipoConta = getTipoConta();
+
+        Conta conta = getConta(usuario, tipoConta);
+
+        Mockito.when(contaRepository.findAllByTipoContaIdAndMesContaAndAnoContaOrderByDataConta(UUID_TEST, 1, 1))
+                .thenReturn(Collections.singletonList(conta));
+
+        Mockito.when(tipoContaRepository.findAll())
+                .thenReturn(Collections.singletonList(tipoConta));
+
+        Mockito.when(tipoContaRepository.findById(Mockito.any(UUID.class)))
+                .thenReturn(Optional.of(tipoConta));
+
+        Mockito.when(contaMapper.contaToContaDto(conta))
+                .thenReturn(contaDTO);
+
+        TodasContaTipoContaDTO todasContaTipoContaDTO = contaService.listarTodasContas(1, 1);
+
+        assertThat(todasContaTipoContaDTO).isNotNull();
+        assertThat(todasContaTipoContaDTO.getContas().size()).isEqualTo(1);
+        assertThat(todasContaTipoContaDTO.getSomatorio()).isEqualTo(conta.getValor());
+        asserts(tipoContaDTO, conta, todasContaTipoContaDTO.getContas().get(0));
     }
 
     private void asserts(TipoContaDTO tipoContaDTO, Conta conta, ContaTipoContaDTO contaSalva) {

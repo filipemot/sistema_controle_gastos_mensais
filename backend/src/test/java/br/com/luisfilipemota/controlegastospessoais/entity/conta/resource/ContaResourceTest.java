@@ -3,6 +3,7 @@ package br.com.luisfilipemota.controlegastospessoais.entity.conta.resource;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.ContaService;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.ContaTipoContaDTO;
+import br.com.luisfilipemota.controlegastospessoais.entity.conta.service.dto.TodasContaTipoContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.tipoconta.service.dto.TipoContaDTO;
 import br.com.luisfilipemota.controlegastospessoais.entity.usuario.service.dto.UsuarioDTO;
 import br.com.luisfilipemota.controlegastospessoais.util.converter.LocalDateTimeConverter;
@@ -255,6 +256,46 @@ public class ContaResourceTest {
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
         assertsRequest(result, status().isOk(), contaDTO, contaSomatorioDTO);
     }
+
+    @Test
+    public void testPesquisaTodosContasMesPorMesAno() throws Exception {
+        UsuarioDTO usuarioDTO = getUsuarioDTO(UUID_TEST);
+        TipoContaDTO tipoContaDTO = getTipoContaDTO();
+
+        ContaDTO contaDTO = getContaDTO(usuarioDTO, tipoContaDTO);
+
+        ContaTipoContaDTO contaSomatorioDTO = getContaTipoContaDTO(tipoContaDTO, contaDTO);
+
+        TodasContaTipoContaDTO todasContaTipoContaDTO = new TodasContaTipoContaDTO();
+        todasContaTipoContaDTO.setContas(Collections.singletonList(contaSomatorioDTO));
+        todasContaTipoContaDTO.setSomatorio(contaSomatorioDTO.getSomatorio());
+
+        Mockito.when(contaService.listarTodasContas(11, 2021))
+                .thenReturn(todasContaTipoContaDTO);
+
+        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/api/conta/todascontasmes/11/2021")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$.contas", hasSize(1)))
+                .andExpect(jsonPath("$.somatorio", is(contaDTO.getValor())))
+                .andExpect(jsonPath("$.contas[0].somatorio", is(contaDTO.getValor())))
+                .andExpect(jsonPath("$.contas[0].nomeTipoConta", is(contaSomatorioDTO.getNomeTipoConta())))
+                .andExpect(jsonPath("$.contas[0].tipoContaId", is(contaSomatorioDTO.getTipoContaId().toString())))
+                .andExpect(jsonPath("$.contas[0].contas[0].usuario.id", is(UUID_TEST.toString())))
+                .andExpect(jsonPath("$.contas[0].contas[0].tipoConta.id", is(UUID_TEST.toString())))
+                .andExpect(jsonPath("$.contas[0].contas[0].dataConta", is("2015-11-04 17:09:55")))
+                .andExpect(jsonPath("$.contas[0].contas[0].mesConta", is(11)))
+                .andExpect(jsonPath("$.contas[0].contas[0].anoConta", is(2021)))
+                .andExpect(jsonPath("$.contas[0].contas[0].descricao", is("Descricao")))
+                .andExpect(jsonPath("$.contas[0].contas[0].valor", is(100.0)))
+                .andExpect(jsonPath("$.contas[0].contas[0].numeroParcela", is(1)))
+                .andExpect(jsonPath("$.contas[0].contas[0].totalParcelas", is(1)))
+                .andExpect(jsonPath("$.contas[0].contas[0].recorrente", is(false)));
+   }
 
     private void assertsRequest(ResultActions result, ResultMatcher status, Boolean isContent) throws Exception {
 
