@@ -10,4 +10,5 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
     <include file="classpath:db/changelog/202111191834_insert_tipo_conta.xml"/>
     <include file="classpath:db/changelog/202111191845_insert_usuario.xml"/>
     <include file="classpath:db/changelog/202112171518_update_conta_problemas_acentos.sql"/>
+    <include file="classpath:db/changelog/202112171641_update_recebidos_problemas_acentos.sql"/>
 </databaseChangeLog>
