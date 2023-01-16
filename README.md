@@ -1,3 +1,4 @@
+[![Board Status](https://filipemot.visualstudio.com/2b71b0e1-370d-40d0-8db0-1a8b9fb8654b/570facad-591f-44d1-8757-0852b023ad6c/_apis/work/boardbadge/31b5cdca-d8f2-4270-92ce-7bb79b699309)](https://filipemot.visualstudio.com/2b71b0e1-370d-40d0-8db0-1a8b9fb8654b/_boards/board/t/570facad-591f-44d1-8757-0852b023ad6c/Microsoft.RequirementCategory)
 
 # Sistema de Controle de Gastos Pessoais
 
